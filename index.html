@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài Tập Online – Cơ Học Đất</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── DESIGN TOKENS ── */
+:root {
+  --primary:    #1565c0;
+  --primary-dk: #0d47a1;
+  --primary-lt: #e3f0fd;
+  --accent:     #f57c00;
+  --accent-lt:  #fff3e0;
+  --green:      #2e7d32;
+  --green-lt:   #e8f5e9;
+  --red:        #c62828;
+  --red-lt:     #ffebee;
+  --yellow:     #f9a825;
+  --yellow-lt:  #fffde7;
+  --bg:         #f0f4f8;
+  --surface:    #ffffff;
+  --border:     #dce3ed;
+  --muted:      #607080;
+  --text:       #1a2533;
+  --sans:       'Plus Jakarta Sans', sans-serif;
+  --mono:       'JetBrains Mono', monospace;
+  --radius:     12px;
+  --shadow:     0 2px 16px rgba(21,101,192,.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:var(--sans);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
+.hidden{display:none!important}
+
+/* ── HEADER ── */
+.site-header{background:var(--primary);color:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(21,101,192,.3)}
+.header-top{max-width:980px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;gap:14px}
+.header-logo{flex:1}
+.header-logo h1{font-size:1.05rem;font-weight:700}
+.header-logo p{font-size:.72rem;opacity:.7;margin-top:1px}
+#timer-badge{font-family:var(--mono);font-size:.82rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);padding:5px 13px;border-radius:20px;display:none}
+.btn-admin-toggle{font-size:.75rem;font-weight:600;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);padding:5px 13px;border-radius:6px;cursor:pointer;font-family:var(--sans);transition:background .18s}
+.btn-admin-toggle:hover{background:rgba(255,255,255,.25)}
+
+/* ── CHAPTER TABS ── */
+.chapter-tabs{background:var(--primary-dk);overflow-x:auto;scrollbar-width:none}
+.chapter-tabs::-webkit-scrollbar{display:none}
+.tabs-inner{max-width:980px;margin:0 auto;display:flex;gap:2px;padding:5px 14px}
+.ch-tab{padding:6px 16px;border-radius:7px;font-size:.79rem;font-weight:600;color:rgba(255,255,255,.6);cursor:pointer;border:none;background:transparent;transition:all .18s;white-space:nowrap;font-family:var(--sans);display:flex;align-items:center;gap:5px}
+.ch-tab:hover{background:rgba(255,255,255,.12);color:#fff}
+.ch-tab.active{background:var(--accent);color:#fff}
+.ch-tab.locked{opacity:.5;cursor:not-allowed}
+.ch-tab.locked:hover{background:transparent;color:rgba(255,255,255,.6)}
+
+/* ── MAIN ── */
+main{max-width:980px;margin:0 auto;padding:26px 16px 80px}
+
+/* ── CARD ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:18px;overflow:hidden}
+.card-head{background:var(--primary);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:10px}
+.card-head .badge{background:rgba(255,255,255,.2);font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:5px;letter-spacing:1px;text-transform:uppercase;font-family:var(--mono)}
+.card-head h2{font-size:.95rem;font-weight:600}
+.card-body{padding:20px}
+
+/* ── FORM ── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.form-grid .span2{grid-column:1/-1}
+.field label{display:block;font-size:.73rem;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:5px}
+.field input,.field select{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--sans);font-size:.93rem;background:#fafcff;color:var(--text);outline:none;transition:border-color .18s,box-shadow .18s;appearance:none}
+.field input:focus,.field select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(21,101,192,.1)}
+
+/* ── ALERTS ── */
+.info-box{background:var(--primary-lt);border-left:4px solid var(--primary);border-radius:7px;padding:10px 14px;font-size:.86rem;color:#1a3a6c;margin-bottom:16px;line-height:1.65}
+.warn-box{background:var(--yellow-lt);border-left:4px solid var(--yellow);border-radius:7px;padding:10px 14px;font-size:.86rem;color:#5a3e00;margin-bottom:16px}
+.err-box{background:var(--red-lt);border-left:4px solid var(--red);border-radius:7px;padding:10px 14px;font-size:.86rem;color:#7a1010;margin-bottom:12px}
+.succ-box{background:var(--green-lt);border-left:4px solid var(--green);border-radius:7px;padding:10px 14px;font-size:.86rem;color:#1a4a1a;margin-bottom:12px}
+
+/* ── BUTTONS ── */
+.btn{border:none;cursor:pointer;font-family:var(--sans);font-weight:600;border-radius:7px;transition:all .18s;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;filter:none}
+.btn-primary{background:var(--primary);color:#fff;padding:10px 24px;font-size:.93rem}
+.btn-accent{background:var(--accent);color:#fff;padding:12px 24px;font-size:.95rem;width:100%;justify-content:center}
+.btn-danger{background:var(--red);color:#fff;padding:8px 16px;font-size:.85rem}
+.btn-ghost{background:transparent;color:var(--muted);border:1.5px solid var(--border);padding:8px 16px;font-size:.85rem}
+.btn-sm{padding:6px 14px!important;font-size:.8rem!important}
+
+/* ── STUDENT BAR ── */
+#student-bar{display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 18px;margin-bottom:18px;align-items:center;gap:14px;box-shadow:var(--shadow)}
+#student-bar .sb-avatar{width:38px;height:38px;border-radius:50%;background:var(--primary);color:#fff;font-weight:700;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+#student-bar .sb-info{flex:1}
+#student-bar .sb-name{font-weight:700;font-size:.95rem}
+#student-bar .sb-meta{font-size:.76rem;color:var(--muted);font-family:var(--mono);margin-top:1px}
+#student-bar .sb-clock{font-family:var(--mono);font-size:.88rem;font-weight:600;background:var(--primary-lt);color:var(--primary);padding:5px 13px;border-radius:20px}
+
+/* ── CHAPTER HEADER ── */
+.chapter-header{background:linear-gradient(135deg,var(--primary),#1976d2);color:#fff;border-radius:var(--radius);padding:16px 20px;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.chapter-header .ch-icon{font-size:1.8rem;flex-shrink:0}
+.chapter-header h3{font-size:1rem;font-weight:700}
+.chapter-header p{font-size:.82rem;opacity:.8;margin-top:2px}
+.chapter-header .ch-badge{margin-left:auto;flex-shrink:0;font-size:.76rem;font-weight:700;padding:4px 13px;border-radius:20px}
+.ch-badge.open{background:#e8f5e9;color:#2e7d32}
+.ch-badge.closed{background:#ffebee;color:#c62828}
+.ch-badge.soon{background:#fffde7;color:#f57c00}
+.ch-badge.locked{background:rgba(255,255,255,.2);color:rgba(255,255,255,.9)}
+
+/* ── PROGRESS ── */
+.progress-wrap{margin-bottom:18px}
+.progress-top{display:flex;justify-content:space-between;font-size:.79rem;font-weight:600;color:var(--muted);margin-bottom:5px}
+.progress-track{height:8px;background:var(--border);border-radius:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),#42a5f5);border-radius:10px;transition:width .4s}
+.progress-fill.done{background:linear-gradient(90deg,var(--green),#66bb6a)}
+
+/* ── PROBLEM CARD ── */
+.prob-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden;animation:slideUp .3s ease both}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.prob-head{padding:11px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:9px;flex-wrap:wrap;background:#f7faff}
+.prob-num{font-family:var(--mono);font-size:.68rem;font-weight:500;background:var(--primary);color:#fff;padding:2px 9px;border-radius:20px;letter-spacing:1px}
+.prob-title{font-weight:700;font-size:.92rem;color:var(--primary);flex:1}
+.prob-type{font-size:.68rem;font-family:var(--mono);background:var(--accent-lt);color:var(--accent);padding:2px 8px;border-radius:4px;border:1px solid rgba(245,124,0,.2)}
+.prob-body{padding:18px}
+
+/* ── THEORY ── */
+.theory-block{background:var(--primary-lt);border:1px solid rgba(21,101,192,.15);border-radius:9px;padding:13px;margin-bottom:14px}
+.theory-label{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--primary);margin-bottom:9px;display:flex;align-items:center;gap:5px}
+.theory-block img{width:100%;border-radius:6px;border:1px solid rgba(21,101,192,.12);display:block;background:#fff;max-height:320px;object-fit:contain}
+.theory-block .img-error{text-align:center;padding:20px;color:var(--muted);font-size:.84rem;background:#fff;border-radius:6px;border:2px dashed var(--border)}
+.theory-caption{font-size:.78rem;color:var(--muted);margin-top:6px;text-align:center;font-style:italic}
+
+/* ── HINT ── */
+.hint-box{background:var(--accent-lt);border:1px solid rgba(245,124,0,.2);border-left:4px solid var(--accent);border-radius:7px;padding:10px 14px;font-size:.86rem;color:#5a3000;margin-bottom:14px;line-height:1.65}
+.hint-title{font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.7px;color:var(--accent);margin-bottom:5px}
+.hint-formula{font-family:var(--mono);font-size:.82rem;background:rgba(255,255,255,.7);padding:4px 9px;border-radius:4px;display:inline-block;margin-top:3px}
+
+/* ── DATA TABLE ── */
+.data-table{width:100%;border-collapse:collapse;margin-bottom:14px;border-radius:7px;overflow:hidden;border:1px solid var(--border);font-size:.87rem}
+.data-table th{background:var(--primary);color:rgba(255,255,255,.9);font-size:.71rem;letter-spacing:.6px;text-transform:uppercase;padding:7px 12px;text-align:left;font-weight:600}
+.data-table td{padding:7px 12px;border-bottom:1px solid var(--border)}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:var(--primary-lt)}
+.dt-sym{font-family:var(--mono);font-size:.82rem;color:var(--muted)}
+.dt-val{font-family:var(--mono);font-weight:700;color:var(--primary)}
+.dt-unit{font-size:.76rem;color:#aaa;font-family:var(--mono)}
+
+/* ── STATEMENT ── */
+.prob-stmt{font-size:.93rem;line-height:1.8;margin-bottom:14px}
+.prob-stmt strong{color:var(--primary)}
+
+/* ── FILL ANSWER ── */
+.ans-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:10px;padding:10px 13px;background:var(--bg);border-radius:7px;border:1px solid var(--border)}
+.ans-label{font-size:.85rem;font-weight:600;flex:1;min-width:160px}
+.ans-input{width:120px;padding:7px 11px;border:2px solid var(--border);border-radius:6px;font-family:var(--mono);font-size:.94rem;font-weight:600;color:var(--primary);background:#fff;outline:none;transition:border-color .18s,box-shadow .18s}
+.ans-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(245,124,0,.11)}
+.ans-input.correct{border-color:var(--green);background:var(--green-lt)}
+.ans-input.wrong{border-color:var(--red);background:var(--red-lt)}
+.ans-unit{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+
+/* ── MCQ ── */
+.mcq-wrap{margin-bottom:12px}
+.mcq-label{font-size:.86rem;font-weight:600;margin-bottom:8px}
+.mcq-opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.mcq-opt{padding:9px 13px;border:1.5px solid var(--border);border-radius:7px;cursor:pointer;font-size:.86rem;background:#fff;transition:all .16s;display:flex;align-items:flex-start;gap:8px}
+.mcq-opt:hover{border-color:var(--primary);background:var(--primary-lt)}
+.mcq-opt.chosen{border-color:var(--primary);background:var(--primary-lt);font-weight:600}
+.mcq-opt.correct{border-color:var(--green);background:var(--green-lt);color:var(--green);font-weight:700}
+.mcq-opt.wrong{border-color:var(--red);background:var(--red-lt);color:var(--red)}
+.mcq-key{font-family:var(--mono);font-size:.73rem;font-weight:700;background:rgba(21,101,192,.1);color:var(--primary);padding:1px 6px;border-radius:3px;flex-shrink:0;margin-top:1px}
+
+/* ── STATUS CHIP (ẩn khi showFeedback = false) ── */
+.s-chip{font-size:.73rem;font-weight:700;padding:2px 9px;border-radius:20px;opacity:0;transition:opacity .25s;white-space:nowrap}
+.s-chip.show{opacity:1}
+.s-chip.ok{background:var(--green-lt);color:var(--green);border:1px solid #c8e6c9}
+.s-chip.err{background:var(--red-lt);color:var(--red);border:1px solid #ffcdd2}
+/* Khi tắt feedback: ẩn chip đúng/sai, bỏ màu ô input */
+body.no-feedback .s-chip { display: none !important; }
+body.no-feedback .ans-input.correct { border-color: var(--border); background: #fff; }
+body.no-feedback .ans-input.wrong   { border-color: var(--border); background: #fff; }
+body.no-feedback .mcq-opt.correct   { border-color: var(--border); background: #fff; color: var(--text); }
+body.no-feedback .mcq-opt.wrong     { border-color: var(--border); background: #fff; color: var(--text); }
+
+/* ── SCORE ── */
+#score-panel{display:none;border-radius:var(--radius);background:linear-gradient(135deg,var(--primary),#1976d2);color:#fff;padding:26px 22px;margin-bottom:18px;text-align:center}
+#score-panel h3{font-size:1rem;font-weight:600;opacity:.85}
+.big-score{font-family:var(--mono);font-size:3.2rem;font-weight:700;line-height:1;margin:7px 0}
+.big-score.pass{color:#a5d6a7}
+.big-score.fail{color:#ef9a9a}
+.score-sub{font-size:.83rem;opacity:.7}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.score-item{background:rgba(255,255,255,.12);border-radius:9px;padding:11px}
+.score-item .si-val{font-family:var(--mono);font-size:1.2rem;font-weight:700}
+.score-item .si-lbl{font-size:.7rem;opacity:.65;margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
+
+/* ── LOCKED ── */
+.locked-msg{text-align:center;padding:44px 20px;color:var(--muted)}
+.locked-msg .lock-icon{font-size:2.8rem;display:block;margin-bottom:10px}
+.locked-msg h4{font-size:1rem;color:var(--text);margin-bottom:5px}
+
+/* ── SUBMIT ── */
+#submit-section{display:none}
+.submit-note{font-size:.81rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ════════════════════════════════════════
+   ADMIN PANEL
+   ════════════════════════════════════════ */
+#admin-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(10,20,40,.55);backdrop-filter:blur(4px);align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto}
+#admin-overlay.show{display:flex}
+#admin-panel{background:var(--surface);border-radius:16px;box-shadow:0 16px 60px rgba(0,0,0,.25);width:100%;max-width:740px;overflow:hidden}
+.admin-head{background:linear-gradient(135deg,#0d47a1,#1565c0);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:12px}
+.admin-head h2{font-size:1.05rem;font-weight:700;flex:1}
+.admin-head .btn-close{background:rgba(255,255,255,.2);border:none;color:#fff;font-size:1.2rem;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s}
+.admin-head .btn-close:hover{background:rgba(255,255,255,.35)}
+.admin-body{padding:22px}
+#admin-login .al-icon{font-size:2.5rem;text-align:center;margin-bottom:12px}
+#admin-login h3{text-align:center;font-size:1rem;margin-bottom:16px;color:var(--primary)}
+.admin-tabs{display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border)}
+.admin-tab{padding:8px 16px;border:none;background:transparent;font-family:var(--sans);font-size:.84rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .18s;border-radius:6px 6px 0 0}
+.admin-tab:hover{color:var(--primary);background:var(--primary-lt)}
+.admin-tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+.admin-pane{display:none}
+.admin-pane.active{display:block}
+.schedule-table{width:100%;border-collapse:collapse;font-size:.86rem}
+.schedule-table th{background:var(--primary-lt);color:var(--primary);font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;padding:8px 10px;text-align:left;font-weight:700;border-bottom:2px solid var(--border)}
+.schedule-table td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
+.schedule-table tr:last-child td{border-bottom:none}
+.schedule-table input[type="datetime-local"]{font-family:var(--mono);font-size:.8rem;padding:5px 8px;border:1.5px solid var(--border);border-radius:5px;background:#fafcff;outline:none;width:175px}
+.schedule-table input[type="datetime-local"]:focus{border-color:var(--primary)}
+.toggle-switch{position:relative;display:inline-block;width:44px;height:24px}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;inset:0;background:#ccc;border-radius:24px;cursor:pointer;transition:.3s}
+.toggle-slider::before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s}
+.toggle-switch input:checked + .toggle-slider{background:var(--green)}
+.toggle-switch input:checked + .toggle-slider::before{transform:translateX(20px)}
+.min-pct-input{font-family:var(--mono);font-size:.85rem;width:60px;padding:5px 7px;border:1.5px solid var(--border);border-radius:5px;text-align:center}
+.class-list{list-style:none}
+.class-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
+.class-item:last-child{border-bottom:none}
+.class-item input{flex:1;padding:6px 10px;border:1.5px solid var(--border);border-radius:6px;font-family:var(--sans);font-size:.88rem;outline:none}
+.class-item input:focus{border-color:var(--primary)}
+.class-badge{font-family:var(--mono);font-size:.72rem;background:var(--primary-lt);color:var(--primary);padding:3px 8px;border-radius:4px;white-space:nowrap}
+
+/* Option row trong settings */
+.option-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}
+.option-row:last-of-type{border-bottom:none}
+.option-row .opt-label{font-size:.9rem;font-weight:600}
+.option-row .opt-desc{font-size:.78rem;color:var(--muted);margin-top:2px}
+
+/* ── LOADING / TOAST ── */
+#loading-overlay{display:none;position:fixed;inset:0;background:rgba(240,244,248,.85);z-index:400;align-items:center;justify-content:center;flex-direction:column;gap:12px}
+#loading-overlay.show{display:flex}
+.spinner{width:38px;height:38px;border:4px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#toast{position:fixed;bottom:22px;right:22px;background:var(--primary);color:#fff;padding:11px 17px;border-radius:9px;font-size:.87rem;font-weight:500;box-shadow:0 6px 24px rgba(21,101,192,.25);opacity:0;pointer-events:none;transition:opacity .3s;z-index:999;max-width:280px;line-height:1.4}
+#toast.show{opacity:1}
+footer{text-align:center;font-size:.73rem;color:var(--muted);padding:18px;border-top:1px solid var(--border)}
+
+@media(max-width:600px){
+  .form-grid{grid-template-columns:1fr}
+  .mcq-opts{grid-template-columns:1fr}
+  .score-grid{grid-template-columns:1fr 1fr}
+  main{padding:16px 10px 60px}
+}
+</style>
+</head>
+<body>
+
+<div id="loading-overlay"><div class="spinner"></div><p>Đang xử lý...</p></div>
+<div id="toast"></div>
+
+<!-- ════════ ADMIN OVERLAY ════════ -->
+<div id="admin-overlay">
+  <div id="admin-panel">
+    <div class="admin-head">
+      <span style="font-size:1.3rem">⚙️</span>
+      <h2>Admin – Cơ Học Đất Online</h2>
+      <button class="btn-close" onclick="ADMIN.close()">✕</button>
+    </div>
+    <div class="admin-body">
+
+      <div id="admin-login">
+        <div class="al-icon">🔐</div>
+        <h3>Đăng nhập quản trị</h3>
+        <div class="field" style="max-width:300px;margin:0 auto 12px;">
+          <label>Mật khẩu admin</label>
+          <input type="password" id="admin-pw" placeholder="Nhập mật khẩu..." onkeydown="if(event.key==='Enter') ADMIN.login()" />
+        </div>
+        <div id="admin-login-err" class="err-box hidden" style="max-width:300px;margin:0 auto 12px;"></div>
+        <div style="text-align:center;">
+          <button class="btn btn-primary" onclick="ADMIN.login()">🔓 Đăng nhập</button>
+        </div>
+      </div>
+
+      <div id="admin-dashboard" class="hidden">
+        <div class="admin-tabs">
+          <button class="admin-tab active" onclick="ADMIN.switchTab('schedule',this)">📅 Lịch bài tập</button>
+          <button class="admin-tab" onclick="ADMIN.switchTab('classes',this)">🏫 Danh sách lớp</button>
+          <button class="admin-tab" onclick="ADMIN.switchTab('settings',this)">🔧 Cài đặt</button>
+        </div>
+
+        <!-- TAB: SCHEDULE -->
+        <div class="admin-pane active" id="pane-schedule">
+          <div class="info-box" style="margin-bottom:14px;">
+            Đặt thời gian mở/đóng từng chương. <strong>Toggle OFF</strong> = khóa ngay lập tức.
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="schedule-table">
+              <thead><tr><th>Chương</th><th>Mở lúc</th><th>Đóng lúc</th><th>% tối thiểu</th><th>Bật/Tắt</th></tr></thead>
+              <tbody id="schedule-tbody"></tbody>
+            </table>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="ADMIN.saveSchedule()">💾 Lưu lịch</button>
+            <button class="btn btn-ghost"   onclick="ADMIN.resetSchedule()">↺ Reset</button>
+          </div>
+          <div id="schedule-msg" style="margin-top:10px;"></div>
+        </div>
+
+        <!-- TAB: CLASSES -->
+        <div class="admin-pane" id="pane-classes">
+          <div class="info-box" style="margin-bottom:14px;">Danh sách lớp trong dropdown chọn lớp của sinh viên.</div>
+          <ul class="class-list" id="class-list"></ul>
+          <div style="margin-top:14px;display:flex;gap:10px;">
+            <button class="btn btn-primary" onclick="ADMIN.addClass()">+ Thêm lớp</button>
+            <button class="btn btn-primary" onclick="ADMIN.saveClasses()">💾 Lưu</button>
+          </div>
+          <div id="classes-msg" style="margin-top:10px;"></div>
+        </div>
+
+        <!-- TAB: SETTINGS -->
+        <div class="admin-pane" id="pane-settings">
+
+          <!-- ── TÙY CHỌN HIỂN THỊ ── -->
+          <div style="margin-bottom:20px;">
+            <div style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:12px;">Tùy chọn hiển thị cho sinh viên</div>
+
+            <div class="option-row">
+              <div>
+                <div class="opt-label">Hiển thị đúng/sai real-time</div>
+                <div class="opt-desc">Sinh viên thấy ✓ / ✗ ngay khi điền đáp số. Tắt = chỉ biết sau khi nộp bài.</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="opt-feedback" />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="option-row">
+              <div>
+                <div class="opt-label">Hiển thị điểm sau khi nộp</div>
+                <div class="opt-desc">Sinh viên thấy điểm % sau khi nhấn Nộp bài.</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="opt-show-score" checked />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+          </div>
+
+          <!-- ── CÀI ĐẶT HỆ THỐNG ── -->
+          <div style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:12px;">Cài đặt hệ thống</div>
+
+          <div class="field" style="margin-bottom:14px;">
+            <label>Google Apps Script URL</label>
+            <input type="text" id="setting-gas-url" placeholder="https://script.google.com/macros/s/.../exec" />
+          </div>
+          <div class="field" style="margin-bottom:14px;">
+            <label>Tên giảng viên / Môn học (hiện trên header)</label>
+            <input type="text" id="setting-teacher" placeholder="TS. Phạm Việt Anh – Cơ Học Đất" />
+          </div>
+          <div class="field" style="margin-bottom:16px;">
+            <label>Đổi mật khẩu Admin</label>
+            <input type="password" id="setting-new-pw" placeholder="Để trống = không đổi" />
+          </div>
+          <button class="btn btn-primary" onclick="ADMIN.saveSettings()">💾 Lưu cài đặt</button>
+          <div id="settings-msg" style="margin-top:10px;"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ HEADER ════════ -->
+<header class="site-header">
+  <div class="header-top">
+    <div class="header-logo">
+      <h1>Cơ Học Đất – Bài Tập Online</h1>
+      <p id="site-sub">TS. Phạm Việt Anh · Bộ môn Địa Kĩ Thuật · ĐHXD Hà Nội</p>
+    </div>
+    <div id="timer-badge">00:00</div>
+    <button class="btn-admin-toggle" onclick="ADMIN.open()">⚙ Admin</button>
+  </div>
+  <div class="chapter-tabs">
+    <div class="tabs-inner" id="chapter-tabs"></div>
+  </div>
+</header>
+
+<!-- ════════ MAIN ════════ -->
+<main>
+
+  <div class="card" id="card-login">
+    <div class="card-head"><span class="badge">Bước 1</span><h2>Thông tin sinh viên</h2></div>
+    <div class="card-body">
+      <div class="warn-box">⚠️ <strong>Lưu ý:</strong> Bài làm <strong>không lưu tạm</strong> khi thoát trang. Hoàn thành và nộp bài trong một lần. Mỗi MSSV chỉ nộp <strong>1 lần</strong> mỗi chương.</div>
+      <div class="form-grid">
+        <div class="field span2"><label>Họ và Tên</label><input type="text" id="f-name" placeholder="Nguyễn Văn An" /></div>
+        <div class="field"><label>Mã Số Sinh Viên</label><input type="text" id="f-mssv" placeholder="2351xxxxxx" /></div>
+        <div class="field"><label>Số Thứ Tự (danh sách lớp)</label><input type="number" id="f-stt" placeholder="VD: 12" min="1" max="300" /></div>
+        <div class="field span2"><label>Chọn Lớp</label><select id="f-class"><option value="">-- Chọn lớp --</option></select></div>
+      </div>
+      <div id="login-err" class="err-box hidden"></div>
+      <button class="btn btn-primary" onclick="APP.start()" style="margin-top:6px;">▶ Bắt Đầu Làm Bài</button>
+    </div>
+  </div>
+
+  <div id="student-bar">
+    <div class="sb-avatar" id="sb-av">?</div>
+    <div class="sb-info">
+      <div class="sb-name" id="sb-name">–</div>
+      <div class="sb-meta" id="sb-meta">–</div>
+    </div>
+    <div class="sb-clock" id="sb-clock">00:00</div>
+  </div>
+
+  <div id="exercise-area" class="hidden">
+    <div class="chapter-header">
+      <div class="ch-icon" id="ch-icon">📚</div>
+      <div><h3 id="ch-title">Chọn chương</h3><p id="ch-desc">–</p></div>
+      <div class="ch-badge locked" id="ch-badge">–</div>
+    </div>
+    <div class="progress-wrap" id="progress-wrap" style="display:none;">
+      <div class="progress-top"><span>Tiến độ</span><span id="prog-text">0/0</span></div>
+      <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+    <div id="problems-container"></div>
+  </div>
+
+  <div id="score-panel">
+    <h3>Kết Quả Bài Làm</h3>
+    <div class="big-score" id="sp-score">–</div>
+    <div class="score-sub" id="sp-sub">–</div>
+    <div class="score-grid">
+      <div class="score-item"><div class="si-val" id="sp-correct">–</div><div class="si-lbl">Câu đúng</div></div>
+      <div class="score-item"><div class="si-val" id="sp-wrong">–</div><div class="si-lbl">Câu sai</div></div>
+      <div class="score-item"><div class="si-val" id="sp-time">–</div><div class="si-lbl">Thời gian</div></div>
+    </div>
+  </div>
+
+  <div id="submit-section">
+    <div class="card">
+      <div class="card-head"><span class="badge">Nộp Bài</span><h2>Hoàn thành & ghi nhận kết quả</h2></div>
+      <div class="card-body">
+        <div class="info-box" style="margin-bottom:14px;">🔒 Kết quả ghi vào bảng điểm. Cần hoàn thành ít nhất <strong id="min-pct-lbl">80%</strong> mới nộp được.</div>
+        <button class="btn btn-accent" id="btn-submit" onclick="APP.submit()" disabled>📤 Nộp Bài</button>
+        <p class="submit-note" id="submit-note">Hoàn thành thêm câu hỏi để kích hoạt nút nộp bài.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+<footer>Cơ Học Đất · Đại học Xây Dựng Hà Nội</footer>
+
+<!-- ════════════════════════════════════════════════════════
+     LOAD CÁC FILE BÀI TẬP VÀ CONFIG
+     ════════════════════════════════════════════════════════ -->
+
+<!-- 1. Khai báo object EXERCISES rỗng trước -->
+<script>
+  const EXERCISES = {};
+  function r2(v){return Math.round(v*100)/100}
+  function r3(v){return Math.round(v*1000)/1000}
+</script>
+
+<!-- 2. Load config chương -->
+<script src="config.js"></script>
+
+<!-- 3. Load từng file bài tập -->
+<script src="exercises/ch3.js"></script>
+<script src="exercises/ch4.js"></script>
+<script src="exercises/ch5.js"></script>
+<script src="exercises/ch6.js"></script>
+
+<!-- 4. Engine (load sau cùng) -->
+<script src="engine.js"></script>
+</body>
+</html>
