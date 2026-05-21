@@ -50,12 +50,13 @@ const DEFAULT_CFG = {
     { id:'68XDC1', name:'Lớp 68XDC1' },
     { id:'68XDC2', name:'Lớp 68XDC2' },
   ],
-  schedule: {
-    ch3: { open:null, close:null, minPct:80, active:true  },
-    ch4: { open:null, close:null, minPct:80, active:false },
-    ch5: { open:null, close:null, minPct:80, active:false },
-    ch6: { open:null, close:null, minPct:80, active:false },
-  }
+ // SỬA THÀNH:
+schedule: {
+  ch3: { open:null, close:null, minPct:80, active:true },
+  ch4: { open:null, close:null, minPct:80, active:true }, // ← true
+  ch5: { open:null, close:null, minPct:80, active:false },
+  ch6: { open:null, close:null, minPct:80, active:false },
+}
 };
 
 function loadCfg() {
