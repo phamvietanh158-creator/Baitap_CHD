@@ -56,7 +56,7 @@ schedule: {
   ch4: { open:null, close:null, minPct:80, active:true }, // ← true
   ch5: { open:null, close:null, minPct:80, active:false },
   ch6: { open:null, close:null, minPct:80, active:false },
-}
+  }
 };
 
 function loadCfg() {
