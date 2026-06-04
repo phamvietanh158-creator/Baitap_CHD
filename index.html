@@ -1167,8 +1167,7 @@ const APP = {
     sessionStorage.setItem(submitKey, '1');
     if (noteEl) noteEl.textContent = '✅ Đã nộp bài thành công.';
     toast(`🎉 Nộp thành công! Điểm: ${score}%`, 4000);
-  }
-};
+  },
 
 // Cảnh báo thoát
   exitConfirm() {
@@ -1189,7 +1188,8 @@ const APP = {
     document.getElementById('score-panel').style.display    = 'none';
     TIMER.iv && clearInterval(TIMER.iv);
     APP.renderTabs();
-  },
+    }
+  };
 window.addEventListener('beforeunload', e => {
   if (APP.student && !document.getElementById('btn-submit').disabled) {
     e.preventDefault(); e.returnValue = '';
