@@ -21,7 +21,7 @@ window.CHAPTER_SCHEDULE = {
   ch7: { active: false },
 };
 // ── Danh sách chương: active:true = sinh viên vào được ────────────
-window.CHAPTER_SCHEDULE = {
+//window.CHAPTER_SCHEDULE = {
 //  ch3: { active: true  },   // ← Chương 3: đang mở
 //  ch4: { active: true  },   // ← Chương 4: đang mở
 //  ch5: { active: false },   // ← Chương 5: chưa mở
