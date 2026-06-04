@@ -628,25 +628,40 @@ function applyFeedback() {
 // ════════════════════════════════════════════════════════
 //  GAS – fire & forget (giống đồ án cũ)
 // ════════════════════════════════════════════════════════
-function gasSend(payload) {
-  const cfg = loadCfg();
-  if (!cfg.gasUrl) return;
-  const params = new URLSearchParams({
-    action:    'submit',
-    name:      payload.name      || '',
-    mssv:      payload.mssv      || '',
-    stt:       payload.stt       || '',
-    classId:   payload.classId   || '',
-    chapterId: payload.chapterId || '',
-    score:     payload.score     || 0,
-    correct:   payload.correct   || 0,
-    wrong:     payload.wrong     || 0,
-    duration:  payload.duration  || '',
-    answers:   payload.answers   || '',
-  });
-  fetch(cfg.gasUrl + '?' + params.toString(), {
-    method: 'GET', mode: 'no-cors'
-  }).catch(() => {});
+const WORKER_URL = 'https://chd-results.phamvietanh158.workers.dev';
+
+async function gasSend(payload) {
+  if (!payload.name || !payload.mssv) {
+    console.warn('[CHD] Thiếu tên/MSSV, không gửi kết quả.');
+    return;
+  }
+  const statusEl = document.getElementById('submit-status');
+  if (statusEl) { statusEl.textContent = '⏳ Đang ghi kết quả...'; statusEl.style.color = '#e65100'; }
+  try {
+    const resp = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name:      String(payload.name      || '').trim(),
+        mssv:      String(payload.mssv      || '').trim(),
+        stt:       Number(payload.stt)       || 0,
+        classId:   String(payload.classId   || ''),
+        chapterId: String(payload.chapterId || ''),
+        score:     Number(payload.score)     || 0,
+        total:     Number(payload.total)     || 0,
+        correct:   Number(payload.correct)   || 0,
+        duration:  String(payload.duration  || ''),
+      })
+    });
+    const data = await resp.json();
+    if (data.ok) {
+      console.log('[CHD] ✅ Kết quả đã ghi vào Google Sheet.');
+      if (statusEl) { statusEl.textContent = '✅ Đã ghi kết quả!'; statusEl.style.color = '#2e7d32'; }
+    } else { throw new Error(data.error || 'Worker lỗi'); }
+  } catch (err) {
+    console.error('[CHD] ❌ Gửi kết quả thất bại:', err.message);
+    if (statusEl) { statusEl.textContent = '⚠️ Chưa ghi được – kiểm tra mạng.'; statusEl.style.color = '#c62828'; }
+  }
 }
 
 // ════════════════════════════════════════════════════════
