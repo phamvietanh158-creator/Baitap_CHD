@@ -1169,27 +1169,28 @@ const APP = {
     toast(`🎉 Nộp thành công! Điểm: ${score}%`, 4000);
   },
 
-// Cảnh báo thoát
   exitConfirm() {
     const scoreVisible = document.getElementById('score-panel').style.display === 'block';
     if (scoreVisible) { location.reload(); return; }
     if (Object.values(APP.answers).some(v => v != null)) {
       if (!confirm('⚠️ Bài làm chưa được nộp!\nBạn có chắc muốn thoát? Dữ liệu sẽ bị mất.')) return;
     }
-    APP.student = null;
-    APP.answers = {};
-    APP.checked = {};
+    APP.student   = null;
+    APP.answers   = {};
+    APP.checked   = {};
     APP.currentCh = null;
-    document.getElementById('student-bar').style.display = 'none';
-    document.getElementById('timer-badge').style.display = 'none';
-    document.getElementById('card-login').style.display  = 'block';
+    document.getElementById('student-bar').style.display    = 'none';
+    document.getElementById('timer-badge').style.display    = 'none';
+    document.getElementById('card-login').style.display     = 'block';
     document.getElementById('exercise-area').classList.add('hidden');
     document.getElementById('submit-section').style.display = 'none';
     document.getElementById('score-panel').style.display    = 'none';
     TIMER.iv && clearInterval(TIMER.iv);
     APP.renderTabs();
-    }
-  };
+  }
+};
+
+// Cảnh báo thoát
 window.addEventListener('beforeunload', e => {
   if (APP.student && !document.getElementById('btn-submit').disabled) {
     e.preventDefault(); e.returnValue = '';
