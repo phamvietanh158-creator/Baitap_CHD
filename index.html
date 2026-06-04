@@ -175,10 +175,11 @@ main{max-width:980px;margin:0 auto;padding:26px 16px 80px}
 .s-chip.err{background:var(--red-lt);color:var(--red);border:1px solid #ffcdd2}
 /* Khi tắt feedback: ẩn chip đúng/sai, bỏ màu ô input */
 body.no-feedback .s-chip { display: none !important; }
+body.no-feedback .mcq-opt.chosen    { border-color: var(--primary) !important; background: var(--primary-lt) !important; color: var(--text) !important; font-weight: 600; }
 body.no-feedback .ans-input.correct { border-color: var(--border); background: #fff; }
 body.no-feedback .ans-input.wrong   { border-color: var(--border); background: #fff; }
-body.no-feedback .mcq-opt.correct   { border-color: var(--border); background: #fff; color: var(--text); }
-body.no-feedback .mcq-opt.wrong     { border-color: var(--border); background: #fff; color: var(--text); }
+body.no-feedback .mcq-opt.correct   { border-color: var(--border) !important; background: #fff !important; color: var(--text) !important; font-weight: 400 !important; }
+body.no-feedback .mcq-opt.wrong     { border-color: var(--border) !important; background: #fff !important; color: var(--text) !important; }
 
 /* ── SCORE ── */
 #score-panel{display:none;border-radius:var(--radius);background:linear-gradient(135deg,var(--primary),#1976d2);color:#fff;padding:26px 22px;margin-bottom:18px;text-align:center}
@@ -261,6 +262,68 @@ footer{text-align:center;font-size:.73rem;color:var(--muted);padding:18px;border
   .score-grid{grid-template-columns:1fr 1fr}
   main{padding:16px 10px 60px}
 }
+
+/* ── PHÂN TÁCH LÝ THUYẾT – BÀI TẬP – ĐÁP ÁN ── */
+.section-divider {
+  display:flex; align-items:center; gap:10px;
+  margin:18px 0 12px;
+}
+.section-divider .div-line {
+  flex:1; height:2px; background:var(--border);
+}
+.section-divider .div-label {
+  font-size:.72rem; font-weight:700; letter-spacing:1.2px;
+  text-transform:uppercase; padding:4px 12px;
+  border-radius:20px; white-space:nowrap;
+}
+.div-label.theory { background:#e3f0fd; color:var(--primary); border:1px solid rgba(21,101,192,.2); }
+.div-label.exercise { background:#fff3e0; color:var(--accent); border:1px solid rgba(245,124,0,.25); }
+.div-label.answer { background:#e8f5e9; color:var(--green); border:1px solid rgba(46,125,50,.2); }
+
+/* Vùng bài tập có nền phân biệt */
+.exercise-zone {
+  background:#fffdf8;
+  border:1.5px solid rgba(245,124,0,.2);
+  border-radius:10px;
+  padding:16px 18px;
+  margin-top:4px;
+}
+
+/* Vùng đáp án */
+.answer-zone {
+  background:#f1faf2;
+  border:1.5px solid rgba(46,125,50,.2);
+  border-radius:10px;
+  padding:14px 18px;
+  margin-top:12px;
+}
+.answer-zone-title {
+  font-size:.74rem; font-weight:700; color:var(--green);
+  text-transform:uppercase; letter-spacing:.8px;
+  margin-bottom:10px;
+  display:flex; align-items:center; gap:6px;
+}
+
+
+/* ── SECTION DIVIDERS ── */
+.section-bar { display:flex; align-items:center; gap:10px; margin:18px 0 10px; }
+.sec-line { flex:1; border:none; border-top:2px solid var(--border); }
+.section-tag { font-size:.71rem; font-weight:700; letter-spacing:1px;
+  text-transform:uppercase; padding:4px 13px; border-radius:20px; white-space:nowrap; }
+.tag-theory   { background:#e3f0fd; color:var(--primary); border:1px solid #bbdefb; }
+.tag-exercise { background:#fff3e0; color:var(--accent);  border:1px solid #ffe0b2; }
+.tag-answer   { background:#e8f5e9; color:var(--green);   border:1px solid #c8e6c9; }
+
+/* ── ZONE BOXES ── */
+.exercise-zone {
+  background:#fffdf8; border:1.5px solid #ffe0b2;
+  border-radius:10px; padding:16px 18px; margin-bottom:4px;
+}
+.answer-zone {
+  background:#f1faf2; border:1.5px solid #c8e6c9;
+  border-radius:10px; padding:16px 18px;
+}
+
 </style>
 </head>
 <body>
@@ -422,6 +485,7 @@ footer{text-align:center;font-size:.73rem;color:var(--muted);padding:18px;border
       <div class="sb-meta" id="sb-meta">–</div>
     </div>
     <div class="sb-clock" id="sb-clock">00:00</div>
+    <button onclick="APP.exitConfirm()" style="background:rgba(198,40,40,.1);border:1.5px solid rgba(198,40,40,.3);color:#c62828;font-size:.78rem;font-weight:600;padding:5px 12px;border-radius:6px;cursor:pointer;font-family:var(--sans);white-space:nowrap;" title="Thoát về trang chủ">✕ Thoát</button>
   </div>
 
   <div id="exercise-area" class="hidden">
@@ -482,7 +546,640 @@ footer{text-align:center;font-size:.73rem;color:var(--muted);padding:18px;border
 <script src="exercises/ch5.js"></script>
 <script src="exercises/ch6.js"></script>
 
-<!-- 4. Engine (load sau cùng) -->
-<script src="engine.js"></script>
+<!-- ENGINE (inline) -->
+<script>
+// ═══════════════════════════════════════════════════════
+//  engine.js – Logic chính, Admin, Timer, GAS
+//  KHÔNG SỬA FILE NÀY
+// ═══════════════════════════════════════════════════════
+
+// ── Helpers ──
+function makeRNG(seed) {
+  let s = Math.abs(seed * 1664525 + 1013904223) & 0x7fffffff;
+  return () => { s = (s*1664525+1013904223) & 0x7fffffff; return s/0x7fffffff; };
+}
+let _tt;
+function toast(msg, dur=3000) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(_tt); _tt = setTimeout(() => el.classList.remove('show'), dur);
+}
+function loading(show) {
+  document.getElementById('loading-overlay').classList.toggle('show', show);
+}
+
+// ── Timer ──
+const TIMER = {
+  t:0, iv:null,
+  start() {
+    this.t = Date.now(); clearInterval(this.iv);
+    this.iv = setInterval(() => {
+      const s = Math.floor((Date.now()-this.t)/1000);
+      const str = `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+      document.getElementById('timer-badge').textContent = str;
+      document.getElementById('sb-clock').textContent = str;
+    }, 1000);
+  },
+  elapsed() {
+    const s = Math.floor((Date.now()-this.t)/1000);
+    return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+  }
+};
+
+// ════════════════════════════════════════════════════════
+//  CONFIG – localStorage
+// ════════════════════════════════════════════════════════
+const CFG_KEY = 'chd_config';
+const DEFAULT_CFG = {
+  gasUrl:      '',
+  teacher:     'TS. Phạm Việt Anh · Bộ môn Địa Kĩ Thuật · ĐHXD Hà Nội',
+  adminPw:     'admin123',
+  showFeedback: false,   // ← mặc định TẮT đúng/sai real-time
+  showScore:    true,    // ← mặc định HIỆN điểm sau nộp
+  classes: [
+    { id:'68XDC1', name:'Lớp 68XDC1' },
+    { id:'68XDC2', name:'Lớp 68XDC2' },
+  ],
+  schedule: {
+    ch3: { open:null, close:null, minPct:80, active:true  },
+    ch4: { open:null, close:null, minPct:80, active:false },
+    ch5: { open:null, close:null, minPct:80, active:false },
+    ch6: { open:null, close:null, minPct:80, active:false },
+  }
+};
+
+function loadCfg() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CFG_KEY));
+    // Merge để không mất key mới thêm vào DEFAULT
+    return saved ? { ...DEFAULT_CFG, ...saved,
+      schedule: { ...DEFAULT_CFG.schedule, ...(saved.schedule||{}) }
+    } : DEFAULT_CFG;
+  } catch { return DEFAULT_CFG; }
+}
+function saveCfg(cfg) { localStorage.setItem(CFG_KEY, JSON.stringify(cfg)); }
+
+// Áp dụng feedback setting lên body
+function applyFeedback() {
+  const cfg = loadCfg();
+  document.body.classList.toggle('no-feedback', !cfg.showFeedback);
+}
+
+// ════════════════════════════════════════════════════════
+//  GAS – fire & forget (giống đồ án cũ)
+// ════════════════════════════════════════════════════════
+function gasSend(payload) {
+  const cfg = loadCfg();
+  if (!cfg.gasUrl) return;
+  const params = new URLSearchParams({
+    action:    'submit',
+    name:      payload.name      || '',
+    mssv:      payload.mssv      || '',
+    stt:       payload.stt       || '',
+    classId:   payload.classId   || '',
+    chapterId: payload.chapterId || '',
+    score:     payload.score     || 0,
+    correct:   payload.correct   || 0,
+    wrong:     payload.wrong     || 0,
+    duration:  payload.duration  || '',
+    answers:   payload.answers   || '',
+  });
+  fetch(cfg.gasUrl + '?' + params.toString(), {
+    method: 'GET', mode: 'no-cors'
+  }).catch(() => {});
+}
+
+// ════════════════════════════════════════════════════════
+//  ADMIN CONTROLLER
+// ════════════════════════════════════════════════════════
+const ADMIN = {
+  loggedIn: false,
+
+  open() {
+    document.getElementById('admin-overlay').classList.add('show');
+    if (this.loggedIn) this.showDashboard();
+    else {
+      document.getElementById('admin-login').classList.remove('hidden');
+      document.getElementById('admin-dashboard').classList.add('hidden');
+      document.getElementById('admin-pw').value = '';
+      document.getElementById('admin-login-err').classList.add('hidden');
+      setTimeout(() => document.getElementById('admin-pw').focus(), 100);
+    }
+  },
+
+  close() { document.getElementById('admin-overlay').classList.remove('show'); },
+
+  login() {
+    const pw  = document.getElementById('admin-pw').value;
+    const cfg = loadCfg();
+    if (pw !== cfg.adminPw) {
+      const err = document.getElementById('admin-login-err');
+      err.textContent = '❌ Mật khẩu không đúng.';
+      err.classList.remove('hidden'); return;
+    }
+    this.loggedIn = true;
+    this.showDashboard();
+  },
+
+  showDashboard() {
+    document.getElementById('admin-login').classList.add('hidden');
+    document.getElementById('admin-dashboard').classList.remove('hidden');
+    this.renderSchedule();
+    this.renderClasses();
+    this.renderSettingsForm();
+  },
+
+  switchTab(name, btn) {
+    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.admin-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('pane-' + name).classList.add('active');
+  },
+
+  // ── SCHEDULE ──
+  renderSchedule() {
+    const cfg = loadCfg();
+    document.getElementById('schedule-tbody').innerHTML = CHAPTERS_DEF.map(ch => {
+      const s = cfg.schedule[ch.id] || DEFAULT_CFG.schedule[ch.id] || { minPct:80, active:false };
+      return `<tr>
+        <td><strong>${ch.icon} ${ch.name}</strong><br>
+          <span style="font-size:.74rem;color:var(--muted)">${ch.desc}</span></td>
+        <td><input type="datetime-local" id="sch-open-${ch.id}"  value="${s.open||''}" /></td>
+        <td><input type="datetime-local" id="sch-close-${ch.id}" value="${s.close||''}" /></td>
+        <td><input type="number" class="min-pct-input" id="sch-pct-${ch.id}" value="${s.minPct||80}" min="0" max="100" />%</td>
+        <td><label class="toggle-switch">
+          <input type="checkbox" id="sch-active-${ch.id}" ${s.active?'checked':''} />
+          <span class="toggle-slider"></span>
+        </label></td>
+      </tr>`;
+    }).join('');
+  },
+
+  saveSchedule() {
+    const cfg = loadCfg();
+    CHAPTERS_DEF.forEach(ch => {
+      cfg.schedule[ch.id] = {
+        open:   document.getElementById(`sch-open-${ch.id}`)?.value  || null,
+        close:  document.getElementById(`sch-close-${ch.id}`)?.value || null,
+        minPct: parseInt(document.getElementById(`sch-pct-${ch.id}`)?.value) || 80,
+        active: document.getElementById(`sch-active-${ch.id}`)?.checked || false,
+      };
+    });
+    saveCfg(cfg);
+    if (APP.student) APP.renderTabs();
+    document.getElementById('schedule-msg').innerHTML = '<div class="succ-box">✅ Đã lưu lịch!</div>';
+    setTimeout(() => document.getElementById('schedule-msg').innerHTML = '', 2200);
+    toast('✅ Đã lưu lịch bài tập!');
+  },
+
+  resetSchedule() {
+    if (!confirm('Reset lịch về mặc định?')) return;
+    const cfg = loadCfg();
+    cfg.schedule = { ...DEFAULT_CFG.schedule };
+    saveCfg(cfg); this.renderSchedule();
+    toast('↺ Đã reset lịch!');
+  },
+
+  // ── CLASSES ──
+  renderClasses() {
+    const cfg = loadCfg();
+    document.getElementById('class-list').innerHTML = (cfg.classes||[]).map((c,i) =>
+      `<li class="class-item">
+        <span class="class-badge">${String(i+1).padStart(2,'0')}</span>
+        <input type="text" id="cls-id-${i}"   value="${c.id}"   placeholder="Mã lớp (VD: 68XDC1)" />
+        <input type="text" id="cls-name-${i}" value="${c.name}" placeholder="Tên lớp" />
+        <button class="btn btn-danger btn-sm" onclick="ADMIN.removeClass(${i})">✕</button>
+      </li>`
+    ).join('');
+  },
+
+  addClass() {
+    const cfg = loadCfg(); cfg.classes.push({id:'',name:''}); saveCfg(cfg); this.renderClasses();
+  },
+
+  removeClass(i) {
+    const cfg = loadCfg(); cfg.classes.splice(i,1); saveCfg(cfg); this.renderClasses();
+  },
+
+  saveClasses() {
+    const cfg = loadCfg();
+    cfg.classes = Array.from({length: cfg.classes.length}, (_,i) => ({
+      id:   document.getElementById(`cls-id-${i}`)?.value.trim()   || '',
+      name: document.getElementById(`cls-name-${i}`)?.value.trim() || '',
+    })).filter(c => c.id);
+    saveCfg(cfg); APP.populateClasses();
+    document.getElementById('classes-msg').innerHTML = '<div class="succ-box">✅ Đã lưu danh sách lớp!</div>';
+    setTimeout(() => document.getElementById('classes-msg').innerHTML = '', 2200);
+    toast('✅ Đã lưu danh sách lớp!');
+  },
+
+  // ── SETTINGS ──
+  renderSettingsForm() {
+    const cfg = loadCfg();
+    document.getElementById('setting-gas-url').value  = cfg.gasUrl  || '';
+    document.getElementById('setting-teacher').value  = cfg.teacher || '';
+    document.getElementById('setting-new-pw').value   = '';
+    document.getElementById('opt-feedback').checked   = cfg.showFeedback !== false;
+    document.getElementById('opt-show-score').checked = cfg.showScore !== false;
+  },
+
+  saveSettings() {
+    const cfg = loadCfg();
+    cfg.gasUrl      = document.getElementById('setting-gas-url').value.trim();
+    cfg.teacher     = document.getElementById('setting-teacher').value.trim();
+    cfg.showFeedback= document.getElementById('opt-feedback').checked;
+    cfg.showScore   = document.getElementById('opt-show-score').checked;
+    const newPw = document.getElementById('setting-new-pw').value.trim();
+    if (newPw) cfg.adminPw = newPw;
+    saveCfg(cfg);
+    if (cfg.teacher) document.getElementById('site-sub').textContent = cfg.teacher;
+    applyFeedback();
+    document.getElementById('settings-msg').innerHTML = '<div class="succ-box">✅ Đã lưu cài đặt!</div>';
+    setTimeout(() => document.getElementById('settings-msg').innerHTML = '', 2200);
+    toast('✅ Đã lưu cài đặt!');
+  },
+};
+
+
+// ════════════════════════════════════════════════════════
+//  APP CONTROLLER
+// ════════════════════════════════════════════════════════
+const APP = {
+  student:   null,
+  exData:    {},
+  answers:   {},
+  checked:   {},
+  currentCh: null,
+  minPct:    80,
+
+  init() {
+    const cfg = loadCfg();
+    if (cfg.teacher) document.getElementById('site-sub').textContent = cfg.teacher;
+    applyFeedback();
+    this.populateClasses();
+    this.renderTabs();
+  },
+
+  populateClasses() {
+    const cfg = loadCfg();
+    const sel = document.getElementById('f-class');
+    sel.innerHTML = '<option value="">-- Chọn lớp của bạn --</option>';
+    (cfg.classes||[]).forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c.id; opt.textContent = c.name || c.id;
+      sel.appendChild(opt);
+    });
+  },
+
+  chapterStatus(chId) {
+    // Ưu tiên 1: window.CHAPTER_SCHEDULE từ config.js (push GitHub → tất cả SV thấy)
+    // Ưu tiên 2: localStorage (Admin Panel – chỉ máy admin)
+    let s;
+    if (window.CHAPTER_SCHEDULE && window.CHAPTER_SCHEDULE[chId] !== undefined) {
+      s = window.CHAPTER_SCHEDULE[chId];
+    } else {
+      const cfg = loadCfg();
+      s = cfg.schedule?.[chId];
+    }
+    if (!s || !s.active) return 'locked';
+    const now   = Date.now();
+    const open  = s.open  ? new Date(s.open).getTime()  : null;
+    const close = s.close ? new Date(s.close).getTime() : null;
+    if (open  && now < open)  return 'soon';
+    if (close && now > close) return 'closed';
+    return 'open';
+  },
+
+  renderTabs() {
+    const logged = !!this.student;
+    const icons  = { open:'✅', soon:'🕐', closed:'⛔', locked:'🔒' };
+    document.getElementById('chapter-tabs').innerHTML = CHAPTERS_DEF.map(ch => {
+      const st = logged ? this.chapterStatus(ch.id) : 'locked';
+      return `<button class="ch-tab ${st!=='open'?'locked':''} ${this.currentCh===ch.id?'active':''}"
+        id="tab-${ch.id}" onclick="APP.clickTab('${ch.id}')">
+        <span>${ch.icon}</span>${ch.name}
+        ${logged ? `<span style="font-size:.62rem;opacity:.8;">${icons[st]}</span>` : ''}
+      </button>`;
+    }).join('');
+  },
+
+  clickTab(chId) {
+    if (!this.student) { toast('⚠️ Nhập thông tin trước.'); return; }
+    const st = this.chapterStatus(chId);
+    const msgs = { locked:'🔒 Chương chưa được mở.', soon:'🕐 Chưa đến giờ mở.', closed:'⛔ Đã hết hạn nộp.' };
+    if (st !== 'open') { toast(msgs[st]); return; }
+    this.switchChapter(chId);
+  },
+
+  start() {
+    const name    = document.getElementById('f-name').value.trim();
+    const mssv    = document.getElementById('f-mssv').value.trim();
+    const stt     = parseInt(document.getElementById('f-stt').value);
+    const classId = document.getElementById('f-class').value;
+    const errEl   = document.getElementById('login-err');
+    errEl.classList.add('hidden');
+
+    if (!name || !mssv || !stt || !classId) {
+      errEl.textContent = '⚠️ Vui lòng điền đầy đủ tất cả thông tin.';
+      errEl.classList.remove('hidden'); return;
+    }
+
+    this.student = { name, mssv, stt, classId };
+
+    // Sinh số liệu
+    Object.entries(EXERCISES).forEach(([id, ex], i) => {
+      this.exData[id] = ex.genData(makeRNG(stt * 997 + i * 31 + 7));
+    });
+
+    // UI
+    document.getElementById('sb-av').textContent   = name.slice(-1).toUpperCase();
+    document.getElementById('sb-name').textContent = name;
+    document.getElementById('sb-meta').textContent = `MSSV: ${mssv} · STT: ${stt} · ${classId}`;
+    document.getElementById('student-bar').style.display   = 'flex';
+    document.getElementById('timer-badge').style.display   = 'block';
+    document.getElementById('card-login').style.display    = 'none';
+    document.getElementById('exercise-area').classList.remove('hidden');
+    document.getElementById('submit-section').style.display= 'block';
+
+    this.renderTabs();
+    TIMER.start();
+
+    const first = CHAPTERS_DEF.find(c => this.chapterStatus(c.id) === 'open');
+    if (first) this.switchChapter(first.id);
+    else {
+      document.getElementById('ch-title').textContent = 'Chưa có chương nào được mở.';
+      document.getElementById('ch-desc').textContent  = 'Vui lòng chờ giảng viên mở bài.';
+    }
+    toast('✅ Đề bài đã sẵn sàng!');
+  },
+
+  switchChapter(chId) {
+    this.currentCh = chId;
+    document.querySelectorAll('.ch-tab').forEach(t => t.classList.remove('active'));
+    const tab = document.getElementById('tab-' + chId);
+    if (tab) tab.classList.add('active');
+
+    const ch  = CHAPTERS_DEF.find(c => c.id === chId);
+    const cfg = loadCfg();
+    const sch = cfg.schedule?.[chId] || {};
+    this.minPct = sch.minPct || 80;
+    document.getElementById('min-pct-lbl').textContent = this.minPct + '%';
+    document.getElementById('ch-icon').textContent = ch.icon;
+    document.getElementById('ch-title').textContent = `${ch.name} – ${ch.desc}`;
+
+    const st = this.chapterStatus(chId);
+    const badgeEl = document.getElementById('ch-badge');
+    const labels  = { open:'✅ Đang mở', soon:'🕐 Chưa mở', closed:'⛔ Đã đóng', locked:'🔒 Chưa mở' };
+    badgeEl.textContent = labels[st]; badgeEl.className = 'ch-badge ' + st;
+
+    if (st === 'open' && sch.close) {
+      document.getElementById('ch-desc').textContent = `Hạn nộp: ${new Date(sch.close).toLocaleString('vi-VN')}`;
+    } else {
+      document.getElementById('ch-desc').textContent = ch.desc;
+    }
+
+    const exIds = Object.keys(EXERCISES).filter(id => EXERCISES[id].chapterId === chId);
+    this.renderExercises(exIds, st);
+  },
+
+  renderExercises(exIds, status) {
+    const cont = document.getElementById('problems-container');
+    cont.innerHTML = '';
+
+    if (status !== 'open') {
+      const m = {
+        soon:   { icon:'🕐', title:'Chưa đến giờ mở',   sub:'Vui lòng quay lại đúng thời gian được thông báo.' },
+        closed: { icon:'⛔', title:'Đã hết hạn nộp bài', sub:'Bạn không thể làm bài sau thời hạn.' },
+        locked: { icon:'🔒', title:'Chưa được mở',       sub:'Giảng viên sẽ mở sau khi dạy xong nội dung.' },
+      }[status] || { icon:'🔒', title:'Chưa mở', sub:'' };
+      cont.innerHTML = `<div class="locked-msg"><span class="lock-icon">${m.icon}</span><h4>${m.title}</h4><p>${m.sub}</p></div>`;
+      document.getElementById('progress-wrap').style.display = 'none';
+      return;
+    }
+
+    if (!exIds.length) {
+      cont.innerHTML = '<div class="locked-msg"><span class="lock-icon">📭</span><h4>Chưa có bài tập</h4><p>Bài tập sẽ được thêm sớm.</p></div>';
+      document.getElementById('progress-wrap').style.display = 'none';
+      return;
+    }
+
+    document.getElementById('progress-wrap').style.display = 'block';
+    exIds.forEach((id, i) => cont.appendChild(this.buildCard(id, i)));
+    this.updateProgress();
+  },
+
+  buildCard(exId, idx) {
+    const ex   = EXERCISES[exId];
+    const data = this.exData[exId];
+    const card = document.createElement('div');
+    card.className = 'prob-card';
+    card.style.animationDelay = (idx * 0.07) + 's';
+
+    let html = `
+      <div class="prob-head">
+        <span class="prob-num">BÀI ${idx+1}</span>
+        <span class="prob-title">${ex.title}</span>
+        <span class="prob-type">${ex.type==='guided'?'📖 LT + BT':'✏️ Áp dụng'}</span>
+      </div>
+      <div class="prob-body">`;
+
+    // theoryHTML: SVG/HTML tự vẽ (ưu tiên)
+    if (ex.theoryHTML) {
+      html += ex.theoryHTML;
+    // theory.url: ảnh Google Drive
+    } else if (ex.theory?.url) {
+      html += `<div class="theory-block">
+        <div class="theory-label">📖 Nhắc lại lý thuyết</div>
+        <img src="${ex.theory.url}" alt="Lý thuyết"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="img-error" style="display:none;">🖼️ Chưa có ảnh – dán link Drive vào <code>theory.url</code></div>
+        <p class="theory-caption">${ex.theory.caption||''}</p>
+      </div>`;
+    }
+
+    if (ex.hint) html += `<div class="hint-box">${ex.hint}</div>`;
+
+    if (ex.dataTable) {
+      const rows = ex.dataTable(data);
+      html += `<table class="data-table">
+        <thead><tr><th>Thông số</th><th>Kí hiệu</th><th>Giá trị</th><th>Đơn vị</th></tr></thead>
+        <tbody>${rows.map(r=>`<tr><td>${r.param}</td><td class="dt-sym">${r.sym}</td><td class="dt-val">${r.val}</td><td class="dt-unit">${r.unit}</td></tr>`).join('')}</tbody>
+      </table>`;
+    }
+
+    html += `<p class="prob-stmt">${ex.statement(data)}</p>`;
+
+    ex.questions.forEach(q => {
+      const key = `${exId}_${q.id}`;
+      if (q.type === 'fill') {
+        html += `<div class="ans-row">
+          <span class="ans-label">${q.label}</span>
+          <input class="ans-input" type="number" step="any" id="inp-${key}"
+            placeholder="..." oninput="APP.checkFill('${exId}','${q.id}')" />
+          <span class="ans-unit">${q.unit||''}</span>
+          <span class="s-chip" id="chip-${key}"></span>
+        </div>`;
+      } else if (q.type === 'mcq') {
+        const choices = q.choices(data);
+        html += `<div class="mcq-wrap">
+          <div class="mcq-label">${q.label}</div>
+          <div class="mcq-opts">${choices.map((c,ci)=>
+            `<div class="mcq-opt" id="opt-${key}-${ci}"
+              onclick="APP.pickMCQ('${exId}','${q.id}',${ci})">
+              <span class="mcq-key">${String.fromCharCode(65+ci)}</span>
+              <span>${c.replace(/^[A-D][.)]\s*/,'')}</span>
+            </div>`).join('')}
+          </div>
+          <span class="s-chip" id="chip-${key}" style="margin-top:6px;display:inline-flex;"></span>
+        </div>`;
+      }
+    });
+
+    html += '</div>';
+    card.innerHTML = html;
+    return card;
+  },
+
+  checkFill(exId, qId) {
+    const ex   = EXERCISES[exId];
+    const q    = ex.questions.find(x => x.id === qId);
+    const data = this.exData[exId];
+    const key  = `${exId}_${qId}`;
+    const val  = parseFloat(document.getElementById('inp-'+key).value);
+    const inp  = document.getElementById('inp-'+key);
+    const chip = document.getElementById('chip-'+key);
+
+    if (isNaN(val)) {
+      chip.className = 's-chip'; chip.textContent = '';
+      inp.className = 'ans-input';
+      this.answers[key] = null; this.updateProgress(); return;
+    }
+
+    const ok = Math.abs(val - q.answer(data)) <= q.tol;
+    this.answers[key] = val;
+    this.checked[key] = ok;
+    inp.className    = 'ans-input ' + (ok ? 'correct' : 'wrong');
+    chip.textContent = ok ? '✓ Đúng' : '✗ Kiểm tra lại';
+    chip.className   = 's-chip show ' + (ok ? 'ok' : 'err');
+    this.updateProgress();
+  },
+
+  pickMCQ(exId, qId, ci) {
+    const ex   = EXERCISES[exId];
+    const q    = ex.questions.find(x => x.id === qId);
+    const data = this.exData[exId];
+    const key  = `${exId}_${qId}`;
+    const ok   = ci === q.correctIndex(data);
+    this.answers[key] = ci;
+    this.checked[key] = ok;
+
+    document.querySelectorAll(`[id^="opt-${key}-"]`).forEach((el,i) => {
+      el.className = 'mcq-opt';
+      if (i === ci) {
+        el.classList.add('chosen');
+        el.classList.add(ok ? 'correct' : 'wrong');
+      }
+      if (!ok && i === q.correctIndex(data)) el.classList.add('correct');
+    });
+
+    const chip = document.getElementById('chip-'+key);
+    chip.textContent = ok ? '✓ Đúng' : '✗ Sai';
+    chip.className   = 's-chip show ' + (ok ? 'ok' : 'err');
+    this.updateProgress();
+  },
+
+  updateProgress() {
+    const exIds = Object.keys(EXERCISES).filter(id => EXERCISES[id].chapterId === this.currentCh);
+    let total=0, answered=0;
+    exIds.forEach(exId => {
+      EXERCISES[exId].questions.forEach(q => {
+        total++;
+        if (this.answers[`${exId}_${q.id}`] != null) answered++;
+      });
+    });
+    const pct = total ? Math.round(answered/total*100) : 0;
+    const fill = document.getElementById('prog-fill');
+    fill.style.width = pct + '%';
+    fill.className = 'progress-fill' + (pct >= 100 ? ' done' : '');
+    document.getElementById('prog-text').textContent = `${answered}/${total} câu (${pct}%)`;
+
+    const btn  = document.getElementById('btn-submit');
+    const note = document.getElementById('submit-note');
+    btn.disabled = pct < this.minPct;
+    note.textContent = pct >= this.minPct
+      ? `✅ Đạt ${pct}% – bạn có thể nộp bài.`
+      : `Cần hoàn thành ít nhất ${this.minPct}% để nộp bài (hiện tại: ${pct}%).`;
+  },
+
+  async submit() {
+    if (!this.student) return;
+
+    // ── Chống nộp 2 lần: kiểm tra sessionStorage ──────────────────
+    const submitKey = `submitted_${this.student.mssv}_${this.currentCh}`;
+    if (sessionStorage.getItem(submitKey)) {
+      toast('⚠️ Bạn đã nộp bài chương này rồi!', 4000);
+      return;
+    }
+
+    const exIds = Object.keys(EXERCISES).filter(id => EXERCISES[id].chapterId === this.currentCh);
+    let total=0, correct=0;
+    exIds.forEach(exId => {
+      EXERCISES[exId].questions.forEach(q => {
+        total++;
+        if (this.checked[`${exId}_${q.id}`] === true) correct++;
+      });
+    });
+    const wrong = total - correct;
+    const score = total ? Math.round(correct/total*100) : 0;
+    const dur   = TIMER.elapsed();
+
+    // Khóa nút ngay lập tức (tránh double-click)
+    const btnSubmit = document.getElementById('btn-submit');
+    const noteEl    = document.getElementById('submit-note');
+    btnSubmit.disabled = true;
+    if (noteEl) noteEl.textContent = '⏳ Đang ghi kết quả...';
+
+    // Score panel (ẩn/hiện theo setting)
+    const cfg = loadCfg();
+    if (cfg.showScore !== false) {
+      document.getElementById('sp-score').textContent  = score + '%';
+      document.getElementById('sp-score').className    = 'big-score ' + (score >= this.minPct ? 'pass' : 'fail');
+      document.getElementById('sp-sub').textContent    = `${correct}/${total} câu đúng`;
+      document.getElementById('sp-correct').textContent = correct;
+      document.getElementById('sp-wrong').textContent   = wrong;
+      document.getElementById('sp-time').textContent    = dur;
+      document.getElementById('score-panel').style.display = 'block';
+      document.getElementById('score-panel').scrollIntoView({ behavior:'smooth' });
+    }
+
+    // Gửi qua Worker (await để biết thành công/thất bại)
+    await gasSend({
+      name:      this.student.name,
+      mssv:      this.student.mssv,
+      stt:       this.student.stt,
+      classId:   this.student.classId,
+      chapterId: this.currentCh,
+      score, total, correct,
+      duration:  dur,
+    });
+
+    // Đánh dấu đã nộp trong session (mất khi đóng tab)
+    sessionStorage.setItem(submitKey, '1');
+    if (noteEl) noteEl.textContent = '✅ Đã nộp bài thành công.';
+    toast(`🎉 Nộp thành công! Điểm: ${score}%`, 4000);
+  }
+};
+
+// Cảnh báo thoát
+window.addEventListener('beforeunload', e => {
+  if (APP.student && !document.getElementById('btn-submit').disabled) {
+    e.preventDefault(); e.returnValue = '';
+  }
+});
+
+// KHỞI ĐỘNG
+window.addEventListener('load', () => APP.init());
+
+</script>
 </body>
 </html>
