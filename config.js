@@ -9,7 +9,7 @@ const CHAPTERS_DEF = [
 window.CHAPTER_SCHEDULE = {
   ch3: { active: true  },
   ch4: { active: true  },
-  ch5: { active: false },
-  ch6: { active: false },
-  ch7: { active: false },
+  ch5: { active: true },
+  ch6: { active: true },
+  ch7: { active: true },
 };
