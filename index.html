@@ -150,7 +150,7 @@ main{max-width:980px;margin:0 auto;padding:26px 16px 80px}
 
 /* ── FILL ANSWER ── */
 .ans-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:10px;padding:10px 13px;background:var(--bg);border-radius:7px;border:1px solid var(--border)}
-.ans-label{font-size:.86rem;font-weight:600;flex:1;min-width:160px;color:#1a3a6c;font-family:var(--sans)}
+.ans-label{font-size:.85rem;font-weight:600;flex:1;min-width:160px}
 .ans-input{width:120px;padding:7px 11px;border:2px solid var(--border);border-radius:6px;font-family:var(--mono);font-size:.94rem;font-weight:600;color:var(--primary);background:#fff;outline:none;transition:border-color .18s,box-shadow .18s}
 .ans-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(245,124,0,.11)}
 .ans-input.correct{border-color:var(--green);background:var(--green-lt)}
@@ -535,22 +535,6 @@ footer{text-align:center;font-size:.73rem;color:var(--muted);padding:18px;border
   const EXERCISES = {};
   function r2(v){return Math.round(v*100)/100}
   function r3(v){return Math.round(v*1000)/1000}
-
-  // Tự động render ký hiệu trong label: c_u → c<sub>u</sub>, σ'_v → σ'<sub>v</sub>
-  function fmtLabel(s) {
-    if (!s) return s;
-    return s
-      // Ký hiệu có dấu nháy: σ'_v, σ'_bt
-      .replace(/σ'_([a-zA-Z0-9]+)/g, "σ'<sub>$1</sub>")
-      // Ký hiệu thường: c_u, N_k, p_gl, E_0, σ_v, γ_bh, h_m
-      .replace(/([a-zA-Zα-ωΑ-Ω_γσφμ])_([a-zA-Z0-9]+)/g, "$1<sub>$2</sub>")
-      // Lũy thừa: H^2, r^2
-      .replace(/\^([0-9]+)/g, "<sup>$1</sup>")
-      // Dấu nhân
-      .replace(/·/g, "·")
-      // ₀ thường gặp: N_60 → N<sub>60</sub> đã xử lý ở trên
-      ;
-  }
 </script>
 
 <!-- 2. Load config chương -->
@@ -1044,7 +1028,7 @@ const APP = {
       const key = `${exId}_${q.id}`;
       if (q.type === 'fill') {
         html += `<div class="ans-row">
-          <span class="ans-label">${fmtLabel(q.label)}</span>
+          <span class="ans-label">${q.label}</span>
           <input class="ans-input" type="number" step="any" id="inp-${key}"
             placeholder="..." oninput="APP.checkFill('${exId}','${q.id}')" />
           <span class="ans-unit">${q.unit||''}</span>
@@ -1053,7 +1037,7 @@ const APP = {
       } else if (q.type === 'mcq') {
         const choices = q.choices(data);
         html += `<div class="mcq-wrap">
-          <div class="mcq-label">${fmtLabel(q.label)}</div>
+          <div class="mcq-label">${q.label}</div>
           <div class="mcq-opts">${choices.map((c,ci)=>
             `<div class="mcq-opt" id="opt-${key}-${ci}"
               onclick="APP.pickMCQ('${exId}','${q.id}',${ci})">
