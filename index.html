@@ -175,10 +175,10 @@ main{max-width:980px;margin:0 auto;padding:26px 16px 80px}
 .s-chip.err{background:var(--red-lt);color:var(--red);border:1px solid #ffcdd2}
 /* Khi tắt feedback: ẩn chip đúng/sai, bỏ màu ô input */
 body.no-feedback .s-chip { display: none !important; }
-body.no-feedback .mcq-opt.chosen    { border-color: var(--primary) !important; background: var(--primary-lt) !important; color: var(--text) !important; font-weight: 600; }
+body.no-feedback .mcq-opt.chosen    { border-color: var(--primary) !important; background: var(--primary-lt) !important; color: var(--text) !important; font-weight: 700; }
 body.no-feedback .ans-input.correct { border-color: var(--border); background: #fff; }
 body.no-feedback .ans-input.wrong   { border-color: var(--border); background: #fff; }
-body.no-feedback .mcq-opt.correct   { border-color: var(--border) !important; background: #fff !important; color: var(--text) !important; font-weight: 400 !important; }
+body.no-feedback .mcq-opt.correct:not(.chosen)   { border-color: var(--border) !important; background: #fff !important; color: var(--text) !important; font-weight: 400 !important; }
 body.no-feedback .mcq-opt.wrong     { border-color: var(--border) !important; background: #fff !important; color: var(--text) !important; }
 
 /* ── SCORE ── */
@@ -1088,13 +1088,19 @@ const APP = {
     this.answers[key] = ci;
     this.checked[key] = ok;
 
-    document.querySelectorAll(`[id^="opt-${key}-"]`).forEach((el,i) => {
+        document.querySelectorAll(`[id^="opt-${key}-"]`).forEach((el,i) => {
       el.className = 'mcq-opt';
       if (i === ci) {
         el.classList.add('chosen');
-        el.classList.add(ok ? 'correct' : 'wrong');
+        if (document.body.classList.contains('no-feedback')) {
+          // no-feedback: chỉ hiện màu xanh đã chọn, không lộ đúng/sai
+        } else {
+          el.classList.add(ok ? 'correct' : 'wrong');
+        }
       }
-      if (!ok && i === q.correctIndex(data)) el.classList.add('correct');
+      if (!document.body.classList.contains('no-feedback') && !ok && i === q.correctIndex(data)) {
+        el.classList.add('correct');
+      }
     });
 
     const chip = document.getElementById('chip-'+key);
