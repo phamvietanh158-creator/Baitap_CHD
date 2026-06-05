@@ -163,7 +163,7 @@ main{max-width:980px;margin:0 auto;padding:26px 16px 80px}
 .mcq-opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
 .mcq-opt{padding:9px 13px;border:1.5px solid var(--border);border-radius:7px;cursor:pointer;font-size:.86rem;background:#fff;transition:all .16s;display:flex;align-items:flex-start;gap:8px}
 .mcq-opt:hover{border-color:var(--primary);background:var(--primary-lt)}
-.mcq-opt.chosen{border-color:var(--primary);background:var(--primary-lt);font-weight:600}
+.mcq-opt.chosen{border-color:var(--primary)!important;background:#dbeafe!important;font-weight:700;color:#1e40af!important}
 .mcq-opt.correct{border-color:var(--green);background:var(--green-lt);color:var(--green);font-weight:700}
 .mcq-opt.wrong{border-color:var(--red);background:var(--red-lt);color:var(--red)}
 .mcq-key{font-family:var(--mono);font-size:.73rem;font-weight:700;background:rgba(21,101,192,.1);color:var(--primary);padding:1px 6px;border-radius:3px;flex-shrink:0;margin-top:1px}
@@ -175,7 +175,7 @@ main{max-width:980px;margin:0 auto;padding:26px 16px 80px}
 .s-chip.err{background:var(--red-lt);color:var(--red);border:1px solid #ffcdd2}
 /* Khi tắt feedback: ẩn chip đúng/sai, bỏ màu ô input */
 body.no-feedback .s-chip { display: none !important; }
-body.no-feedback .mcq-opt.chosen    { border-color: var(--primary) !important; background: var(--primary-lt) !important; color: var(--text) !important; font-weight: 700; }
+body.no-feedback .mcq-opt.chosen    { border-color: var(--primary) !important; background: #dbeafe !important; color: #1e40af !important; font-weight: 700 !important; }
 body.no-feedback .ans-input.correct { border-color: var(--border); background: #fff; }
 body.no-feedback .ans-input.wrong   { border-color: var(--border); background: #fff; }
 body.no-feedback .mcq-opt.correct:not(.chosen)   { border-color: var(--border) !important; background: #fff !important; color: var(--text) !important; font-weight: 400 !important; }
@@ -1088,24 +1088,20 @@ const APP = {
     this.answers[key] = ci;
     this.checked[key] = ok;
 
-        document.querySelectorAll(`[id^="opt-${key}-"]`).forEach((el,i) => {
+    document.querySelectorAll(`[id^="opt-${key}-"]`).forEach((el,i) => {
       el.className = 'mcq-opt';
       if (i === ci) {
         el.classList.add('chosen');
-        if (document.body.classList.contains('no-feedback')) {
-          // no-feedback: chỉ hiện màu xanh đã chọn, không lộ đúng/sai
-        } else {
-          el.classList.add(ok ? 'correct' : 'wrong');
-        }
+        el.classList.add(ok ? 'correct' : 'wrong');
       }
-      if (!document.body.classList.contains('no-feedback') && !ok && i === q.correctIndex(data)) {
-        el.classList.add('correct');
-      }
+      if (!ok && i === q.correctIndex(data)) el.classList.add('correct');
     });
 
     const chip = document.getElementById('chip-'+key);
-    chip.textContent = ok ? '✓ Đúng' : '✗ Sai';
-    chip.className   = 's-chip show ' + (ok ? 'ok' : 'err');
+    if (chip) {
+      chip.textContent = ok ? '✓ Đúng' : '✗ Sai';
+      chip.className   = 's-chip show ' + (ok ? 'ok' : 'err');
+    }
     this.updateProgress();
   },
 
