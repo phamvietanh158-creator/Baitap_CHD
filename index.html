@@ -1020,6 +1020,7 @@ const APP = {
 
     // theoryHTML: SVG/HTML tự vẽ (ưu tiên)
     if (ex.theoryHTML) {
+      html += `<div style="font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--primary);margin-bottom:7px;display:flex;align-items:center;gap:5px">📖 Lý thuyết gợi ý</div>`;
       html += ex.theoryHTML;
     // theory.url: ảnh Google Drive
     } else if (ex.theory?.url) {
@@ -1042,6 +1043,7 @@ const APP = {
       </table>`;
     }
 
+   html += `<div style="font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:7px;margin-top:4px;display:flex;align-items:center;gap:5px">✏️ Bài tập áp dụng</div>`;
     html += `<p class="prob-stmt">${ex.statement(data)}</p>`;
 
     ex.questions.forEach(q => {
