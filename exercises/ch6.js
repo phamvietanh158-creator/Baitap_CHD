@@ -94,152 +94,165 @@ const BANG_HINH_DANG_HTML = `
   </table>
 </div>`;
 
-// SVG sơ đồ móng băng tổng quát
-// ── DEFS CHUNG ──────────────────────────────────────────────────
-const _D6 = `
-  <defs>
-    <marker id="a6-red"  markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,3.5 L0,7 Z" fill="#e53935"/></marker>
-    <marker id="a6-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,3.5 L0,7 Z" fill="#1565c0"/></marker>
-    <marker id="a6-org"  markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,3.5 L0,7 Z" fill="#e65100"/></marker>
-    <marker id="a6-grn"  markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,3.5 L0,7 Z" fill="#1b5e20"/></marker>
-    <marker id="a6-pur"  markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,3.5 L0,7 Z" fill="#7b1fa2"/></marker>
-    <marker id="a6-dn-o" markerWidth="7" markerHeight="10" refX="3.5" refY="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L3.5,10 L7,0 Z" fill="#e65100"/></marker>
-    <marker id="a6-dn-r" markerWidth="7" markerHeight="10" refX="3.5" refY="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L3.5,10 L7,0 Z" fill="#e53935"/></marker>
-    <marker id="a6-dn-g" markerWidth="7" markerHeight="10" refX="3.5" refY="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L3.5,10 L7,0 Z" fill="#1b5e20"/></marker>
-    <pattern id="h6-sand" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="#bcaaa4" stroke-width="1.5"/></pattern>
-    <pattern id="h6-clay" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="#a5d6a7" stroke-width="1.5"/></pattern>
-    <linearGradient id="g6-sand" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#efebe9"/><stop offset="100%" stop-color="#d7ccc8"/></linearGradient>
-    <linearGradient id="g6-wall" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#90a4ae"/><stop offset="100%" stop-color="#607d8b"/></linearGradient>
-    <linearGradient id="g6-found" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#607d8b"/><stop offset="100%" stop-color="#455a64"/></linearGradient>
-    <linearGradient id="g6-nền" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c8e6c9"/><stop offset="100%" stop-color="#a5d6a7"/></linearGradient>
-    <linearGradient id="g6-press" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e3f2fd"/><stop offset="100%" stop-color="#bbdefb"/></linearGradient>
-  </defs>`;
-
-// ─── SVG MÓNG BĂNG + TẢI + THÔNG SỐ ────────────────────────────
+// SVG sơ đồ móng băng tổng quát – nâng cấp
 const SVG_MONG_BANG = `
-<svg viewBox="0 0 440 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:440px;display:block;margin:8px auto;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.1)">
-  ${_D6}
-  <rect width="440" height="200" fill="#fafbff" rx="8"/>
-  <!-- Đất hông trái -->
-  <rect x="25" y="52" width="130" height="78" fill="url(#g6-sand)"/>
-  <rect x="25" y="52" width="130" height="78" fill="url(#h6-sand)" opacity="0.45"/>
-  <!-- Đất hông phải -->
-  <rect x="285" y="52" width="130" height="78" fill="url(#g6-sand)"/>
-  <rect x="285" y="52" width="130" height="78" fill="url(#h6-sand)" opacity="0.45"/>
+<svg viewBox="0 0 440 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:440px;display:block;margin:8px auto;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.1)">
+  <defs>
+    <marker id="mb-dn" markerWidth="7" markerHeight="7" refX="3.5" refY="7" orient="auto"><path d="M0,0 L3.5,7 L7,0 Z" fill="#c62828"/></marker>
+    <marker id="mb-dn2" markerWidth="7" markerHeight="7" refX="3.5" refY="7" orient="auto"><path d="M0,0 L3.5,7 L7,0 Z" fill="#e65100"/></marker>
+    <marker id="mb-r" markerWidth="7" markerHeight="7" refX="0" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#1565c0"/></marker>
+    <marker id="mb-l" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto-start-reverse"><path d="M0,0 L7,3.5 L0,7 Z" fill="#1565c0"/></marker>
+    <pattern id="mb-hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="10" stroke="#bcaaa4" stroke-width="1.5"/>
+    </pattern>
+    <linearGradient id="mb-soil" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#efebe9"/>
+      <stop offset="100%" stop-color="#d7ccc8"/>
+    </linearGradient>
+    <linearGradient id="mb-found" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#90a4ae"/>
+      <stop offset="100%" stop-color="#607d8b"/>
+    </linearGradient>
+    <linearGradient id="mb-nền" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c8e6c9"/>
+      <stop offset="100%" stop-color="#a5d6a7"/>
+    </linearGradient>
+  </defs>
+  <!-- Nền -->
+  <rect x="0" y="0" width="440" height="195" fill="#fafbff" rx="8"/>
+  <!-- Đất hông (texture) -->
+  <rect x="25" y="52" width="130" height="75" fill="url(#mb-soil)"/>
+  <rect x="25" y="52" width="130" height="75" fill="url(#mb-hatch)" opacity="0.45"/>
+  <rect x="285" y="52" width="130" height="75" fill="url(#mb-soil)"/>
+  <rect x="285" y="52" width="130" height="75" fill="url(#mb-hatch)" opacity="0.45"/>
   <!-- Đất nền dưới -->
-  <rect x="25" y="130" width="390" height="55" fill="url(#g6-nền)" stroke="#388e3c" stroke-width="1"/>
-  <text x="220" y="162" text-anchor="middle" font-size="11" fill="#1b5e20" font-weight="600">Đất nền: c, φ, γ</text>
+  <rect x="25" y="127" width="390" height="58" fill="url(#mb-nền)" rx="0 0 6 6"/>
+  <text x="220" y="163" text-anchor="middle" font-size="11" fill="#1b5e20" font-weight="600">Đất nền: c, φ, γ</text>
   <!-- Mặt đất tự nhiên -->
   <line x1="8" y1="52" x2="432" y2="52" stroke="#5d4037" stroke-width="2"/>
-  <line x1="8"  y1="52" x2="20"  y2="62" stroke="#5d4037" stroke-width="0.8"/>
-  <line x1="25" y1="52" x2="37"  y2="62" stroke="#5d4037" stroke-width="0.8"/>
-  <line x1="42" y1="52" x2="54"  y2="62" stroke="#5d4037" stroke-width="0.8"/>
-  <text x="310" y="46" font-size="9.5" fill="#5d4037" font-style="italic">Mặt đất tự nhiên</text>
-  <!-- Móng -->
-  <rect x="155" y="52" width="130" height="78" fill="url(#g6-found)" stroke="#37474f" stroke-width="2" rx="2"/>
-  <text x="220" y="92" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">MÓNG BĂNG</text>
+  <text x="340" y="46" font-size="9.5" fill="#5d4037" font-style="italic">Mặt đất tự nhiên</text>
+  <!-- Gạch chéo mặt đất -->
+  <line x1="8" y1="52" x2="20" y2="62" stroke="#5d4037" stroke-width="0.8"/>
+  <line x1="25" y1="52" x2="37" y2="62" stroke="#5d4037" stroke-width="0.8"/>
+  <line x1="42" y1="52" x2="54" y2="62" stroke="#5d4037" stroke-width="0.8"/>
+  <line x1="320" y1="52" x2="332" y2="62" stroke="#5d4037" stroke-width="0.8"/>
+  <line x1="348" y1="52" x2="360" y2="62" stroke="#5d4037" stroke-width="0.8"/>
+  <line x1="376" y1="52" x2="388" y2="62" stroke="#5d4037" stroke-width="0.8"/>
+  <!-- MÓNG -->
+  <rect x="155" y="52" width="130" height="75" fill="url(#mb-found)" stroke="#37474f" stroke-width="2" rx="2"/>
+  <text x="220" y="93" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">MÓNG BĂNG</text>
   <text x="220" y="108" text-anchor="middle" font-size="9" fill="#cfd8dc">b × l</text>
-  <!-- Tải P: từ trên xuống -->
-  <line x1="220" y1="18" x2="220" y2="50" stroke="#c62828" stroke-width="2.5" marker-end="url(#a6-dn-r)"/>
+  <!-- Tải P trên móng -->
+  <line x1="220" y1="18" x2="220" y2="50" stroke="#c62828" stroke-width="2.5" marker-end="url(#mb-dn)"/>
   <rect x="195" y="8" width="50" height="14" fill="#ffebee" rx="3" stroke="#ef9a9a" stroke-width="1"/>
   <text x="220" y="18" text-anchor="middle" font-size="10" fill="#c62828" font-weight="700">P (tải)</text>
-  <!-- q bên hông: từ trên xuống -->
-  <line x1="88" y1="22" x2="88" y2="50" stroke="#e65100" stroke-width="2" marker-end="url(#a6-dn-o)"/>
-  <rect x="55" y="12" width="68" height="14" fill="#fff3e0" rx="3" stroke="#ffb74d" stroke-width="1"/>
-  <text x="89" y="22" text-anchor="middle" font-size="9" fill="#e65100" font-weight="600">q = γ·h_m</text>
-  <!-- Kích thước h_m: từ trên xuống -->
-  <line x1="12" y1="52" x2="12" y2="130" stroke="#e53935" stroke-width="1.5" marker-end="url(#a6-dn-r)"/>
-  <line x1="8"  y1="52"  x2="16" y2="52"  stroke="#e53935" stroke-width="1.5"/>
-  <line x1="8"  y1="130" x2="16" y2="130" stroke="#e53935" stroke-width="1.5"/>
-  <rect x="0" y="86" width="28" height="14" fill="white" rx="3" opacity="0.9"/>
-  <text x="14" y="97" text-anchor="middle" font-size="10" fill="#e53935" font-weight="700">h_m</text>
+  <!-- q mũi tên bên hông -->
+  <line x1="88" y1="22" x2="88" y2="50" stroke="#e65100" stroke-width="2" marker-end="url(#mb-dn2)"/>
+  <rect x="55" y="12" width="66" height="14" fill="#fff3e0" rx="3" stroke="#ffb74d" stroke-width="1"/>
+  <text x="88" y="22" text-anchor="middle" font-size="9" fill="#e65100" font-weight="600">q = γ·h_m</text>
+  <!-- Kích thước h_m -->
+  <line x1="12" y1="52" x2="12" y2="127" stroke="#e53935" stroke-width="1.5" marker-end="url(#mb-dn)"/>
+  <line x1="8" y1="52" x2="16" y2="52" stroke="#e53935" stroke-width="1.5"/>
+  <line x1="8" y1="127" x2="16" y2="127" stroke="#e53935" stroke-width="1.5"/>
+  <text x="3" y="96" font-size="10" fill="#e53935" font-weight="700">h_m</text>
   <!-- Kích thước b -->
-  <line x1="155" y1="188" x2="285" y2="188" stroke="#1565c0" stroke-width="1.5"/>
-  <line x1="155" y1="183" x2="155" y2="193" stroke="#1565c0" stroke-width="1.5"/>
-  <line x1="285" y1="183" x2="285" y2="193" stroke="#1565c0" stroke-width="1.5"/>
-  <rect x="200" y="182" width="40" height="13" fill="white" rx="3" opacity="0.9"/>
-  <text x="220" y="193" text-anchor="middle" font-size="11" fill="#1565c0" font-weight="700">b</text>
+  <line x1="155" y1="187" x2="285" y2="187" stroke="#1565c0" stroke-width="1.5" marker-start="url(#mb-l)" marker-end="url(#mb-r)"/>
+  <rect x="200" y="180" width="40" height="13" fill="#e3f2fd" rx="3"/>
+  <text x="220" y="190" text-anchor="middle" font-size="10" fill="#1565c0" font-weight="700">b</text>
 </svg>`;
 
-// ─── SVG MÁI DỐC ĐẤT RỜI VÔ HẠN ──────────────────────────────
+// SVG mái dốc vô hạn đất rời – nâng cấp
 const SVG_MAI_DOC_ROI = `
 <svg viewBox="0 0 420 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;display:block;margin:8px auto;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.1)">
-  ${_D6}
+  <defs>
+    <marker id="dr-dn" markerWidth="7" markerHeight="7" refX="3.5" refY="7" orient="auto"><path d="M0,0 L3.5,7 L7,0 Z" fill="#2e7d32"/></marker>
+    <marker id="dr-p" markerWidth="7" markerHeight="7" refX="3.5" refY="7" orient="auto"><path d="M0,0 L3.5,7 L7,0 Z" fill="#7b1fa2"/></marker>
+    <linearGradient id="dr-sand" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#fff9c4"/>
+      <stop offset="100%" stop-color="#ffe082"/>
+    </linearGradient>
+  </defs>
   <rect width="420" height="210" fill="#f0f4ff" rx="8"/>
-  <!-- Nền đáy -->
-  <rect x="0" y="183" width="420" height="22" fill="url(#g6-nền)" stroke="#388e3c" stroke-width="1"/>
-  <!-- Thân mái cát -->
-  <polygon points="28,183 398,183 398,72 28,183" fill="#fff9c4" stroke="#f9a825" stroke-width="2"/>
+  <!-- Thân mái đất cát -->
+  <polygon points="30,185 400,185 400,75 30,185" fill="url(#dr-sand)" stroke="#f9a825" stroke-width="2"/>
   <!-- Texture cát -->
-  <line x1="80"  y1="170" x2="140" y2="151" stroke="#f9a825" stroke-width="0.7" opacity="0.7"/>
-  <line x1="130" y1="175" x2="220" y2="147" stroke="#f9a825" stroke-width="0.7" opacity="0.7"/>
-  <line x1="200" y1="178" x2="320" y2="143" stroke="#f9a825" stroke-width="0.7" opacity="0.7"/>
-  <line x1="270" y1="180" x2="390" y2="150" stroke="#f9a825" stroke-width="0.7" opacity="0.7"/>
-  <!-- Mặt mái -->
-  <line x1="28" y1="183" x2="398" y2="72" stroke="#e53935" stroke-width="2.5"/>
+  <line x1="80" y1="170" x2="140" y2="153" stroke="#f9a825" stroke-width="0.7" opacity="0.6"/>
+  <line x1="130" y1="175" x2="220" y2="148" stroke="#f9a825" stroke-width="0.7" opacity="0.6"/>
+  <line x1="200" y1="178" x2="320" y2="143" stroke="#f9a825" stroke-width="0.7" opacity="0.6"/>
+  <line x1="270" y1="180" x2="390" y2="150" stroke="#f9a825" stroke-width="0.7" opacity="0.6"/>
+  <!-- Nền đáy -->
+  <rect x="0" y="185" width="420" height="25" fill="#a5d6a7" stroke="#388e3c" stroke-width="1"/>
+  <!-- Mặt mái (đường nghiêng) -->
+  <line x1="30" y1="185" x2="400" y2="75" stroke="#e53935" stroke-width="2.5"/>
   <!-- Khối ABCD nổi bật -->
-  <polygon points="128,153 258,118 258,183 128,183" fill="rgba(21,101,192,0.2)" stroke="#1565c0" stroke-width="2"/>
-  <text x="193" y="158" text-anchor="middle" font-size="11" fill="#1565c0" font-weight="700">Khối ABCD</text>
-  <!-- Góc β -->
-  <path d="M 54,183 A 30,30 0 0,0 44,158" fill="none" stroke="#e53935" stroke-width="2"/>
-  <text x="65" y="178" font-size="13" fill="#e53935" font-weight="700">β</text>
-  <!-- Lực W: từ trên xuống -->
-  <line x1="193" y1="142" x2="193" y2="176" stroke="#1b5e20" stroke-width="2.5" marker-end="url(#a6-dn-g)"/>
-  <rect x="170" y="130" width="46" height="14" fill="#e8f5e9" rx="3" stroke="#81c784" stroke-width="1"/>
-  <text x="193" y="140" text-anchor="middle" font-size="9.5" fill="#1b5e20" font-weight="600">W·cosβ</text>
-  <!-- Chiều sâu z: từ trên xuống -->
-  <line x1="268" y1="118" x2="268" y2="183" stroke="#7b1fa2" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#a6-pur)"/>
-  <rect x="272" y="144" width="18" height="14" fill="#f3e5ff" rx="2" opacity="0.9"/>
-  <text x="281" y="155" text-anchor="middle" font-size="10.5" fill="#7b1fa2" font-weight="600">z</text>
-  <!-- Hộp công thức -->
-  <rect x="6" y="6" width="205" height="44" fill="white" rx="6" stroke="#1565c0" stroke-width="1" opacity="0.94"/>
-  <text x="16" y="22" font-size="10" fill="#1565c0" font-weight="700">σₙ = γ·z·cos²β</text>
-  <text x="16" y="38" font-size="10" fill="#c62828" font-weight="700">τ = γ·z·cosβ·sinβ</text>
-  <rect x="220" y="6" width="188" height="24" fill="white" rx="6" stroke="#1b5e20" stroke-width="1" opacity="0.94"/>
-  <text x="314" y="22" text-anchor="middle" font-size="11" fill="#1b5e20" font-weight="700">Fₛ = tanφ / tanβ</text>
+  <polygon points="130,155 260,120 260,185 130,185" fill="rgba(21,101,192,0.2)" stroke="#1565c0" stroke-width="2"/>
+  <text x="195" y="158" text-anchor="middle" font-size="11" fill="#1565c0" font-weight="700">Khối ABCD</text>
+  <!-- Nhãn góc β -->
+  <path d="M 55,185 A 28,28 0 0,0 47,162" fill="none" stroke="#e53935" stroke-width="2"/>
+  <text x="66" y="178" font-size="13" fill="#e53935" font-weight="700">β</text>
+  <!-- Lực W (trọng lượng) -->
+  <line x1="195" y1="145" x2="195" y2="178" stroke="#2e7d32" stroke-width="2.5" marker-end="url(#dr-dn)"/>
+  <rect x="173" y="132" width="44" height="14" fill="#e8f5e9" rx="3" stroke="#81c784" stroke-width="1"/>
+  <text x="195" y="142" text-anchor="middle" font-size="9.5" fill="#1b5e20" font-weight="600">W·cosβ</text>
+  <!-- Chiều sâu z -->
+  <line x1="270" y1="120" x2="270" y2="185" stroke="#7b1fa2" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#dr-p)"/>
+  <rect x="272" y="145" width="18" height="13" fill="#f3e5ff" rx="2"/>
+  <text x="281" y="155" text-anchor="middle" font-size="10" fill="#7b1fa2" font-weight="600">z</text>
+  <!-- Công thức -->
+  <rect x="8" y="8" width="200" height="45" fill="white" rx="6" stroke="#1565c0" stroke-width="1" opacity="0.92"/>
+  <text x="18" y="24" font-size="10" fill="#1565c0" font-weight="700">σₙ = γ·z·cos²β</text>
+  <text x="18" y="40" font-size="10" fill="#c62828" font-weight="700">τ = γ·z·cosβ·sinβ</text>
+  <rect x="220" y="8" width="180" height="28" fill="white" rx="6" stroke="#2e7d32" stroke-width="1" opacity="0.92"/>
+  <text x="310" y="27" text-anchor="middle" font-size="11" fill="#2e7d32" font-weight="700">Fₛ = tanφ / tanβ</text>
 </svg>`;
 
-// ─── SVG MÁI ĐẤT DÍNH – KHỐI BAC ──────────────────────────────
+// SVG mái dốc đất dính – khối BAC – nâng cấp
 const SVG_MAI_DOC_DINH = `
-<svg viewBox="0 0 440 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:440px;display:block;margin:8px auto;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.1)">
-  ${_D6}
-  <rect width="440" height="220" fill="#f5f5f5" rx="8"/>
+<svg viewBox="0 0 440 215" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:440px;display:block;margin:8px auto;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.1)">
+  <defs>
+    <marker id="gd-dn" markerWidth="7" markerHeight="7" refX="3.5" refY="7" orient="auto"><path d="M0,0 L3.5,7 L7,0 Z" fill="#1b5e20"/></marker>
+    <marker id="gd-r" markerWidth="7" markerHeight="7" refX="0" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#e65100"/></marker>
+    <linearGradient id="gd-clay" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff9c4"/>
+      <stop offset="100%" stop-color="#ffcc02" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+  <rect width="440" height="215" fill="#f5f5f5" rx="8"/>
   <!-- Nền -->
-  <rect x="0" y="173" width="440" height="38" fill="url(#g6-nền)" stroke="#388e3c" stroke-width="1"/>
+  <rect x="0" y="170" width="440" height="40" fill="#c8e6c9" stroke="#388e3c" stroke-width="1"/>
   <!-- Thân mái đất dính -->
-  <polygon points="52,173 358,173 358,55" fill="#fff9c4" stroke="#f9a825" stroke-width="2"/>
-  <!-- Vách thẳng đứng BC -->
-  <line x1="358" y1="55" x2="358" y2="173" stroke="#1565c0" stroke-width="2.5"/>
-  <!-- Mặt trượt AC (đỏ nổi bật) -->
-  <line x1="52" y1="173" x2="358" y2="85" stroke="#e53935" stroke-width="2.5"/>
-  <!-- Khối BAC -->
-  <polygon points="52,173 358,173 358,85" fill="rgba(21,101,192,0.18)" stroke="#1565c0" stroke-width="1.5"/>
-  <!-- Điểm A, B, C -->
-  <circle cx="52"  cy="173" r="5" fill="#e53935" stroke="white" stroke-width="2"/>
-  <text x="32"  y="171" font-size="13" fill="#e53935" font-weight="700">A</text>
-  <circle cx="358" cy="173" r="5" fill="#e53935" stroke="white" stroke-width="2"/>
-  <text x="364" y="185" font-size="13" fill="#e53935" font-weight="700">B</text>
-  <circle cx="358" cy="85"  r="5" fill="#1565c0" stroke="white" stroke-width="2"/>
-  <text x="364" y="86"  font-size="13" fill="#1565c0" font-weight="700">C</text>
-  <!-- Kích thước H: từ trên xuống -->
-  <line x1="390" y1="85" x2="390" y2="173" stroke="#e65100" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#a6-dn-o)"/>
-  <line x1="384" y1="85"  x2="396" y2="85"  stroke="#e65100" stroke-width="1.5"/>
-  <line x1="384" y1="173" x2="396" y2="173" stroke="#e65100" stroke-width="1.5"/>
-  <rect x="395" y="122" width="18" height="16" fill="white" rx="3" opacity="0.9"/>
-  <text x="404" y="134" text-anchor="middle" font-size="13" fill="#e65100" font-weight="700">H</text>
+  <polygon points="55,170 360,170 360,55" fill="url(#gd-clay)" stroke="#f9a825" stroke-width="2"/>
+  <!-- Vách thẳng đứng -->
+  <line x1="360" y1="55" x2="360" y2="170" stroke="#1565c0" stroke-width="2.5"/>
+  <!-- Mặt trượt AC (màu đỏ nổi bật) -->
+  <line x1="55" y1="170" x2="360" y2="85" stroke="#e53935" stroke-width="2.5"/>
+  <!-- Khối BAC tô màu -->
+  <polygon points="55,170 360,170 360,85" fill="rgba(21,101,192,0.18)" stroke="#1565c0" stroke-width="1.5"/>
+  <!-- Nhãn điểm -->
+  <circle cx="55" cy="170" r="4.5" fill="#e53935" stroke="white" stroke-width="1.5"/>
+  <text x="34" y="168" font-size="13" fill="#e53935" font-weight="700">A</text>
+  <circle cx="360" cy="170" r="4.5" fill="#e53935" stroke="white" stroke-width="1.5"/>
+  <text x="366" y="182" font-size="13" fill="#e53935" font-weight="700">B</text>
+  <circle cx="360" cy="85" r="4.5" fill="#1565c0" stroke="white" stroke-width="1.5"/>
+  <text x="366" y="86" font-size="13" fill="#1565c0" font-weight="700">C</text>
+  <!-- Kích thước H -->
+  <line x1="388" y1="85" x2="388" y2="170" stroke="#e65100" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#gd-r)"/>
+  <line x1="384" y1="85" x2="392" y2="85" stroke="#e65100" stroke-width="1.5"/>
+  <line x1="384" y1="170" x2="392" y2="170" stroke="#e65100" stroke-width="1.5"/>
+  <text x="394" y="132" font-size="12" fill="#e65100" font-weight="700">H</text>
   <!-- Góc α -->
-  <path d="M 78,173 A 35,35 0 0,0 65,145" fill="none" stroke="#e53935" stroke-width="2"/>
-  <text x="90" y="168" font-size="13" fill="#e53935" font-weight="700">α</text>
-  <!-- Lực G: từ trên xuống -->
-  <line x1="248" y1="143" x2="248" y2="170" stroke="#1b5e20" stroke-width="2.5" marker-end="url(#a6-dn-g)"/>
-  <rect x="222" y="131" width="52" height="14" fill="#e8f5e9" rx="3" stroke="#81c784" stroke-width="1"/>
-  <text x="248" y="141" text-anchor="middle" font-size="9.5" fill="#1b5e20" font-weight="600">G (TL khối)</text>
-  <!-- T và N nhãn -->
-  <text x="108" y="120" font-size="10" fill="#7b1fa2" font-weight="600">T = G·sinα (trượt)</text>
-  <text x="108" y="135" font-size="10" fill="#388e3c" font-weight="600">N = G·cosα (pháp tuyến)</text>
+  <path d="M 80,170 A 32,32 0 0,0 68,145" fill="none" stroke="#e53935" stroke-width="2"/>
+  <text x="88" y="165" font-size="13" fill="#e53935" font-weight="700">α</text>
+  <!-- Lực G -->
+  <line x1="250" y1="142" x2="250" y2="168" stroke="#1b5e20" stroke-width="2.5" marker-end="url(#gd-dn)"/>
+  <rect x="225" y="130" width="50" height="14" fill="#e8f5e9" rx="3" stroke="#81c784" stroke-width="1"/>
+  <text x="250" y="140" text-anchor="middle" font-size="9.5" fill="#1b5e20" font-weight="600">G (TL khối)</text>
+  <!-- Nhãn T N -->
+  <text x="110" y="120" font-size="10" fill="#7b1fa2" font-weight="600">T = G·sinα (trượt)</text>
+  <text x="110" y="135" font-size="10" fill="#388e3c" font-weight="600">N = G·cosα (pháp tuyến)</text>
   <!-- Công thức K -->
-  <rect x="6" y="6" width="346" height="24" fill="white" rx="5" stroke="#c62828" stroke-width="1.5" opacity="0.95"/>
-  <text x="179" y="22" text-anchor="middle" font-size="10.5" fill="#c62828" font-weight="700">K = (G·cosα·tanφ + c·h/sinα) / (G·sinα)</text>
+  <rect x="8" y="8" width="340" height="28" fill="white" rx="6" stroke="#c62828" stroke-width="1.5" opacity="0.95"/>
+  <text x="178" y="26" text-anchor="middle" font-size="10.5" fill="#c62828" font-weight="700">K = (N·tanφ + c·BA) / T = (G·cosα·tanφ + c·h/sinα) / G·sinα</text>
 </svg>`;
 
 
@@ -250,31 +263,107 @@ const SVG_MAI_DOC_DINH = `
 // ch6_b1c  Nghịch: cho CBGH, tìm c khi biết φ
 // ═══════════════════════════════════════════════════════════════════
 
+const SVG_PHA_HOAI = `
+<svg viewBox="0 0 560 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:10px auto;">
+  <defs>
+    <marker id="ph-arr" markerWidth="7" markerHeight="7" refX="3.5" refY="7" orient="auto"><path d="M0,0 L3.5,7 L7,0 Z" fill="#c62828"/></marker>
+    <marker id="ph-arr2" markerWidth="7" markerHeight="7" refX="3.5" refY="7" orient="auto"><path d="M0,0 L3.5,7 L7,0 Z" fill="#1565c0"/></marker>
+  </defs>
+
+  <!-- ① PHÁ HOẠI TỔNG THỂ -->
+  <rect x="2" y="2" width="176" height="176" rx="8" fill="#fffde7" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="90" y="18" text-anchor="middle" font-size="10" font-weight="700" fill="#e65100">① Tổng thể</text>
+  <text x="90" y="29" text-anchor="middle" font-size="8.5" fill="#888">(cát chặt, sét cứng)</text>
+  <!-- mặt đất -->
+  <line x1="10" y1="50" x2="170" y2="50" stroke="#5d4037" stroke-width="1.5"/>
+  <!-- móng -->
+  <rect x="68" y="42" width="44" height="18" fill="#90a4ae" stroke="#455a64" stroke-width="1.5" rx="2"/>
+  <text x="90" y="55" text-anchor="middle" font-size="9" fill="#fff" font-weight="bold">MÓNG</text>
+  <!-- tải P -->
+  <line x1="90" y1="25" x2="90" y2="42" stroke="#c62828" stroke-width="2" marker-end="url(#ph-arr)"/>
+  <text x="96" y="36" font-size="9" fill="#c62828" font-weight="bold">P</text>
+  <!-- đất nền -->
+  <rect x="10" y="60" width="160" height="80" fill="#e8d5b0" rx="3"/>
+  <!-- mặt trượt 2 bên rõ ràng -->
+  <path d="M68,60 Q30,95 18,130 Q10,150 28,160" fill="none" stroke="#e53935" stroke-width="2" stroke-dasharray="5,3"/>
+  <path d="M112,60 Q150,95 162,130 Q170,150 152,160" fill="none" stroke="#e53935" stroke-width="2" stroke-dasharray="5,3"/>
+  <!-- đất trồi -->
+  <ellipse cx="25" cy="58" rx="16" ry="8" fill="#d4b896" stroke="#9c7a5a" stroke-width="1.5"/>
+  <text x="25" y="62" text-anchor="middle" font-size="8" fill="#5d4037">trồi</text>
+  <ellipse cx="155" cy="58" rx="16" ry="8" fill="#d4b896" stroke="#9c7a5a" stroke-width="1.5"/>
+  <text x="155" y="62" text-anchor="middle" font-size="8" fill="#5d4037">trồi</text>
+  <!-- mũi tên trồi -->
+  <line x1="25" y1="68" x2="25" y2="52" stroke="#e65100" stroke-width="1.5" marker-end="url(#ph-arr)"/>
+  <line x1="155" y1="68" x2="155" y2="52" stroke="#e65100" stroke-width="1.5" marker-end="url(#ph-arr)"/>
+  <text x="90" y="108" text-anchor="middle" font-size="8.5" fill="#555">Mặt trượt rõ ràng</text>
+  <text x="90" y="120" text-anchor="middle" font-size="8.5" fill="#c62828" font-weight="600">Biến dạng ngang lớn</text>
+
+  <!-- ② PHÁ HOẠI CỤC BỘ -->
+  <rect x="192" y="2" width="176" height="176" rx="8" fill="#f1f8e9" stroke="#81c784" stroke-width="1.5"/>
+  <text x="280" y="18" text-anchor="middle" font-size="10" font-weight="700" fill="#2e7d32">② Cục bộ</text>
+  <text x="280" y="29" text-anchor="middle" font-size="8.5" fill="#888">(cát vừa, sét nửa cứng)</text>
+  <line x1="200" y1="50" x2="360" y2="50" stroke="#5d4037" stroke-width="1.5"/>
+  <rect x="258" y="42" width="44" height="18" fill="#90a4ae" stroke="#455a64" stroke-width="1.5" rx="2"/>
+  <text x="280" y="55" text-anchor="middle" font-size="9" fill="#fff" font-weight="bold">MÓNG</text>
+  <line x1="280" y1="25" x2="280" y2="42" stroke="#c62828" stroke-width="2" marker-end="url(#ph-arr)"/>
+  <text x="286" y="36" font-size="9" fill="#c62828" font-weight="bold">P</text>
+  <rect x="200" y="60" width="160" height="80" fill="#e8d5b0" rx="3"/>
+  <!-- mặt phá hoại mờ dần -->
+  <path d="M258,60 Q230,85 215,110 Q208,130 218,148" fill="none" stroke="#ffa726" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.8"/>
+  <path d="M302,60 Q330,85 345,110 Q352,130 342,148" fill="none" stroke="#ffa726" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.8"/>
+  <!-- lún nhiều trước -->
+  <rect x="262" y="60" width="36" height="16" fill="#90a4ae" stroke="#455a64" stroke-width="1" rx="1" opacity="0.6"/>
+  <text x="280" y="72" text-anchor="middle" font-size="7.5" fill="#333">lún trước</text>
+  <text x="280" y="108" text-anchor="middle" font-size="8.5" fill="#555">Mặt trượt không rõ</text>
+  <text x="280" y="120" text-anchor="middle" font-size="8.5" fill="#2e7d32" font-weight="600">Lún lớn trước khi phá hoại</text>
+
+  <!-- ③ TRƯỢT SÂU (ĐÂM XUYÊN) -->
+  <rect x="382" y="2" width="176" height="176" rx="8" fill="#e3f2fd" stroke="#64b5f6" stroke-width="1.5"/>
+  <text x="470" y="18" text-anchor="middle" font-size="10" font-weight="700" fill="#0d47a1">③ Trượt sâu</text>
+  <text x="470" y="29" text-anchor="middle" font-size="8.5" fill="#888">(đất rất yếu, móng sâu)</text>
+  <line x1="390" y1="50" x2="550" y2="50" stroke="#5d4037" stroke-width="1.5"/>
+  <rect x="448" y="42" width="44" height="18" fill="#90a4ae" stroke="#455a64" stroke-width="1.5" rx="2"/>
+  <text x="470" y="55" text-anchor="middle" font-size="9" fill="#fff" font-weight="bold">MÓNG</text>
+  <line x1="470" y1="22" x2="470" y2="42" stroke="#c62828" stroke-width="3" marker-end="url(#ph-arr)"/>
+  <text x="476" y="34" font-size="9" fill="#c62828" font-weight="bold">P</text>
+  <rect x="390" y="60" width="160" height="115" fill="#b3cde0" rx="3" opacity="0.7"/>
+  <!-- móng chìm xuống -->
+  <rect x="448" y="60" width="44" height="30" fill="#78909c" stroke="#455a64" stroke-width="1.5" rx="2"/>
+  <text x="470" y="80" text-anchor="middle" font-size="8" fill="#fff">chìm</text>
+  <!-- mũi tên xuống mạnh -->
+  <line x1="470" y1="90" x2="470" y2="115" stroke="#0d47a1" stroke-width="2.5" marker-end="url(#ph-arr2)"/>
+  <!-- không trồi -->
+  <text x="415" y="110" font-size="8" fill="#888">không trồi đất</text>
+  <text x="470" y="140" text-anchor="middle" font-size="8.5" fill="#555">Không có mặt trượt</text>
+  <text x="470" y="152" text-anchor="middle" font-size="8.5" fill="#0d47a1" font-weight="600">Như đóng đinh vào đất</text>
+</svg>`;
+
 const LY_THUYET_PHÁ_HOAI_HTML = `
 <div class="theory-block">
   <div class="theory-label">📖 SỰ PHÁ HOẠI NỀN ĐẤT – Phân loại Vesic (1973)</div>
-  <table style="border-collapse:collapse;font-size:.82rem;width:100%;margin-top:6px;">
+  ${SVG_PHA_HOAI}
+  <table style="border-collapse:collapse;font-size:.82rem;width:100%;margin-top:8px;">
     <thead>
       <tr style="background:#1565c0;color:#fff;text-align:center;">
         <th style="padding:5px 8px;">Kiểu phá hoại</th>
-        <th style="padding:5px 8px;">Dấu hiệu</th>
+        <th style="padding:5px 8px;">Dấu hiệu nhận biết</th>
         <th style="padding:5px 8px;">Gặp khi nào</th>
       </tr>
     </thead>
     <tbody>
       <tr style="background:#fff9c4;">
         <td style="padding:5px 8px;font-weight:700;color:#e65100;">① Tổng thể</td>
-        <td style="padding:5px 8px;">Đất 2 bên móng trồi lên, mặt trượt rõ ràng, biến dạng ngang lớn</td>
+        <td style="padding:5px 8px;">Đất 2 bên móng <b>trồi lên</b>, mặt trượt rõ ràng, biến dạng ngang rất lớn</td>
         <td style="padding:5px 8px;">Nền cát chặt, sét cứng; móng nông</td>
       </tr>
       <tr style="background:#e8f5e9;">
         <td style="padding:5px 8px;font-weight:700;color:#1b5e20;">② Cục bộ</td>
-        <td style="padding:5px 8px;">Mở rộng từ 2 mép, mặt phá hoại không xác định rõ, lún lớn trước</td>
+        <td style="padding:5px 8px;">Mặt phá hoại <b>không xác định rõ</b>, lún lớn trước khi đạt tải giới hạn</td>
         <td style="padding:5px 8px;">Cát vừa, sét nửa cứng; móng nông trung</td>
       </tr>
       <tr style="background:#e3f2fd;">
         <td style="padding:5px 8px;font-weight:700;color:#0d47a1;">③ Trượt sâu</td>
-        <td style="padding:5px 8px;">Móng chìm như "đóng đinh", không trồi đất, không có biến dạng ngang</td>
+        <td style="padding:5px 8px;">Móng <b>chìm như "đóng đinh"</b>, không trồi đất, không quan sát được mặt phá hoại</td>
         <td style="padding:5px 8px;">Đất rất yếu; móng sâu</td>
       </tr>
     </tbody>
@@ -416,6 +505,165 @@ EXERCISES['ch6_b1b'] = {
         `B. Điểm M ở trạng thái cân bằng giới hạn (sin θ_max ≈ sin φ)`
       ],
       correctIndex: d => d.state }
+  ]
+};
+
+// ── ch6_b1b2: Kiểm tra trạng thái – cho ứng suất TRỰC GIAO σx, σz, τ ──
+EXERCISES['ch6_b1b2'] = {
+  chapterId: 'ch6',
+  title: '6.1b2 – Kiểm tra trạng thái M từ ứng suất trực giao (σx, σz, τxz)',
+  type: 'apply',
+  theoryHTML: `
+<div class="theory-block">
+  <div class="theory-label">📖 TÍNH ỨNG SUẤT CHÍNH TỪ ỨNG SUẤT TRỰC GIAO</div>
+  <div style="background:#fff;border:2px solid #1565c0;border-radius:8px;padding:9px 16px;margin:8px 0;display:inline-block;">
+    <span style="font-family:monospace;font-size:.92rem;font-weight:700;color:#1565c0;">
+      σ₁,₃ = (σz+σx)/2 ± √[((σz−σx)/2)² + τ²]
+    </span>
+  </div>
+  <div style="font-size:.84rem;margin-top:6px;line-height:1.8;">
+    Sau khi có σ₁, σ₃ → kiểm tra theo Mohr-Rankine:<br>
+    <span style="font-family:monospace;">sinθ = (σ₁−σ₃)/(σ₁+σ₃+2c/tgφ)</span><br>
+    So sánh sinθ với sinφ → kết luận
+  </div>
+</div>`,
+  hint: `
+    <div class="hint-title">💡 Trình tự</div>
+    <div style="font-size:.85rem;line-height:1.85;">
+      <b>B1.</b> Tính R = √[((σz−σx)/2)² + τ²]<br>
+      <b>B2.</b> σ₁ = (σz+σx)/2 + R ; σ₃ = (σz+σx)/2 − R<br>
+      <b>B3.</b> sinθ = (σ₁−σ₃)/(σ₁+σ₃+2c/tgφ) ; so sánh sinφ
+    </div>`,
+  genData(rng) {
+    const phi_deg = [15, 20, 25][Math.floor(rng() * 3)];
+    const c = Math.floor(5 + rng() * 20);
+    const phi_rad = phi_deg * Math.PI / 180;
+    const sin_phi = Math.sin(phi_rad);
+    const cotphi = Math.cos(phi_rad) / Math.sin(phi_rad);
+    const sz = Math.floor(80 + rng() * 80);
+    const sx = Math.floor(30 + rng() * 40);
+    const tau = Math.floor(10 + rng() * 30);
+    const R = r2(Math.sqrt(((sz - sx) / 2) ** 2 + tau ** 2));
+    const s1 = r2((sz + sx) / 2 + R);
+    const s3 = r2((sz + sx) / 2 - R);
+    const sin_theta = r3((s1 - s3) / (s1 + s3 + 2 * c * cotphi));
+    const sin_phi_r = r3(sin_phi);
+    const state = sin_theta < sin_phi_r ? 0 : 1;
+    return { phi_deg, c, sz, sx, tau, R, s1, s3, sin_theta, sin_phi_r, state };
+  },
+  statement(d) {
+    return `Tại điểm M trong nền đất, đo được các thành phần ứng suất: <strong>σz = ${d.sz} kPa</strong>, <strong>σx = ${d.sx} kPa</strong>, <strong>τxz = ${d.tau} kPa</strong>.<br>
+    Đất nền có <strong>c = ${d.c} kPa</strong>, <strong>φ = ${d.phi_deg}°</strong>. Kiểm tra trạng thái tại M.`;
+  },
+  questions: [
+    { id: 'q1', type: 'fill', label: 'R = √[((σz−σx)/2)²+τ²] =', unit: 'kPa', answer: d => d.R, tol: 0.5 },
+    { id: 'q2', type: 'fill', label: 'σ₁ =', unit: 'kPa', answer: d => d.s1, tol: 0.5 },
+    { id: 'q3', type: 'fill', label: 'σ₃ =', unit: 'kPa', answer: d => d.s3, tol: 0.5 },
+    { id: 'q4', type: 'fill', label: 'sin θ_max =', unit: '', answer: d => d.sin_theta, tol: 0.005 },
+    { id: 'q5', type: 'mcq',
+      label: 'Kết luận trạng thái tại M:',
+      choices: d => [
+        `A. Điểm M ổn định (sinθ = ${d.sin_theta} < sinφ = ${d.sin_phi_r}) ✓`,
+        `B. Điểm M ở CBGH hoặc phá hoại (sinθ ≥ sinφ = ${d.sin_phi_r}) ✗`
+      ],
+      correctIndex: d => d.state }
+  ]
+};
+
+// ── ch6_b1b3: Kiểm tra trạng thái – ĐẤT RỜI (c = 0) ────────────────
+EXERCISES['ch6_b1b3'] = {
+  chapterId: 'ch6',
+  title: '6.1b3 – Kiểm tra trạng thái M trong đất rời (c = 0)',
+  type: 'apply',
+  theoryHTML: `
+<div class="theory-block">
+  <div class="theory-label">📖 ĐẤT RỜI (c = 0) – CÔNG THỨC ĐƠN GIẢN HƠN</div>
+  <div style="background:#fff;border:2px solid #2e7d32;border-radius:8px;padding:9px 16px;margin:8px 0;display:inline-block;">
+    <span style="font-family:monospace;font-size:.93rem;font-weight:700;color:#2e7d32;">
+      c = 0 → sinθ = (σ₁−σ₃) / (σ₁+σ₃)
+    </span>
+  </div>
+  <div style="font-size:.84rem;margin-top:6px;color:#444;">
+    So sánh sinθ với sinφ để kết luận.<br>
+    Điều kiện ổn định: sinθ &lt; sinφ
+  </div>
+</div>`,
+  hint: `<div class="hint-title">💡 Khi c = 0, công thức sinθ rút gọn còn (σ₁−σ₃)/(σ₁+σ₃)</div>`,
+  genData(rng) {
+    const phi_deg = [25, 28, 30, 32, 35][Math.floor(rng() * 5)];
+    const phi_rad = phi_deg * Math.PI / 180;
+    const sin_phi = Math.sin(phi_rad);
+    const sigma3 = Math.floor(40 + rng() * 60);
+    const ratio = 0.55 + rng() * 0.35;
+    const sigma1_cbgh = sigma3 * (1 + sin_phi) / (1 - sin_phi);
+    const sigma1 = Math.round(sigma3 + ratio * (sigma1_cbgh - sigma3));
+    const sin_theta = r3((sigma1 - sigma3) / (sigma1 + sigma3));
+    const sin_phi_r = r3(sin_phi);
+    const state = sin_theta < sin_phi_r ? 0 : 1;
+    return { phi_deg, sigma1, sigma3, sin_theta, sin_phi_r, state };
+  },
+  statement(d) {
+    return `Tại điểm M trong nền <strong>cát (c = 0)</strong>, ứng suất chính: <strong>σ₁ = ${d.sigma1} kPa</strong>, <strong>σ₃ = ${d.sigma3} kPa</strong>.<br>
+    Cát có góc ma sát trong <strong>φ = ${d.phi_deg}°</strong>. Kiểm tra trạng thái tại M.`;
+  },
+  questions: [
+    { id: 'q1', type: 'fill', label: 'sin θ = (σ₁−σ₃)/(σ₁+σ₃) =', unit: '', answer: d => d.sin_theta, tol: 0.005 },
+    { id: 'q2', type: 'fill', label: 'sin φ =', unit: '', answer: d => d.sin_phi_r, tol: 0.005 },
+    { id: 'q3', type: 'mcq',
+      label: 'Kết luận:',
+      choices: d => [
+        `A. Điểm M ổn định (sinθ < sinφ = ${d.sin_phi_r}) ✓`,
+        `B. Điểm M ở CBGH hoặc phá hoại ✗`
+      ],
+      correctIndex: d => d.state }
+  ]
+};
+
+// ── ch6_b1b4: Tìm σ₁ giới hạn khi biết σ₃, c, φ ──────────────────────
+EXERCISES['ch6_b1b4'] = {
+  chapterId: 'ch6',
+  title: '6.1b4 – Tính ứng suất chính lớn nhất giới hạn σ₁_gh',
+  type: 'apply',
+  theoryHTML: `
+<div class="theory-block">
+  <div class="theory-label">📖 ỨNG SUẤT GIỚI HẠN – CÔNG THỨC RANKINE</div>
+  <div style="background:#fff;border:2px solid #c62828;border-radius:8px;padding:9px 16px;margin:8px 0;display:inline-block;">
+    <span style="font-family:monospace;font-size:.93rem;font-weight:700;color:#c62828;">
+      σ₁_gh = σ₃·tan²(45°+φ/2) + 2c·tan(45°+φ/2)
+    </span>
+  </div>
+  <div style="font-size:.84rem;margin-top:6px;color:#444;">
+    Khi σ₁ ≤ σ₁_gh: điểm M ổn định<br>
+    Khi σ₁ > σ₁_gh: điểm M bị phá hoại
+  </div>
+</div>`,
+  hint: `<div class="hint-title">💡 Tính tan(45+φ/2), bình phương nó, nhân σ₃ rồi cộng 2c×tan(45+φ/2)</div>`,
+  genData(rng) {
+    const phi_deg = [15, 20, 22, 25, 28][Math.floor(rng() * 5)];
+    const c = Math.floor(5 + rng() * 20);
+    const phi_rad = phi_deg * Math.PI / 180;
+    const alpha_rad = (45 + phi_deg / 2) * Math.PI / 180;
+    const tan_a = Math.tan(alpha_rad);
+    const sigma3 = Math.floor(50 + rng() * 80);
+    const s1_gh = r2(sigma3 * tan_a * tan_a + 2 * c * tan_a);
+    const s1_act = Math.round(s1_gh * (0.7 + rng() * 0.5));
+    const safe = s1_act <= s1_gh ? 0 : 1;
+    return { phi_deg, c, sigma3, s1_gh, s1_act, safe, tan_a: r3(tan_a) };
+  },
+  statement(d) {
+    return `Đất dính có <strong>c = ${d.c} kPa</strong>, <strong>φ = ${d.phi_deg}°</strong>. Tại điểm M, ứng suất nhỏ <strong>σ₃ = ${d.sigma3} kPa</strong>, ứng suất lớn thực tế <strong>σ₁ = ${d.s1_act} kPa</strong>.<br>
+    Tính σ₁ giới hạn và kết luận trạng thái tại M.`;
+  },
+  questions: [
+    { id: 'q1', type: 'fill', label: 'tan(45°+φ/2) =', unit: '', answer: d => d.tan_a, tol: 0.005 },
+    { id: 'q2', type: 'fill', label: 'σ₁_gh =', unit: 'kPa', answer: d => d.s1_gh, tol: 2 },
+    { id: 'q3', type: 'mcq',
+      label: 'Kết luận trạng thái tại M:',
+      choices: d => [
+        `A. Ổn định – σ₁ = ${d.s1_act} ≤ σ₁_gh = ${d.s1_gh} kPa ✓`,
+        `B. Phá hoại – σ₁ = ${d.s1_act} > σ₁_gh = ${d.s1_gh} kPa ✗`
+      ],
+      correctIndex: d => d.safe }
   ]
 };
 
@@ -677,6 +925,121 @@ EXERCISES['ch6_b2d'] = {
   ]
 };
 
+// ── ch6_b2d2: SCT không gian – đất RỜI (c=0), móng vuông ──────────
+EXERCISES['ch6_b2d2'] = {
+  chapterId: 'ch6',
+  title: '6.2d2 – SCT không gian móng vuông trên đất rời (c = 0)',
+  type: 'apply',
+  hint: `
+    <div class="hint-title">💡 Đất rời c = 0 → bỏ hạng Nc</div>
+    <div style="font-size:.85rem;line-height:1.85;">
+      p<sub>gh</sub> = α₁·½·N<sub>γ</sub>·b·γ + α₂·N<sub>q</sub>·q<br>
+      Móng vuông: α₁ = 0.4, α₂ = 1.0
+    </div>
+    ${BANG_TERZAGHI_HTML}`,
+  genData(rng) {
+    const opts = [
+      {phi:25, ng:9.7,  nq:12.7},
+      {phi:28, ng:15.4, nq:17.8},
+      {phi:30, ng:19.7, nq:22.5},
+      {phi:32, ng:24.5, nq:28.5},
+    ];
+    const o = opts[Math.floor(rng() * opts.length)];
+    const b = r2(1.0 + rng() * 1.2);
+    const hm = r2(1.0 + rng() * 1.0);
+    const gamma = r2(18.0 + rng() * 1.5);
+    const q = r2(gamma * hm);
+    const p_gh = r2(0.4 * 0.5 * o.ng * b * gamma + 1.0 * o.nq * q);
+    return { phi: o.phi, ng: o.ng, nq: o.nq, b, hm, gamma, q, p_gh };
+  },
+  statement(d) {
+    return `Móng <strong>vuông</strong> kích thước b = <strong>${d.b} m</strong>, chôn sâu h<sub>m</sub> = <strong>${d.hm} m</strong>.<br>
+    Đất nền là <strong>cát</strong> (c = 0): γ = <strong>${d.gamma} kN/m³</strong>, φ = <strong>${d.phi}°</strong>.<br>
+    Hệ số Terzaghi: N<sub>γ</sub> = ${d.ng}, N<sub>q</sub> = ${d.nq}. Hệ số hình dạng: α₁ = 0.4, α₂ = 1.0.<br>
+    Tính sức chịu tải giới hạn p<sub>gh</sub>.`;
+  },
+  questions: [
+    { id: 'q1', type: 'fill', label: 'q = γ·h_m =', unit: 'kPa', answer: d => d.q, tol: 0.3 },
+    { id: 'q2', type: 'fill', label: 'p_gh =', unit: 'kPa', answer: d => d.p_gh, tol: 3 },
+  ]
+};
+
+// ── ch6_b2d3: SCT không gian – đất DÍNH (φ=0), móng tròn ──────────
+EXERCISES['ch6_b2d3'] = {
+  chapterId: 'ch6',
+  title: '6.2d3 – SCT không gian móng tròn trên đất dính (φ = 0)',
+  type: 'apply',
+  hint: `
+    <div class="hint-title">💡 Đất sét bão hòa φ=0 → bỏ hạng Nγ và Nq</div>
+    <div style="font-size:.85rem;line-height:1.85;">
+      p<sub>gh</sub> = α₃·N<sub>c</sub>·c + N<sub>q</sub>·q<br>
+      Khi φ=0: N<sub>c</sub> = 5.7, N<sub>q</sub> = 1.0, N<sub>γ</sub> = 0<br>
+      Móng tròn: α₃ = 1.3
+    </div>`,
+  genData(rng) {
+    const b = r2(1.0 + rng() * 1.5);
+    const hm = r2(1.0 + rng() * 1.0);
+    const gamma = r2(17.5 + rng() * 2.0);
+    const c = Math.floor(15 + rng() * 25);
+    const q = r2(gamma * hm);
+    const p_gh = r2(1.3 * 5.7 * c + 1.0 * q);
+    return { b, hm, gamma, c, q, p_gh };
+  },
+  statement(d) {
+    return `Móng <strong>tròn</strong> đường kính D = <strong>${d.b} m</strong>, chôn sâu h<sub>m</sub> = <strong>${d.hm} m</strong>.<br>
+    Đất nền là <strong>sét bão hòa (φ = 0)</strong>: γ = <strong>${d.gamma} kN/m³</strong>, c<sub>u</sub> = <strong>${d.c} kPa</strong>.<br>
+    Khi φ=0: N<sub>γ</sub>=0, N<sub>q</sub>=1.0, N<sub>c</sub>=5.7. Hệ số hình dạng: α₃ = 1.3.<br>
+    Tính sức chịu tải giới hạn p<sub>gh</sub>.`;
+  },
+  questions: [
+    { id: 'q1', type: 'fill', label: 'q = γ·h_m =', unit: 'kPa', answer: d => d.q, tol: 0.3 },
+    { id: 'q2', type: 'fill', label: 'p_gh = 1.3·Nc·c + Nq·q =', unit: 'kPa', answer: d => d.p_gh, tol: 2 },
+  ]
+};
+
+// ── ch6_b2d4: SCT không gian – móng CHỮ NHẬT, đất dính ────────────
+EXERCISES['ch6_b2d4'] = {
+  chapterId: 'ch6',
+  title: '6.2d4 – SCT không gian móng chữ nhật (hệ số α theo b/l)',
+  type: 'apply',
+  hint: `
+    <div class="hint-title">💡 Hệ số hình dạng chữ nhật</div>
+    <div style="font-size:.85rem;line-height:1.85;">
+      α₁ = 1 − 0.2·b/l &nbsp; α₂ = 1.0 &nbsp; α₃ = 1 + 0.2·b/l
+    </div>
+    ${BANG_TERZAGHI_HTML}`,
+  genData(rng) {
+    const opts = [
+      {phi:15, ng:2.5, nq:4.4, nc:12.9},
+      {phi:20, ng:5.0, nq:7.4, nc:17.7},
+      {phi:25, ng:9.7, nq:12.7, nc:25.1},
+    ];
+    const o = opts[Math.floor(rng() * opts.length)];
+    const b = r2(1.2 + rng() * 0.8);
+    const l = r2(b * (1.5 + rng() * 1.5));
+    const hm = r2(1.0 + rng() * 1.0);
+    const gamma = r2(17.5 + rng() * 2.0);
+    const c = Math.floor(8 + rng() * 15);
+    const a1 = r2(1 - 0.2 * b / l);
+    const a3 = r2(1 + 0.2 * b / l);
+    const q = r2(gamma * hm);
+    const p_gh = r2(a1 * 0.5 * o.ng * b * gamma + 1.0 * o.nq * q + a3 * o.nc * c);
+    return { phi: o.phi, ng: o.ng, nq: o.nq, nc: o.nc, b, l, hm, gamma, c, a1, a3, q, p_gh };
+  },
+  statement(d) {
+    return `Móng <strong>chữ nhật</strong> b×l = <strong>${d.b}×${d.l} m</strong>, chôn sâu h<sub>m</sub> = <strong>${d.hm} m</strong>.<br>
+    Đất nền: γ = <strong>${d.gamma} kN/m³</strong>, c = <strong>${d.c} kPa</strong>, φ = <strong>${d.phi}°</strong>.<br>
+    Hệ số Terzaghi: N<sub>γ</sub> = ${d.ng}, N<sub>q</sub> = ${d.nq}, N<sub>c</sub> = ${d.nc}.<br>
+    Tính hệ số hình dạng α₁, α₃ và p<sub>gh</sub>.`;
+  },
+  questions: [
+    { id: 'q1', type: 'fill', label: 'α₁ = 1−0.2·b/l =', unit: '', answer: d => d.a1, tol: 0.02 },
+    { id: 'q2', type: 'fill', label: 'α₃ = 1+0.2·b/l =', unit: '', answer: d => d.a3, tol: 0.02 },
+    { id: 'q3', type: 'fill', label: 'q = γ·h_m =', unit: 'kPa', answer: d => d.q, tol: 0.3 },
+    { id: 'q4', type: 'fill', label: 'p_gh =', unit: 'kPa', answer: d => d.p_gh, tol: 3 },
+  ]
+};
+
 // ── ch6_b2e: Kiểm tra nền – tính p_tx từ tải trọng, tìm F_s ───────
 EXERCISES['ch6_b2e'] = {
   chapterId: 'ch6',
@@ -697,33 +1060,35 @@ EXERCISES['ch6_b2e'] = {
       {phi:30, ng:19.7, nq:22.5, nc:37.2},
     ];
     const o = opts[Math.floor(rng() * opts.length)];
-    const b = r2(1.0 + rng() * 1.0);
+    const b = r2(1.0 + rng() * 1.2);
     const hm = r2(1.0 + rng() * 0.8);
     const gamma = r2(17.5 + rng() * 2.0);
     const c = o.phi >= 25 ? 0 : Math.floor(8 + rng() * 12);
     const q = r2(gamma * hm);
     const p_gh = r2(0.5 * o.ng * b * gamma + o.nq * q + o.nc * c);
-    // Tải trọng chân tường (kN/m dài) để tạo p_tx hợp lý
-    const N = r2((p_gh * b) * (0.45 + rng() * 0.35)); // 45–80% p_gh*b
+    // Tải trọng cột nhà (kN) để tạo p_tx hợp lý
+    const N = r2((p_gh * b) * (0.45 + rng() * 0.35));
     const p_tx = r2(N / b);
     const fs = r2(p_gh / p_tx);
-    const safe = fs >= 2.5 ? 0 : 1;
-    return { phi: o.phi, ng: o.ng, nq: o.nq, nc: o.nc, b, hm, gamma, c, q, p_gh, N, p_tx, fs, safe };
+    // Fs yêu cầu ngẫu nhiên 2.5 hoặc 3.0
+    const fs_yc = rng() > 0.5 ? 3.0 : 2.5;
+    const safe = fs >= fs_yc ? 0 : 1;
+    return { phi: o.phi, ng: o.ng, nq: o.nq, nc: o.nc, b, hm, gamma, c, q, p_gh, N, p_tx, fs, fs_yc, safe };
   },
   statement(d) {
-    return `Tường chắn đất có tải trọng tính toán truyền xuống nền <strong>N = ${d.N} kN/m dài</strong>. Móng băng bề rộng <strong>b = ${d.b} m</strong>, chiều sâu chôn móng <strong>h<sub>m</sub> = ${d.hm} m</strong>.<br>
+    return `Cột nhà có tải trọng tính toán truyền xuống móng <strong>N = ${d.N} kN/m dài</strong>. Móng băng bề rộng <strong>b = ${d.b} m</strong>, chiều sâu chôn móng <strong>h<sub>m</sub> = ${d.hm} m</strong>.<br>
     Đất nền: <strong>γ = ${d.gamma} kN/m³</strong>, <strong>c = ${d.c} kPa</strong>, <strong>φ = ${d.phi}°</strong>.<br>
     Hệ số Terzaghi đã tra: N<sub>γ</sub> = ${d.ng}, N<sub>q</sub> = ${d.nq}, N<sub>c</sub> = ${d.nc}. Đã tính được p<sub>gh</sub> = ${d.p_gh} kPa.<br><br>
-    Kiểm tra điều kiện an toàn của nền.`;
+    Kiểm tra điều kiện an toàn của nền (lấy [F<sub>s</sub>] = ${d.fs_yc}).`;
   },
   questions: [
     { id: 'q1', type: 'fill', label: 'Áp lực tiếp xúc dưới đáy móng p_tx =', unit: 'kPa', answer: d => d.p_tx, tol: 0.5 },
     { id: 'q2', type: 'fill', label: 'Hệ số an toàn thực tế F_s =', unit: '', answer: d => d.fs, tol: 0.05 },
     { id: 'q3', type: 'mcq',
-      label: 'Đánh giá nền đất (lấy [F_s] = 2.5):',
+      label: 'Đánh giá nền đất:',
       choices: d => [
-        `A. Nền đảm bảo an toàn (F_s = ${d.fs} ≥ 2.5)`,
-        `B. Nền KHÔNG an toàn, cần điều chỉnh (F_s = ${d.fs} < 2.5)`
+        `A. Nền đảm bảo an toàn (F_s ≥ [F_s] = ${d.fs_yc}) ✓`,
+        `B. Nền KHÔNG an toàn, cần điều chỉnh (F_s < [F_s] = ${d.fs_yc}) ✗`
       ],
       correctIndex: d => d.safe }
   ]
@@ -769,12 +1134,13 @@ EXERCISES['ch6_b2z'] = {
     const a3 = r2(1 + 0.2 * b / l);
     const q = r2(gamma * hm);
     const p_gh = r2(a1 * 0.5 * o.ng * b * gamma + o.nq * q + a3 * o.nc * c);
-    const p_allow = r2(p_gh / 3.0); // Fs = 3
-    // Tải trọng cột (kN)
+    const p_allow = r2(p_gh / 3.0);
     const N_kN = r2(b * l * p_allow * (0.6 + rng() * 0.3));
     const p_tx = r2(N_kN / (b * l));
     const fs = r2(p_gh / p_tx);
-    return { phi: o.phi, ng: o.ng, nq: o.nq, nc: o.nc, b, l, hm, gamma, c, a1, a3, q, p_gh, N_kN, p_tx, fs };
+    const fs_yc = rng() > 0.5 ? 3.0 : 2.5;
+    const safe = fs >= fs_yc ? 0 : 1;
+    return { phi: o.phi, ng: o.ng, nq: o.nq, nc: o.nc, b, l, hm, gamma, c, a1, a3, q, p_gh, N_kN, p_tx, fs, fs_yc, safe };
   },
   statement(d) {
     return `Cột nhà có tải trọng tính toán truyền xuống móng <strong>N = ${d.N_kN} kN</strong>. Móng đơn hình chữ nhật kích thước <strong>b × l = ${d.b} × ${d.l} m</strong>, chiều sâu chôn móng <strong>h<sub>m</sub> = ${d.hm} m</strong>.<br>
@@ -789,12 +1155,12 @@ EXERCISES['ch6_b2z'] = {
     { id: 'q3', type: 'fill', label: 'Áp lực tiếp xúc p_tx = N / (b·l) =', unit: 'kPa', answer: d => d.p_tx, tol: 0.5 },
     { id: 'q4', type: 'fill', label: 'Hệ số an toàn F_s =', unit: '', answer: d => d.fs, tol: 0.1 },
     { id: 'q5', type: 'mcq',
-      label: 'Kết luận về nền (lấy [F_s] = 3.0):',
+      label: 'Kết luận về nền:',
       choices: d => [
-        `A. Nền đảm bảo, F_s = ${d.fs} ≥ 3.0`,
-        `B. Nền CHƯA đảm bảo, F_s = ${d.fs} < 3.0`
+        `A. Nền đảm bảo an toàn (F_s ≥ [F_s] = ${d.fs_yc}) ✓`,
+        `B. Nền CHƯA đảm bảo (F_s < [F_s] = ${d.fs_yc}) ✗`
       ],
-      correctIndex: d => d.fs >= 3.0 ? 0 : 1 }
+      correctIndex: d => d.safe }
   ]
 };
 
@@ -1018,8 +1384,9 @@ EXERCISES['ch6_b3d'] = {
     const T = r2(G * Math.sin(alpha_rad));
     const N = r2(G * Math.cos(alpha_rad));
     const K = r2((N * Math.tan(phi_rad) + c * BA) / T);
-    const safe = K >= 1.4 ? 0 : 1;
-    return { phi_deg, c, gamma, h, alpha_deg, G, BA, T, N, K, safe };
+    const K_yc = rng() > 0.5 ? 1.4 : 1.5;
+    const safe = K >= K_yc ? 0 : 1;
+    return { phi_deg, c, gamma, h, alpha_deg, G, BA, T, N, K, safe, K_yc };
   },
   statement(d) {
     return `Một mái đất dính cao <strong>H = ${d.h} m</strong> (vách đào thẳng đứng). Đất có: <strong>γ = ${d.gamma} kN/m³</strong>, <strong>c = ${d.c} kPa</strong>, <strong>φ = ${d.phi_deg}°</strong>.<br>
@@ -1032,10 +1399,10 @@ EXERCISES['ch6_b3d'] = {
     { id: 'q3', type: 'fill', label: 'Lực gây trượt T = G·sinα =', unit: 'kN/m', answer: d => d.T, tol: 1.5 },
     { id: 'q4', type: 'fill', label: 'Hệ số ổn định K =', unit: '', answer: d => d.K, tol: 0.05 },
     { id: 'q5', type: 'mcq',
-      label: 'Kết luận (lấy [K] = 1.4):',
+      label: 'Kết luận:',
       choices: d => [
-        `A. Mái đất ổn định (K = ${d.K} ≥ 1.4)`,
-        `B. Mái đất KHÔNG đủ ổn định (K = ${d.K} < 1.4)`
+        `A. Mái đất ổn định (K ≥ [K] = ${d.K_yc}) ✓`,
+        `B. Mái đất KHÔNG đủ ổn định (K < [K] = ${d.K_yc}) ✗`
       ],
       correctIndex: d => d.safe }
   ]
@@ -1171,44 +1538,8 @@ EXERCISES['ch6_tomtat'] = {
     <strong>Ghi chú:</strong> α<sub>nguy hiểm nhất</sub> = 45° + φ/2 (cực tiểu hàm h theo α, cực đại hàm K nghịch → cực tiểu K)
   </div>
 </div>`,
-  hint: `<div class="hint-title">💡 Đây là bài ôn tập tóm tắt, không có câu hỏi tính toán.</div>`,
-  genData(rng) {
-    // Câu hỏi ôn nhanh công thức
-    const qs = [
-      {
-        q: 'Công thức Terzaghi cho móng BĂNG (bài toán phẳng) là:',
-        choices: [
-          'A. p_gh = ½·Nγ·b·γ + Nq·q + Nc·c',
-          'B. p_gh = 0.4·½·Nγ·b·γ + Nq·q + 1.3·Nc·c',
-          'C. p_gh = Nγ·b·γ + 2·Nq·q + Nc·c',
-          'D. p_gh = ½·Nγ·b·γ + Nc·c'
-        ],
-        correct: 0
-      },
-      {
-        q: 'Hệ số hình dạng α₁ của MÓNG VUÔNG trong bài toán không gian là:',
-        choices: ['A. 0.3', 'B. 0.4', 'C. 1.0', 'D. 1.3'],
-        correct: 1
-      },
-      {
-        q: 'Điều kiện ổn định mái cát vô hạn (c=0) có thể phát biểu là:',
-        choices: [
-          'A. Góc dốc β phải nhỏ hơn góc ma sát trong φ',
-          'B. Góc dốc β phải bằng φ',
-          'C. Chiều cao H phải đủ nhỏ',
-          'D. Góc dốc β > 45°'
-        ],
-        correct: 0
-      },
-    ];
-    const pick = (rng() * qs.length) | 0;
-    return { set: qs[pick], idx: qs[pick].correct };
-  },
-  statement(d) { return d.set.q; },
-  questions: [
-    { id: 'q1', type: 'mcq',
-      label: 'Chọn đáp án đúng:',
-      choices: d => d.set.choices,
-      correctIndex: d => d.idx }
-  ]
+  hint: `<div class="hint-title">📌 Tóm tắt toàn bộ công thức chương 6 – không có câu hỏi tính toán.</div>`,
+  genData(rng) { return {}; },
+  statement(d) { return ''; },
+  questions: []
 };
