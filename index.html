@@ -621,13 +621,21 @@ const DEFAULT_CFG = {
     { id:'69XDC2', name:'Lớp 69XDC2' },
   ],
   schedule: {
+    ch2: { open:null, close:null, minPct:80, active:true  },
     ch3: { open:null, close:null, minPct:80, active:true  },
-    ch4: { open:null, close:null, minPct:80, active:false },
-    ch5: { open:null, close:null, minPct:80, active:false },
-    ch6: { open:null, close:null, minPct:80, active:false },
+    ch4: { open:null, close:null, minPct:80, active:true },
+    ch5: { open:null, close:null, minPct:80, active:true },
+    ch6: { open:null, close:null, minPct:80, active:true },
+    ch7: { open:null, close:null, minPct:80, active:true  },
   }
 };
 
+  // Xóa config cũ khi version thay đổi
+if (!localStorage.getItem('chd_config_v2')) {
+  localStorage.removeItem('chd_config');
+  localStorage.setItem('chd_config_v2', '1');
+}
+  
 function loadCfg() {
   try {
     const saved = JSON.parse(localStorage.getItem(CFG_KEY));
