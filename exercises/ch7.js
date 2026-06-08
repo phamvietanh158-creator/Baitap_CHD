@@ -6,145 +6,312 @@
 
 // ── HẰNG SỐ HTML DÙNG CHUNG ─────────────────────────────────────
 
-// SVG sơ đồ tường chắn tổng quát với biểu đồ áp lực tam giác
+// ── DEFS CHUNG cho tất cả SVG ──
+// Quy ước: line(x1,y1 → x2,y2) luôn đi từ GỐC → ĐÍCH
+// marker-end tại đích → mũi tên chỉ về hướng line đang đi
+// orient="auto" → mũi tên tự xoay đúng hướng với path chuẩn M0,0 L10,3.5 L0,7
+
+const _DEFS = `
+  <defs>
+    <marker id="a-red"  markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,3.5 L0,7 Z" fill="#e53935"/></marker>
+    <marker id="a-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,3.5 L0,7 Z" fill="#1565c0"/></marker>
+    <marker id="a-org"  markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,3.5 L0,7 Z" fill="#e65100"/></marker>
+    <marker id="a-grn"  markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,3.5 L0,7 Z" fill="#1b5e20"/></marker>
+    <marker id="a-pur"  markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,3.5 L0,7 Z" fill="#7b1fa2"/></marker>
+    <marker id="a-dn-r" markerWidth="7" markerHeight="10" refX="3.5" refY="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L3.5,10 L7,0 Z" fill="#e53935"/></marker>
+    <marker id="a-dn-b" markerWidth="7" markerHeight="10" refX="3.5" refY="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L3.5,10 L7,0 Z" fill="#1565c0"/></marker>
+    <marker id="a-dn-o" markerWidth="7" markerHeight="10" refX="3.5" refY="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L3.5,10 L7,0 Z" fill="#e65100"/></marker>
+    <marker id="a-dn-g" markerWidth="7" markerHeight="10" refX="3.5" refY="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L3.5,10 L7,0 Z" fill="#1b5e20"/></marker>
+    <marker id="a-up-r" markerWidth="7" markerHeight="10" refX="3.5" refY="1" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,10 L3.5,0 L7,10 Z" fill="#e53935"/></marker>
+    <pattern id="hatch-sand" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="#bcaaa4" stroke-width="1.5"/></pattern>
+    <pattern id="hatch-clay" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="#a5d6a7" stroke-width="1.5"/></pattern>
+    <linearGradient id="g-sand" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#fff9c4"/><stop offset="100%" stop-color="#ffe082"/></linearGradient>
+    <linearGradient id="g-clay" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#e8f5e9"/><stop offset="100%" stop-color="#c8e6c9"/></linearGradient>
+    <linearGradient id="g-wall" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#90a4ae"/><stop offset="100%" stop-color="#607d8b"/></linearGradient>
+    <linearGradient id="g-pb" x1="1" y1="0" x2="0" y2="0"><stop offset="0%" stop-color="rgba(21,101,192,0.35)"/><stop offset="100%" stop-color="rgba(21,101,192,0.05)"/></linearGradient>
+    <linearGradient id="g-nền" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#90a4ae"/><stop offset="100%" stop-color="#607d8b"/></linearGradient>
+  </defs>`;
+
+// ─── SVG TƯỜNG CHẮN ĐẤT RỜI (biểu đồ tam giác) ──────────────────
 const SVG_TUONG_CHAN_ROI = `
-<svg viewBox="0 0 420 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;display:block;margin:8px auto;">
-  <!-- Đất sau tường (gạch chéo) -->
-  <rect x="10" y="20" width="160" height="170" fill="#fff9c4" stroke="#f9a825" stroke-width="1"/>
-  <line x1="10" y1="35"  x2="45"  y2="20"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="55"  x2="65"  y2="20"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="75"  x2="85"  y2="20"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="95"  x2="105" y2="20"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="115" x2="125" y2="20"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="135" x2="145" y2="20"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="155" x2="165" y2="30"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="175" x2="165" y2="55"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="30" y1="190" x2="165" y2="80"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="70" y1="190" x2="165" y2="115" stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="110" y1="190" x2="165" y2="150" stroke="#8d6e63" stroke-width="0.7"/>
+<svg viewBox="0 0 460 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:460px;display:block;margin:8px auto;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.1)">
+  ${_DEFS}
+  <rect width="460" height="230" fill="#f8faff" rx="8"/>
+  <!-- Đất sau tường -->
+  <rect x="15" y="20" width="160" height="185" fill="url(#g-sand)"/>
+  <rect x="15" y="20" width="160" height="185" fill="url(#hatch-sand)" opacity="0.4"/>
   <!-- Mặt đất -->
-  <line x1="10" y1="20" x2="170" y2="20" stroke="#555" stroke-width="1.5" stroke-dasharray="5,3"/>
-  <text x="14" y="15" font-size="9" fill="#555">Mặt đất</text>
-  <!-- Tường -->
-  <rect x="168" y="20" width="22" height="170" fill="#b0bec5" stroke="#455a64" stroke-width="2"/>
-  <text x="171" y="110" font-size="9" fill="#1a237e" transform="rotate(-90,171,110)">TƯỜNG CHẮN</text>
-  <!-- Biểu đồ áp lực tam giác -->
-  <polygon points="190,20 190,190 310,190" fill="rgba(21,101,192,0.18)" stroke="#1565c0" stroke-width="1.5"/>
-  <!-- Đường áp lực -->
-  <line x1="190" y1="20" x2="310" y2="190" stroke="#1565c0" stroke-width="2" stroke-dasharray="5,3"/>
-  <!-- Mũi tên p tại đáy -->
-  <line x1="310" y1="190" x2="195" y2="190" stroke="#e53935" stroke-width="2" marker-end="url(#arr7)"/>
-  <text x="250" y="185" font-size="10" fill="#e53935" font-weight="bold">p = K·γ·H</text>
-  <!-- Chiều cao H -->
-  <line x1="400" y1="20" x2="400" y2="190" stroke="#e65100" stroke-width="1.5" stroke-dasharray="4,2"/>
-  <text x="405" y="110" font-size="11" fill="#e65100" font-weight="bold">H</text>
-  <!-- H/3 từ đáy -->
-  <line x1="190" y1="133" x2="260" y2="133" stroke="#7b1fa2" stroke-width="1" stroke-dasharray="3,2"/>
-  <text x="262" y="137" font-size="9" fill="#7b1fa2">H/3</text>
-  <!-- E mũi tên -->
-  <line x1="260" y1="175" x2="200" y2="175" stroke="#1565c0" stroke-width="2" marker-end="url(#arr7b)"/>
-  <text x="262" y="179" font-size="10" fill="#1565c0" font-weight="bold">E</text>
+  <line x1="8" y1="20" x2="185" y2="20" stroke="#5d4037" stroke-width="2"/>
+  <line x1="8" y1="20" x2="20" y2="30" stroke="#5d4037" stroke-width="0.8"/>
+  <line x1="25" y1="20" x2="37" y2="30" stroke="#5d4037" stroke-width="0.8"/>
+  <line x1="42" y1="20" x2="54" y2="30" stroke="#5d4037" stroke-width="0.8"/>
+  <text x="15" y="14" font-size="9.5" fill="#5d4037" font-style="italic">Mặt đất tự nhiên</text>
+  <!-- Tường chắn -->
+  <rect x="175" y="20" width="26" height="185" fill="url(#g-wall)" stroke="#37474f" stroke-width="2" rx="1"/>
+  <text x="188" y="113" text-anchor="middle" font-size="9" fill="#fff" font-weight="700" transform="rotate(-90,188,113)">TƯỜNG CHẮN</text>
+  <!-- Nền -->
+  <rect x="15" y="205" width="420" height="18" fill="#c8e6c9" stroke="#388e3c" stroke-width="1"/>
+  <!-- Biểu đồ áp lực TAM GIÁC: đỉnh tại (201,20), đáy tại (201,205), góc tại (370,205) -->
+  <polygon points="201,20 201,205 370,205" fill="url(#g-pb)" stroke="#1565c0" stroke-width="2"/>
+  <!-- Mũi tên áp lực: từ phải → trái vào tường (x1 > x2, marker-end ở x2) -->
+  <line x1="360" y1="205" x2="204" y2="205" stroke="#e53935" stroke-width="2"   marker-end="url(#a-red)"/>
+  <line x1="326" y1="168" x2="204" y2="168" stroke="#e53935" stroke-width="1.5" marker-end="url(#a-red)" opacity="0.7"/>
+  <line x1="285" y1="131" x2="204" y2="131" stroke="#e53935" stroke-width="1.5" marker-end="url(#a-red)" opacity="0.5"/>
+  <line x1="244" y1="94"  x2="204" y2="94"  stroke="#e53935" stroke-width="1"   marker-end="url(#a-red)" opacity="0.35"/>
+  <!-- Nhãn p_max -->
+  <rect x="345" y="196" width="100" height="16" fill="white" rx="3" opacity="0.9"/>
+  <text x="395" y="207" text-anchor="middle" font-size="9.5" fill="#e53935" font-weight="700">p = Ka·γ·H</text>
+  <!-- Kích thước H: từ trên xuống, marker-end ở dưới -->
+  <line x1="428" y1="20" x2="428" y2="205" stroke="#e65100" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#a-dn-o)"/>
+  <line x1="422" y1="20"  x2="434" y2="20"  stroke="#e65100" stroke-width="1.5"/>
+  <line x1="422" y1="205" x2="434" y2="205" stroke="#e65100" stroke-width="1.5"/>
+  <rect x="432" y="105" width="22" height="16" fill="white" rx="3" opacity="0.9"/>
+  <text x="443" y="117" text-anchor="middle" font-size="13" fill="#e65100" font-weight="700">H</text>
+  <!-- H/3 -->
+  <line x1="201" y1="143" x2="340" y2="143" stroke="#7b1fa2" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <rect x="306" y="134" width="38" height="14" fill="white" rx="3" opacity="0.9"/>
+  <text x="325" y="144" text-anchor="middle" font-size="9.5" fill="#7b1fa2" font-weight="600">H/3</text>
+  <!-- E hợp lực: từ phải → trái -->
+  <line x1="355" y1="185" x2="204" y2="185" stroke="#1565c0" stroke-width="2.5" marker-end="url(#a-blue)"/>
+  <rect x="358" y="177" width="88" height="16" fill="#e3f2fd" rx="3" stroke="#90caf9" stroke-width="1"/>
+  <text x="402" y="189" text-anchor="middle" font-size="9.5" fill="#1565c0" font-weight="700">E=½·Ka·γ·H²</text>
   <!-- Thông số đất -->
-  <text x="50" y="105" font-size="11" fill="#1b5e20" font-weight="bold">γ, φ</text>
-  <text x="40" y="120" font-size="10" fill="#555">(c = 0)</text>
-  <defs>
-    <marker id="arr7" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-      <path d="M6,0 L6,6 L0,3 z" fill="#e53935"/>
-    </marker>
-    <marker id="arr7b" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-      <path d="M6,0 L6,6 L0,3 z" fill="#1565c0"/>
-    </marker>
-  </defs>
+  <rect x="28" y="90" width="105" height="44" fill="white" rx="5" opacity="0.88" stroke="#f9a825" stroke-width="1"/>
+  <text x="81" y="108" text-anchor="middle" font-size="11" fill="#1b5e20" font-weight="700">γ, φ (c = 0)</text>
+  <text x="81" y="124" text-anchor="middle" font-size="9.5" fill="#555">Ka = tg²(45−φ/2)</text>
 </svg>`;
 
-// SVG biểu đồ áp lực đất dính (có vùng âm, hc)
+// ─── SVG TƯỜNG ĐẤT DÍNH (vùng hc âm) ────────────────────────────
 const SVG_TUONG_DINH = `
-<svg viewBox="0 0 440 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:440px;display:block;margin:8px auto;">
+<svg viewBox="0 0 470 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:470px;display:block;margin:8px auto;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.1)">
+  ${_DEFS}
+  <rect width="470" height="250" fill="#f8faff" rx="8"/>
   <!-- Đất sau tường -->
-  <rect x="10" y="20" width="160" height="190" fill="#e8f5e9" stroke="#388e3c" stroke-width="1"/>
-  <line x1="10" y1="35"  x2="45"  y2="20"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="60"  x2="70"  y2="20"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="85"  x2="95"  y2="20"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="110" x2="120" y2="20"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="135" x2="145" y2="20"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="160" x2="165" y2="40"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="185" x2="165" y2="80"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="35" y1="210" x2="165" y2="120" stroke="#8d6e63" stroke-width="0.7"/>
+  <rect x="15" y="20" width="160" height="200" fill="url(#g-clay)"/>
+  <rect x="15" y="20" width="160" height="200" fill="url(#hatch-clay)" opacity="0.5"/>
   <!-- Mặt đất -->
-  <line x1="10" y1="20" x2="170" y2="20" stroke="#555" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="8" y1="20" x2="185" y2="20" stroke="#5d4037" stroke-width="2"/>
+  <text x="15" y="14" font-size="9.5" fill="#5d4037" font-style="italic">Mặt đất</text>
   <!-- Tường -->
-  <rect x="168" y="20" width="20" height="190" fill="#b0bec5" stroke="#455a64" stroke-width="2"/>
-  <!-- hc vùng âm -->
-  <line x1="188" y1="20" x2="188" y2="75" stroke="#e53935" stroke-width="1" stroke-dasharray="3,2"/>
-  <line x1="188" y1="75" x2="245" y2="75" stroke="#e53935" stroke-width="1" stroke-dasharray="3,2"/>
-  <text x="135" y="50" font-size="9.5" fill="#e53935" font-weight="bold">hc</text>
-  <line x1="163" y1="20" x2="163" y2="75" stroke="#e53935" stroke-width="1"/>
-  <line x1="158" y1="20" x2="168" y2="20" stroke="#e53935" stroke-width="1"/>
-  <line x1="158" y1="75" x2="168" y2="75" stroke="#e53935" stroke-width="1"/>
-  <!-- Biểu đồ âm (tam giác trên hc) - màu đỏ nhạt -->
-  <polygon points="188,20 188,75 245,75" fill="rgba(229,57,53,0.1)" stroke="#e53935" stroke-width="1" stroke-dasharray="4,2"/>
-  <text x="205" y="60" font-size="9" fill="#e53935">p &lt; 0</text>
-  <text x="200" y="70" font-size="9" fill="#e53935">(bỏ qua)</text>
-  <!-- Biểu đồ dương (từ hc đến đáy) -->
-  <polygon points="188,75 188,210 370,210" fill="rgba(21,101,192,0.2)" stroke="#1565c0" stroke-width="1.5"/>
-  <!-- Mũi tên áp lực -->
-  <line x1="370" y1="210" x2="193" y2="210" stroke="#1565c0" stroke-width="2" marker-end="url(#arr7c)"/>
-  <text x="240" y="207" font-size="9.5" fill="#1565c0" font-weight="bold">p_H = Ka·γ·H − 2c·√Ka</text>
+  <rect x="175" y="20" width="26" height="200" fill="url(#g-wall)" stroke="#37474f" stroke-width="2" rx="1"/>
+  <text x="188" y="120" text-anchor="middle" font-size="9" fill="#fff" font-weight="700" transform="rotate(-90,188,120)">TƯỜNG CHẮN</text>
+  <!-- Nền -->
+  <rect x="15" y="220" width="440" height="18" fill="#c8e6c9" stroke="#388e3c" stroke-width="1"/>
+  <!-- Vùng âm (hc) -->
+  <rect x="201" y="20" width="75" height="70" fill="rgba(229,57,53,0.08)" stroke="#e53935" stroke-width="1.5" stroke-dasharray="5,3" rx="2"/>
+  <text x="240" y="52" text-anchor="middle" font-size="9" fill="#e53935" font-style="italic">p &lt; 0</text>
+  <text x="240" y="65" text-anchor="middle" font-size="9" fill="#e53935">(bỏ qua)</text>
+  <!-- Đường hc (p=0) -->
+  <line x1="175" y1="90" x2="280" y2="90" stroke="#e53935" stroke-width="1.8" stroke-dasharray="5,3"/>
+  <!-- hc kích thước: từ trên xuống -->
+  <line x1="158" y1="20" x2="158" y2="90" stroke="#e53935" stroke-width="1.5" marker-end="url(#a-dn-r)"/>
+  <line x1="152" y1="20" x2="164" y2="20" stroke="#e53935" stroke-width="1.5"/>
+  <line x1="152" y1="90" x2="164" y2="90" stroke="#e53935" stroke-width="1.5"/>
+  <rect x="128" y="48" width="24" height="16" fill="white" rx="3" opacity="0.9"/>
+  <text x="140" y="60" text-anchor="middle" font-size="12" fill="#e53935" font-weight="700">hc</text>
+  <!-- Biểu đồ dương (hc→đáy): tam giác từ (201,90) đến (400,220) -->
+  <polygon points="201,90 201,220 400,220" fill="rgba(21,101,192,0.22)" stroke="#1565c0" stroke-width="2"/>
+  <!-- Mũi tên áp lực dương: từ phải → trái -->
+  <line x1="395" y1="220" x2="204" y2="220" stroke="#1565c0" stroke-width="2"   marker-end="url(#a-blue)"/>
+  <line x1="355" y1="183" x2="204" y2="183" stroke="#1565c0" stroke-width="1.5" marker-end="url(#a-blue)" opacity="0.7"/>
+  <line x1="302" y1="146" x2="204" y2="146" stroke="#1565c0" stroke-width="1"   marker-end="url(#a-blue)" opacity="0.5"/>
+  <!-- Nhãn p_H -->
+  <rect x="362" y="212" width="98" height="15" fill="white" rx="3" opacity="0.9"/>
+  <text x="411" y="223" text-anchor="middle" font-size="8.5" fill="#1565c0" font-weight="700">Ka·γH − 2c√Ka</text>
+  <!-- H: từ trên xuống -->
+  <line x1="440" y1="20" x2="440" y2="220" stroke="#e65100" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#a-dn-o)"/>
+  <line x1="434" y1="20"  x2="446" y2="20"  stroke="#e65100" stroke-width="1.5"/>
+  <line x1="434" y1="220" x2="446" y2="220" stroke="#e65100" stroke-width="1.5"/>
+  <text x="452" y="125" font-size="13" fill="#e65100" font-weight="700">H</text>
+  <!-- H-hc -->
+  <line x1="456" y1="90" x2="456" y2="220" stroke="#1565c0" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#a-dn-b)"/>
+  <rect x="406" y="148" width="42" height="15" fill="white" rx="3" opacity="0.9"/>
+  <text x="427" y="159" text-anchor="middle" font-size="10" fill="#1565c0" font-weight="600">H−hc</text>
   <!-- Thông số -->
-  <text x="50" y="115" font-size="11" fill="#1b5e20" font-weight="bold">γ, φ, c</text>
-  <!-- H và (H-hc) -->
-  <text x="415" y="50" font-size="9.5" fill="#e65100" font-weight="bold">H</text>
-  <line x1="408" y1="20" x2="408" y2="210" stroke="#e65100" stroke-width="1.5" stroke-dasharray="4,2"/>
-  <text x="415" y="150" font-size="9.5" fill="#1565c0" font-weight="bold">H-hc</text>
-  <defs>
-    <marker id="arr7c" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-      <path d="M6,0 L6,6 L0,3 z" fill="#1565c0"/>
-    </marker>
-  </defs>
+  <rect x="28" y="100" width="105" height="44" fill="white" rx="5" opacity="0.88" stroke="#a5d6a7" stroke-width="1"/>
+  <text x="81" y="118" text-anchor="middle" font-size="11" fill="#1b5e20" font-weight="700">γ, φ, c</text>
+  <text x="81" y="134" text-anchor="middle" font-size="9.5" fill="#555">hc = 2c/(γ√Ka)</text>
 </svg>`;
 
-// SVG đất rời có tải trọng phân bố q
+// ─── SVG TƯỜNG ĐẤT RỜI CÓ TẢI q (hình thang) ───────────────────
 const SVG_TUONG_Q = `
-<svg viewBox="0 0 440 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:440px;display:block;margin:8px auto;">
-  <!-- Tải trọng phân bố q -->
-  <line x1="10" y1="18" x2="170" y2="18" stroke="#e65100" stroke-width="2"/>
-  <line x1="30" y1="10" x2="30" y2="18" stroke="#e65100" stroke-width="1.5" marker-end="url(#arr7q)"/>
-  <line x1="60" y1="10" x2="60" y2="18" stroke="#e65100" stroke-width="1.5" marker-end="url(#arr7q)"/>
-  <line x1="90" y1="10" x2="90" y2="18" stroke="#e65100" stroke-width="1.5" marker-end="url(#arr7q)"/>
-  <line x1="120" y1="10" x2="120" y2="18" stroke="#e65100" stroke-width="1.5" marker-end="url(#arr7q)"/>
-  <line x1="150" y1="10" x2="150" y2="18" stroke="#e65100" stroke-width="1.5" marker-end="url(#arr7q)"/>
-  <text x="55" y="9" font-size="10" fill="#e65100" font-weight="bold">q (kN/m²)</text>
+<svg viewBox="0 0 470 245" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:470px;display:block;margin:8px auto;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.1)">
+  ${_DEFS}
+  <rect width="470" height="245" fill="#f8faff" rx="8"/>
+  <!-- Tải q phân bố: từ trên xuống -->
+  <line x1="12" y1="18" x2="178" y2="18" stroke="#e65100" stroke-width="2.5"/>
+  <line x1="30"  y1="5" x2="30"  y2="16" stroke="#e65100" stroke-width="1.8" marker-end="url(#a-dn-o)"/>
+  <line x1="60"  y1="5" x2="60"  y2="16" stroke="#e65100" stroke-width="1.8" marker-end="url(#a-dn-o)"/>
+  <line x1="90"  y1="5" x2="90"  y2="16" stroke="#e65100" stroke-width="1.8" marker-end="url(#a-dn-o)"/>
+  <line x1="120" y1="5" x2="120" y2="16" stroke="#e65100" stroke-width="1.8" marker-end="url(#a-dn-o)"/>
+  <line x1="150" y1="5" x2="150" y2="16" stroke="#e65100" stroke-width="1.8" marker-end="url(#a-dn-o)"/>
+  <rect x="52" y="0" width="82" height="13" fill="white" rx="3" opacity="0.9"/>
+  <text x="93" y="10" text-anchor="middle" font-size="10" fill="#e65100" font-weight="700">q (kN/m²)</text>
   <!-- Đất sau tường -->
-  <rect x="10" y="18" width="160" height="182" fill="#fff9c4" stroke="#f9a825" stroke-width="1"/>
-  <line x1="10" y1="33"  x2="45"  y2="18"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="58"  x2="70"  y2="18"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="83"  x2="95"  y2="18"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="108" x2="120" y2="18"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="133" x2="145" y2="18"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="158" x2="165" y2="28"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="10" y1="183" x2="165" y2="68"  stroke="#8d6e63" stroke-width="0.7"/>
-  <line x1="35" y1="200" x2="165" y2="110" stroke="#8d6e63" stroke-width="0.7"/>
-  <!-- Mặt đất -->
-  <line x1="10" y1="18" x2="170" y2="18" stroke="#555" stroke-width="1.5"/>
+  <rect x="12" y="18" width="165" height="197" fill="url(#g-sand)"/>
+  <rect x="12" y="18" width="165" height="197" fill="url(#hatch-sand)" opacity="0.4"/>
+  <line x1="8" y1="18" x2="185" y2="18" stroke="#5d4037" stroke-width="2"/>
   <!-- Tường -->
-  <rect x="168" y="18" width="20" height="182" fill="#b0bec5" stroke="#455a64" stroke-width="2"/>
-  <!-- Biểu đồ hình thang: p_top = Ka*q, p_bot = Ka*(q+γH) -->
-  <polygon points="188,18 188,200 360,200 240,18" fill="rgba(21,101,192,0.18)" stroke="#1565c0" stroke-width="1.5"/>
+  <rect x="177" y="18" width="26" height="197" fill="url(#g-wall)" stroke="#37474f" stroke-width="2" rx="1"/>
+  <text x="190" y="117" text-anchor="middle" font-size="9" fill="#fff" font-weight="700" transform="rotate(-90,190,117)">TƯỜNG CHẮN</text>
+  <!-- Nền -->
+  <rect x="12" y="215" width="445" height="18" fill="#c8e6c9" stroke="#388e3c" stroke-width="1"/>
+  <!-- Biểu đồ hình THANG: điểm (203,18),(203,215),(400,215),(258,18) -->
+  <polygon points="203,18 203,215 400,215 258,18" fill="url(#g-pb)" stroke="#1565c0" stroke-width="2"/>
+  <!-- Mũi tên áp lực: từ phải → trái -->
+  <line x1="254" y1="18"  x2="206" y2="18"  stroke="#e65100" stroke-width="1.8" marker-end="url(#a-org)"/>
+  <line x1="390" y1="215" x2="206" y2="215" stroke="#1565c0" stroke-width="2"   marker-end="url(#a-blue)"/>
   <!-- Nhãn 2 đầu -->
-  <text x="244" y="32" font-size="9.5" fill="#e65100" font-weight="bold">Ka·q</text>
-  <text x="363" y="205" font-size="9.5" fill="#1565c0" font-weight="bold">Ka·(γH+q)</text>
-  <text x="50" y="110" font-size="11" fill="#1b5e20" font-weight="bold">γ, φ (c=0)</text>
-  <!-- E tổng = E1 + E2 -->
-  <text x="290" y="145" font-size="9.5" fill="#1565c0">E = E₁ + E₂</text>
-  <text x="290" y="158" font-size="9" fill="#7b1fa2">E₁=Ka·q·H</text>
-  <text x="290" y="170" font-size="9" fill="#7b1fa2">E₂=½·Ka·γ·H²</text>
-  <defs>
-    <marker id="arr7q" markerWidth="5" markerHeight="5" refX="2.5" refY="5" orient="auto">
-      <path d="M0,0 L5,0 L2.5,5 z" fill="#e65100"/>
-    </marker>
-  </defs>
+  <rect x="257" y="10" width="55" height="14" fill="#fff3e0" rx="3" stroke="#ffb74d" stroke-width="1"/>
+  <text x="285" y="20" text-anchor="middle" font-size="9" fill="#e65100" font-weight="700">Ka·q</text>
+  <rect x="393" y="207" width="70" height="14" fill="#e3f2fd" rx="3" stroke="#90caf9" stroke-width="1"/>
+  <text x="428" y="218" text-anchor="middle" font-size="9" fill="#1565c0" font-weight="700">Ka·(γH+q)</text>
+  <!-- Phân tích E1 + E2 -->
+  <rect x="218" y="130" width="148" height="56" fill="white" rx="5" opacity="0.9" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="292" y="148" text-anchor="middle" font-size="9.5" fill="#1565c0" font-weight="700">E = E₁ + E₂</text>
+  <text x="292" y="163" text-anchor="middle" font-size="9"   fill="#7b1fa2">E₁ = Ka·q·H   (chữ nhật)</text>
+  <text x="292" y="178" text-anchor="middle" font-size="9"   fill="#7b1fa2">E₂ = ½·Ka·γ·H²  (tam giác)</text>
+  <!-- H: từ trên xuống -->
+  <line x1="445" y1="18" x2="445" y2="215" stroke="#e65100" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#a-dn-o)"/>
+  <line x1="439" y1="18"  x2="451" y2="18"  stroke="#e65100" stroke-width="1.5"/>
+  <line x1="439" y1="215" x2="451" y2="215" stroke="#e65100" stroke-width="1.5"/>
+  <text x="458" y="120" font-size="13" fill="#e65100" font-weight="700">H</text>
 </svg>`;
 
+// ─── SVG 3 KIỂU TƯỜNG CHẮN (cho b1a) ────────────────────────────
+const SVG_3_KIEU_TUONG = `
+<svg viewBox="0 0 580 205" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:580px;display:block;margin:10px auto;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.1)">
+  ${_DEFS}
+  <rect width="580" height="205" fill="#fafbff" rx="8"/>
+
+  <!-- ① TƯỜNG TRỌNG LỰC -->
+  <rect x="4" y="4" width="182" height="197" rx="6" fill="#fffde7" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="95" y="19" text-anchor="middle" font-size="10" font-weight="700" fill="#e65100">① Tường trọng lực</text>
+  <rect x="14" y="28" width="70" height="138" fill="url(#g-sand)"/>
+  <rect x="14" y="28" width="70" height="138" fill="url(#hatch-sand)" opacity="0.5"/>
+  <line x1="8" y1="28" x2="98" y2="28" stroke="#5d4037" stroke-width="1.5"/>
+  <!-- Thân tường hình thang -->
+  <polygon points="84,28 112,28 120,166 76,166" fill="#90a4ae" stroke="#455a64" stroke-width="1.5"/>
+  <rect x="63" y="166" width="72" height="12" fill="#607d8b" stroke="#37474f" stroke-width="1.5"/>
+  <rect x="10" y="178" width="170" height="12" fill="#c8e6c9" stroke="#388e3c" stroke-width="1" opacity="0.8"/>
+  <!-- Áp lực Ea: từ phải → trái -->
+  <line x1="108" y1="148" x2="86" y2="148" stroke="#e53935" stroke-width="1.8" marker-end="url(#a-red)"/>
+  <text x="115" y="152" font-size="8.5" fill="#e53935" font-weight="600">Ea</text>
+  <!-- Trọng lượng W: từ trên xuống -->
+  <line x1="98" y1="55" x2="98" y2="85" stroke="#1b5e20" stroke-width="2.5" marker-end="url(#a-dn-g)"/>
+  <text x="106" y="76" font-size="9" fill="#1b5e20" font-weight="700">W</text>
+  <text x="20" y="195" font-size="8" fill="#888" font-style="italic">Ổn định nhờ W bản thân</text>
+
+  <!-- ② TƯỜNG CỪ -->
+  <rect x="200" y="4" width="182" height="197" rx="6" fill="#e3f2fd" stroke="#90caf9" stroke-width="1.5"/>
+  <text x="291" y="19" text-anchor="middle" font-size="10" font-weight="700" fill="#0d47a1">② Tường cừ</text>
+  <rect x="210" y="28" width="68" height="120" fill="url(#g-sand)"/>
+  <rect x="210" y="28" width="68" height="120" fill="url(#hatch-sand)" opacity="0.5"/>
+  <line x1="204" y1="28" x2="288" y2="28" stroke="#5d4037" stroke-width="1.5"/>
+  <!-- Tấm cừ -->
+  <rect x="278" y="28" width="12" height="148" fill="url(#g-wall)" stroke="#37474f" stroke-width="1.5"/>
+  <!-- Đất trước tường bị động -->
+  <rect x="290" y="105" width="72" height="71" fill="#c8e6c9" opacity="0.7"/>
+  <rect x="290" y="105" width="72" height="71" fill="url(#hatch-clay)" opacity="0.35"/>
+  <line x1="204" y1="105" x2="372" y2="105" stroke="#555" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="212" y="100" font-size="8" fill="#555">Mặt đào</text>
+  <!-- Ea: từ phải → trái -->
+  <line x1="278" y1="75" x2="258" y2="75" stroke="#e53935" stroke-width="1.8" marker-end="url(#a-red)"/>
+  <text x="214" y="79" font-size="8.5" fill="#e53935">Ea →</text>
+  <!-- Eb bị động: từ trái → phải -->
+  <line x1="290" y1="135" x2="310" y2="135" stroke="#1b5e20" stroke-width="1.8" marker-end="url(#a-grn)"/>
+  <text x="315" y="139" font-size="8.5" fill="#1b5e20">← Eb</text>
+  <rect x="205" y="178" width="172" height="12" fill="#c8e6c9" stroke="#388e3c" stroke-width="1" opacity="0.8"/>
+  <text x="214" y="195" font-size="8" fill="#888" font-style="italic">Ổn định: Ea ≤ Eb</text>
+
+  <!-- ③ 3 HÌNH THỨC MẤT ỔN ĐỊNH -->
+  <rect x="396" y="4" width="180" height="197" rx="6" fill="#fff0f0" stroke="#ef9a9a" stroke-width="1.5"/>
+  <text x="486" y="19" text-anchor="middle" font-size="10" font-weight="700" fill="#c62828">③ Mất ổn định ngoài</text>
+  <!-- Tường nhỏ -->
+  <polygon points="448,38 464,38 470,155 440,155" fill="#90a4ae" stroke="#455a64" stroke-width="1.2"/>
+  <rect x="430" y="155" width="52" height="8" fill="#607d8b" stroke="#37474f" stroke-width="1"/>
+  <rect x="404" y="163" width="168" height="10" fill="#c8e6c9" stroke="#388e3c" stroke-width="1" opacity="0.8"/>
+  <!-- Đất -->
+  <rect x="404" y="38" width="44" height="125" fill="url(#g-sand)" opacity="0.7"/>
+  <rect x="404" y="38" width="44" height="125" fill="url(#hatch-sand)" opacity="0.35"/>
+  <!-- ①Trượt: mũi tên ngang -->
+  <line x1="440" y1="163" x2="404" y2="163" stroke="#e53935" stroke-width="2" marker-end="url(#a-red)" stroke-dasharray="4,3"/>
+  <text x="402" y="185" font-size="8" fill="#e53935" font-weight="600">①Trượt đáy</text>
+  <!-- ②Lật: cung tròn + mũi tên -->
+  <path d="M470,155 A18,18 0 0,1 488,168" fill="none" stroke="#e65100" stroke-width="2"/>
+  <line x1="486" y1="167" x2="490" y2="174" stroke="#e65100" stroke-width="2" marker-end="url(#a-dn-o)"/>
+  <text x="490" y="185" font-size="8" fill="#e65100" font-weight="600">②Lật</text>
+  <!-- ③Phá hoại nền: mũi tên xuống -->
+  <line x1="455" y1="163" x2="455" y2="178" stroke="#7b1fa2" stroke-width="2" marker-end="url(#a-dn-r)" stroke-dasharray="4,3"/>
+  <text x="528" y="176" font-size="8" fill="#7b1fa2" font-weight="600">③Phá hoại</text>
+  <text x="528" y="188" font-size="8" fill="#7b1fa2">nền</text>
+</svg>`;
+
+// ─── SVG BA LOẠI ÁP LỰC + CHUYỂN VỊ TƯỜNG (cho b1b) ─────────────
+const SVG_3_LOAI_AP_LUC = `
+<svg viewBox="0 0 580 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:580px;display:block;margin:10px auto;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.1)">
+  ${_DEFS}
+  <rect width="580" height="210" fill="#fafbff" rx="8"/>
+
+  <!-- ① CHỦ ĐỘNG (tường dịch ra xa) -->
+  <rect x="4" y="4" width="180" height="202" rx="6" fill="#e3f2fd" stroke="#90caf9" stroke-width="1.5"/>
+  <text x="94" y="19" text-anchor="middle" font-size="10" font-weight="700" fill="#0d47a1">Chủ động (Ea)</text>
+  <text x="94" y="30" text-anchor="middle" font-size="8.5" fill="#555">Tường dịch ra xa →</text>
+  <rect x="14" y="36" width="65" height="132" fill="url(#g-sand)"/>
+  <rect x="14" y="36" width="65" height="132" fill="url(#hatch-sand)" opacity="0.4"/>
+  <line x1="8" y1="36" x2="92" y2="36" stroke="#5d4037" stroke-width="1.5"/>
+  <!-- Mặt trượt -->
+  <line x1="14" y1="168" x2="79" y2="36" stroke="#e53935" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <!-- Tường (đã dịch ra) -->
+  <rect x="80" y="36" width="14" height="132" fill="url(#g-wall)" stroke="#455a64" stroke-width="1.5"/>
+  <!-- Mũi tên tường dịch ra: từ trái → phải -->
+  <line x1="94" y1="72" x2="114" y2="72" stroke="#e53935" stroke-width="2.5" marker-end="url(#a-red)"/>
+  <rect x="114" y="65" width="55" height="13" fill="white" rx="2" opacity="0.9"/>
+  <text x="142" y="75" text-anchor="middle" font-size="8.5" fill="#e53935" font-weight="700">Δ≈0.5%H</text>
+  <!-- Biểu đồ Ea (nhỏ): từ phải → trái -->
+  <polygon points="94,36 94,168 128,168" fill="rgba(21,101,192,0.2)" stroke="#1565c0" stroke-width="1.5"/>
+  <line x1="126" y1="168" x2="96" y2="168" stroke="#1565c0" stroke-width="1.8" marker-end="url(#a-blue)"/>
+  <rect x="110" y="178" width="54" height="14" fill="#e3f2fd" rx="3" stroke="#90caf9" stroke-width="1"/>
+  <text x="137" y="189" text-anchor="middle" font-size="9.5" fill="#1565c0" font-weight="700">Ea (nhỏ)</text>
+  <text x="94" y="202" text-anchor="middle" font-size="8" fill="#555">Ka &lt; K₀ &lt; Kb</text>
+
+  <!-- ② TĨNH (đứng yên) -->
+  <rect x="200" y="4" width="180" height="202" rx="6" fill="#fffde7" stroke="#fff176" stroke-width="1.5"/>
+  <text x="290" y="19" text-anchor="middle" font-size="10" font-weight="700" fill="#e65100">Tĩnh (E₀)</text>
+  <text x="290" y="30" text-anchor="middle" font-size="8.5" fill="#555">Tường không chuyển vị</text>
+  <rect x="210" y="36" width="68" height="132" fill="url(#g-sand)" opacity="0.8"/>
+  <rect x="210" y="36" width="68" height="132" fill="url(#hatch-sand)" opacity="0.4"/>
+  <line x1="204" y1="36" x2="286" y2="36" stroke="#5d4037" stroke-width="1.5"/>
+  <rect x="278" y="36" width="14" height="132" fill="url(#g-wall)" stroke="#455a64" stroke-width="1.5"/>
+  <!-- Biểu đồ E0 (trung bình): từ phải → trái -->
+  <polygon points="292,36 292,168 352,168" fill="rgba(230,81,0,0.2)" stroke="#e65100" stroke-width="1.5"/>
+  <line x1="350" y1="168" x2="294" y2="168" stroke="#e65100" stroke-width="1.8" marker-end="url(#a-org)"/>
+  <rect x="320" y="178" width="50" height="14" fill="#fff3e0" rx="3" stroke="#ffb74d" stroke-width="1"/>
+  <text x="345" y="189" text-anchor="middle" font-size="9.5" fill="#e65100" font-weight="700">E₀ (TB)</text>
+  <!-- K0 label -->
+  <rect x="216" y="126" width="56" height="28" fill="white" rx="4" opacity="0.9" stroke="#ffe082" stroke-width="1"/>
+  <text x="244" y="140" text-anchor="middle" font-size="8.5" fill="#e65100">K₀ = μ/(1−μ)</text>
+  <text x="244" y="151" text-anchor="middle" font-size="8" fill="#555">μ: hệ số Poisson</text>
+
+  <!-- ③ BỊ ĐỘNG (đẩy vào) -->
+  <rect x="396" y="4" width="180" height="202" rx="6" fill="#e8f5e9" stroke="#a5d6a7" stroke-width="1.5"/>
+  <text x="486" y="19" text-anchor="middle" font-size="10" font-weight="700" fill="#1b5e20">Bị động (Eb)</text>
+  <text x="486" y="30" text-anchor="middle" font-size="8.5" fill="#555">Tường đẩy vào đất ←</text>
+  <rect x="406" y="36" width="68" height="132" fill="url(#g-clay)" opacity="0.8"/>
+  <rect x="406" y="36" width="68" height="132" fill="url(#hatch-clay)" opacity="0.4"/>
+  <line x1="400" y1="36" x2="484" y2="36" stroke="#5d4037" stroke-width="1.5"/>
+  <rect x="474" y="36" width="14" height="132" fill="url(#g-wall)" stroke="#455a64" stroke-width="1.5"/>
+  <!-- Mũi tên tường đẩy vào: từ phải → trái -->
+  <line x1="474" y1="72" x2="454" y2="72" stroke="#1b5e20" stroke-width="2.5" marker-end="url(#a-grn)"/>
+  <rect x="400" y="65" width="50" height="13" fill="white" rx="2" opacity="0.9"/>
+  <text x="425" y="75" text-anchor="middle" font-size="8.5" fill="#1b5e20" font-weight="700">Δ≈5%H</text>
+  <!-- Biểu đồ Eb (lớn): từ phải → trái -->
+  <polygon points="488,36 488,168 565,168" fill="rgba(27,94,32,0.22)" stroke="#2e7d32" stroke-width="1.5"/>
+  <line x1="563" y1="168" x2="490" y2="168" stroke="#2e7d32" stroke-width="1.8" marker-end="url(#a-grn)"/>
+  <rect x="530" y="178" width="46" height="14" fill="#e8f5e9" rx="3" stroke="#a5d6a7" stroke-width="1"/>
+  <text x="553" y="189" text-anchor="middle" font-size="9.5" fill="#1b5e20" font-weight="700">Eb (lớn)</text>
+  <text x="486" y="202" text-anchor="middle" font-size="8" fill="#555" font-style="italic">Kb = 1/Ka</text>
+</svg>`;
 // Bảng Ka, K0, Kb
 const BANG_HE_SO_AP_LUC = `
 <div style="margin-top:10px;">
@@ -197,7 +364,8 @@ const BANG_HE_SO_AP_LUC = `
 const LY_THUYET_TUONG_HTML = `
 <div class="theory-block">
   <div class="theory-label">📖 TƯỜNG CHẮN – Phân loại và hình thức mất ổn định</div>
-  <table style="border-collapse:collapse;font-size:.82rem;width:100%;margin-top:6px;">
+  ${SVG_3_KIEU_TUONG}
+  <table style="border-collapse:collapse;font-size:.82rem;width:100%;margin-top:8px;">
     <thead>
       <tr style="background:#1565c0;color:#fff;">
         <th style="padding:5px 8px;">Loại tường</th>
@@ -210,54 +378,53 @@ const LY_THUYET_TUONG_HTML = `
         <td style="padding:5px 8px;">Nhờ trọng lượng bản thân tường</td>
       </tr>
       <tr>
-        <td style="padding:5px 8px;font-weight:700;">② Tường bán trọng lực</td>
-        <td style="padding:5px 8px;">Trọng lượng tường + đất trên bản đáy kéo dài</td>
+        <td style="padding:5px 8px;font-weight:700;">② Tường cừ</td>
+        <td style="padding:5px 8px;">Cừ cắm sâu vào đất, dùng áp lực bị động Eb chống lại Ea</td>
       </tr>
-      <tr style="background:#e3f2fd;">
-        <td style="padding:5px 8px;font-weight:700;">③ Tường cừ</td>
-        <td style="padding:5px 8px;">Cừ cắm sâu vào đất, dùng áp lực bị động E₂</td>
+      <tr style="background:#fff0f0;">
+        <td style="padding:5px 8px;font-weight:700;color:#c62828;">③ 3 hình thức mất ổn định ngoài</td>
+        <td style="padding:5px 8px;">① Trượt phẳng theo đáy &nbsp;② Lật quanh mép trước &nbsp;③ Phá hoại nền</td>
       </tr>
     </tbody>
   </table>
-  <div style="margin-top:8px;font-size:.82rem;line-height:1.75;">
-    <b>3 hình thức mất ổn định ngoài (tường trọng lực):</b><br>
-    ① Trượt phẳng theo đáy tường<br>
-    ② Lật quanh mép trước tường<br>
-    ③ Sức chịu tải của nền dưới đáy tường
-  </div>
 </div>`;
 
 const LY_THUYET_AP_LUC_HTML = `
 <div class="theory-block">
-  <div class="theory-label">📖 BA LOẠI ÁP LỰC ĐẤT LÊN TƯỜNG</div>
-  <table style="border-collapse:collapse;font-size:.82rem;width:100%;margin-top:6px;">
+  <div class="theory-label">📖 BA LOẠI ÁP LỰC ĐẤT LÊN TƯỜNG – Quan hệ với chuyển vị</div>
+  ${SVG_3_LOAI_AP_LUC}
+  <table style="border-collapse:collapse;font-size:.82rem;width:100%;margin-top:8px;">
     <thead>
       <tr style="background:#1565c0;color:#fff;text-align:center;">
         <th style="padding:5px 8px;">Loại áp lực</th>
         <th style="padding:5px 8px;">Khi nào xảy ra</th>
+        <th style="padding:5px 8px;">Chuyển vị cần thiết</th>
         <th style="padding:5px 8px;">Giá trị</th>
       </tr>
     </thead>
     <tbody>
       <tr style="background:#fff9c4;">
         <td style="padding:5px 8px;font-weight:700;color:#e65100;">Tĩnh E₀</td>
-        <td style="padding:5px 8px;">Tường không chuyển vị (cứng tuyệt đối)</td>
+        <td style="padding:5px 8px;">Tường <b>không chuyển vị</b></td>
+        <td style="padding:5px 8px;text-align:center;">Δ = 0</td>
         <td style="padding:5px 8px;text-align:center;">Trung bình</td>
       </tr>
       <tr>
         <td style="padding:5px 8px;font-weight:700;color:#1565c0;">Chủ động Ea</td>
-        <td style="padding:5px 8px;">Tường dịch <b>ra xa</b> khối đất; Δ = 0.5–1%H</td>
+        <td style="padding:5px 8px;">Tường dịch <b>ra xa</b> khối đất</td>
+        <td style="padding:5px 8px;text-align:center;">Δ ≈ 0.5–1%H</td>
         <td style="padding:5px 8px;text-align:center;color:#1565c0;font-weight:700;">NHỎ NHẤT</td>
       </tr>
       <tr style="background:#e8f5e9;">
         <td style="padding:5px 8px;font-weight:700;color:#1b5e20;">Bị động Eb</td>
-        <td style="padding:5px 8px;">Tường đẩy <b>vào</b> khối đất; Δ = 2–15%H</td>
+        <td style="padding:5px 8px;">Tường đẩy <b>vào</b> khối đất</td>
+        <td style="padding:5px 8px;text-align:center;">Δ ≈ 2–15%H</td>
         <td style="padding:5px 8px;text-align:center;color:#1b5e20;font-weight:700;">LỚN NHẤT</td>
       </tr>
     </tbody>
   </table>
   <div style="margin-top:6px;font-size:.8rem;color:#555;">
-    Quan hệ: E<sub>a</sub> &lt; E₀ &lt; E<sub>b</sub>
+    Quan hệ: E<sub>a</sub> &lt; E₀ &lt; E<sub>b</sub> &nbsp;|&nbsp; Ka · Kb = 1
   </div>
 </div>`;
 
@@ -1170,41 +1337,8 @@ EXERCISES['ch7_tomtat'] = {
 </div>`,
   hint: `<div class="hint-title">💡 Tóm tắt công thức ôn tập – không có câu hỏi tính toán.</div>`,
   genData(rng) {
-    const sets = [
-      {
-        q: 'Biểu đồ áp lực đất chủ động của đất RỜI có tải q (mặt đất) là hình gì?',
-        choices: [
-          'A. Tam giác (0 ở đỉnh, lớn dần xuống đáy)',
-          'B. Hình thang (Ka·q ở đỉnh, Ka·(γH+q) ở đáy)',
-          'C. Chữ nhật đều khắp',
-          'D. Parabol'
-        ],
-        correct: 1
-      },
-      {
-        q: 'Công thức tổng áp lực chủ động đất RỜI không có tải phân bố q là:',
-        choices: [
-          'A. Ec = Ka·γ·H',
-          'B. Ec = ½·Ka·γ·H²',
-          'C. Ec = Ka·γ·H²',
-          'D. Ec = ½·γ·H²'
-        ],
-        correct: 1
-      },
-      {
-        q: 'Hệ số K₀ cho đất có μ = 0.25 bằng:',
-        choices: ['A. 0.25', 'B. 0.30', 'C. 0.33', 'D. 0.40'],
-        correct: 2
-      },
-    ];
-    const pick = (rng() * sets.length) | 0;
-    return { set: sets[pick], idx: sets[pick].correct };
+    return {};
   },
-  statement(d) { return d.set.q; },
-  questions: [
-    { id: 'q1', type: 'mcq',
-      label: 'Ôn công thức – chọn đáp án đúng:',
-      choices: d => d.set.choices,
-      correctIndex: d => d.idx }
-  ]
+  statement(d) { return ''; },
+  questions: []
 };
