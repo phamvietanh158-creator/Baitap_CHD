@@ -52,7 +52,7 @@ const CFG_KEY = 'chd_config';
 
 const DEFAULT_CFG = {
   gasUrl:       '',
-  teacher:      'TS. Phạm Việt Anh · Bộ môn Địa Kĩ Thuật · ĐHXD Hà Nội',
+  teacher:      'TS. Phạm Việt Anh · Bộ môn Cơ học đất - Nền móng · ĐHXD Hà Nội',
   adminPw:      'admin123',
   showFeedback: false,
   showScore:    true,
