@@ -511,10 +511,10 @@ EXERCISES['ch5_b1e'] = {
     { id:'q2', type:'fill', label:'Độ lún S =', unit:'cm',
       answer: d => d.S_cm, tol: 0.3 },
     { id:'q3', type:'mcq',
-      label:'Kết luận về độ lún:',
+      label:'Kết luận về độ lún (so sánh S vừa tính với [S]):',
       choices: d => [
-        `A. Đạt – S = ${d.S_cm} cm ≤ [S] = ${d.S_gh} cm ✓`,
-        `B. Không đạt – S = ${d.S_cm} cm > [S] = ${d.S_gh} cm ✗`,
+        `A. Đạt yêu cầu – S ≤ [S] = ${d.S_gh} cm ✓`,
+        `B. Không đạt – S > [S] = ${d.S_gh} cm ✗`,
       ],
       correctIndex: d => d.ok ? 0 : 1
     },
@@ -1340,41 +1340,8 @@ EXERCISES['ch5_tomtat'] = {
       <td style="padding:5px 8px;font-family:monospace;">Tv = −(4/π²)·ln[(1−U)·π²/8] → t = Tv·H²/Cv</td></tr>
   </table>
 </div>`,
-  hint: `<div class="hint-title">💡 Tóm tắt ôn tập – không có câu hỏi tính toán.</div>`,
-  genData(rng) {
-    const sets = [
-      {
-        q: 'Điều kiện tắt lún với ĐẤT TỐT là:',
-        choices: ['A. Δσ ≤ 0.1·σ_bt', 'B. Δσ ≤ 0.2·σ_bt', 'C. Δσ ≤ 0.5·σ_bt', 'D. Δσ = 0'],
-        correct: 1
-      },
-      {
-        q: 'Trong công thức lún đàn hồi S = (1−μ₀²)·p_gl·b·ω/E₀, p_gl là:',
-        choices: [
-          'A. Áp lực tiếp xúc p_tx',
-          'B. p_tx − γ·h_m (áp lực gây lún)',
-          'C. Trọng lượng móng',
-          'D. Ứng suất bản thân'
-        ],
-        correct: 1
-      },
-      {
-        q: 'Độ cố kết U liên hệ với lún cố kết theo:',
-        choices: [
-          'A. S(t) = S∞ / U',
-          'B. S(t) = S∞ · U(Tv)',
-          'C. S(t) = S∞ + U',
-          'D. S(t) = U / S∞'
-        ],
-        correct: 1
-      },
-    ];
-    const pick = (rng() * sets.length) | 0;
-    return { set: sets[pick], idx: sets[pick].correct };
-  },
-  statement(d) { return d.set.q; },
-  questions: [
-    { id:'q1', type:'mcq', label:'Chọn đáp án đúng:',
-      choices: d => d.set.choices, correctIndex: d => d.idx }
-  ]
+  hint: `<div class="hint-title">📌 Tóm tắt toàn bộ công thức chương 5 – không có câu hỏi tính toán.</div>`,
+  genData(rng) { return {}; },
+  statement(d) { return ''; },
+  questions: []
 };
