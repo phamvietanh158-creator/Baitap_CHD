@@ -246,24 +246,26 @@ EXERCISES['ch3_t01'] = {
   </div>`,
   hint: 'Gradient i = Δh/L. Lưu lượng Q = k × i × A.',
   genData(rng) {
-    const k  = r2((1 + rng()*9) * 1e-5);  // m/s
-    const A  = r2(0.05 + rng()*0.15);      // m²
-    const L  = r2(0.3 + rng()*0.5);
-    const dh = r2(0.2 + rng()*0.4);
+    // Dùng đơn vị cm/s để tránh r2() làm tròn về 0
+    const k_cms = r3(0.001 + rng()*0.099);  // cm/s, range 0.001–0.1
+    const k_ms  = r3(k_cms / 100);           // m/s để tính Q
+    const A  = r2(0.05 + rng()*0.15);        // m²
+    const L  = r2(0.3  + rng()*0.5);
+    const dh = r2(0.2  + rng()*0.4);
     const i  = r3(dh/L);
-    const Q  = r3(k * i * A);
-    const v  = r3(k * i);
-    return {k, A, L, dh, i, Q, v};
+    const v  = parseFloat((k_ms * i).toExponential(3));
+    const Q  = parseFloat((k_ms * i * A).toExponential(3));
+    return {k_cms, k_ms, A, L, dh, i, v, Q};
   },
   statement(d) {
-    return `Một mẫu đất có hệ số thấm k = <b>${d.k.toExponential(2)} m/s</b>, diện tích tiết diện A = <b>${d.A} m²</b>, chiều dài mẫu L = <b>${d.L} m</b>.
+    return `Một mẫu đất có hệ số thấm k = <b>${d.k_cms} cm/s</b>, diện tích tiết diện A = <b>${d.A} m²</b>, chiều dài mẫu L = <b>${d.L} m</b>.
     <br>Chênh lệch cột nước Δh = <b>${d.dh} m</b>.
     <br>Tính gradient thủy lực i, vận tốc thấm v và lưu lượng Q.`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'i = Δh/L',      unit:'',     answer: d=>d.i, tol:0.005 },
-    { id:'q2', type:'fill', label:'v = k·i (m/s)', unit:'m/s',  answer: d=>d.v, tol:d=>d.v*0.05 },
-    { id:'q3', type:'fill', label:'Q = k·i·A (m³/s)', unit:'m³/s', answer: d=>d.Q, tol:d=>d.Q*0.05 },
+    { id:'q1', type:'fill', label:'i = Δh/L',           unit:'',      answer: d=>d.i,    tol:0.005 },
+    { id:'q2', type:'fill', label:'v = k·i (m/s)',       unit:'m/s',   answer: d=>d.v,    tol:d=>Math.max(d.v*0.05, 1e-7) },
+    { id:'q3', type:'fill', label:'Q = k·i·A (m³/s)',   unit:'m³/s',  answer: d=>d.Q,    tol:d=>Math.max(d.Q*0.05, 1e-8) },
   ]
 };
 
@@ -338,13 +340,17 @@ EXERCISES['ch3_t03'] = {
   hint: 'k = (a×L)/(A×t) × ln(h₁/h₂). Chú ý ln là logarit tự nhiên.',
   genData(rng) {
     const a_cm2 = r2(0.5 + rng()*1);
-    const A_cm2 = r2(15 + rng()*15);
-    const L_cm  = r2(8 + rng()*6);
-    const h1_cm = r2(50 + rng()*30);
-    const h2_cm = r2(10 + rng()*15);
-    const k_cms = r3(1e-4 + rng()*9e-4); // cm/s
-    const t_s   = Math.round(a_cm2 * L_cm * Math.log(h1_cm/h2_cm) / (A_cm2 * k_cms));
-    const k_ans = r3(a_cm2 * L_cm * Math.log(h1_cm/h2_cm) / (A_cm2 * t_s));
+    const A_cm2 = r2(15  + rng()*15);
+    const L_cm  = r2(8   + rng()*6);
+    const h1_cm = r2(50  + rng()*30);
+    const h2_cm = r2(10  + rng()*15);
+    // k_cms đủ lớn để t_s không bị Infinity: đảm bảo t_s < 86400s (1 ngày)
+    const ln_h  = Math.log(h1_cm / h2_cm);
+    const t_max = 3600;  // giới hạn t tối đa 3600s (1 giờ)
+    const k_min = r3(a_cm2 * L_cm * ln_h / (A_cm2 * t_max));
+    const k_cms = r3(Math.max(k_min * 1.2, 1e-4) + rng() * 5e-3);
+    const t_s   = Math.round(a_cm2 * L_cm * ln_h / (A_cm2 * k_cms));
+    const k_ans = r3(a_cm2 * L_cm * ln_h / (A_cm2 * t_s));
     return {a_cm2, A_cm2, L_cm, h1_cm, h2_cm, t_s, k_ans};
   },
   statement(d) {
@@ -354,7 +360,7 @@ EXERCISES['ch3_t03'] = {
   },
   questions: [
     { id:'q1', type:'fill', label:'ln(h₁/h₂)',  unit:'',     answer: d=>r3(Math.log(d.h1_cm/d.h2_cm)), tol:0.01 },
-    { id:'q2', type:'fill', label:'k (cm/s)',    unit:'cm/s', answer: d=>d.k_ans,  tol:d=>d.k_ans*0.05 },
+    { id:'q2', type:'fill', label:'k (cm/s)',    unit:'cm/s', answer: d=>d.k_ans, tol:0.0001 },
   ]
 };
 
@@ -383,11 +389,11 @@ EXERCISES['ch3_t04'] = {
   genData(rng) {
     const h1 = r2(2 + rng()*3);
     const h2 = r2(3 + rng()*4);
-    const k1 = r3((1 + rng()*9) * 1e-4);
-    const k2 = r3((1 + rng()*4) * 1e-5);
-    const kh = r3((k1*h1 + k2*h2)/(h1+h2));
-    const kv = r3((h1+h2)/(h1/k1 + h2/k2));
-    const ratio = r2(kh/kv) || 0;
+    const k1 = parseFloat(((1 + rng()*9) * 1e-4).toExponential(3));
+    const k2 = parseFloat(((1 + rng()*4) * 1e-5).toExponential(3));
+    const kh = parseFloat(((k1*h1 + k2*h2)/(h1+h2)).toExponential(3));
+    const kv = parseFloat(((h1+h2)/(h1/k1 + h2/k2)).toExponential(3));
+    const ratio = r2(kh/kv) || 1;
     return {h1, h2, k1, k2, kh, kv, ratio};
   },
   statement(d) {
