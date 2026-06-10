@@ -884,3 +884,442 @@ EXERCISES['ch1_b3_11'] = {
     { id:'q5', type:'fill', label:'e = (V−V_h)/V_h',             unit:'',     answer: d=>d.e_ans,   tol:0.01 },
   ]
 };
+// ═══════════════════════════════════════════════════════════════════
+//  BỔ SUNG: TRẠNG THÁI ĐẤT + TÊN ĐẤT + TỔNG HỢP CÔNG THỨC
+// ═══════════════════════════════════════════════════════════════════
+
+// ── SVG sơ đồ giới hạn Atterberg ─────────────────────────────────
+const SVG_ATTERBERG = `
+<svg viewBox="0 0 520 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:8px auto;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.1)">
+  <defs>
+    <linearGradient id="at-ran" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#fff9c4"/><stop offset="100%" stop-color="#ffe082"/></linearGradient>
+    <linearGradient id="at-deo" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#c8e6c9"/><stop offset="100%" stop-color="#81c784"/></linearGradient>
+    <linearGradient id="at-cung" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffccbc"/><stop offset="100%" stop-color="#ff8a65"/></linearGradient>
+  </defs>
+  <rect width="520" height="160" fill="#fafbff" rx="8"/>
+
+  <!-- Trục w -->
+  <line x1="30" y1="120" x2="500" y2="120" stroke="#555" stroke-width="1.5"/>
+  <text x="510" y="124" font-size="11" fill="#555" font-weight="700">w→</text>
+  <text x="20" y="90" font-size="10" fill="#555" transform="rotate(-90,20,90)">đất</text>
+
+  <!-- Vùng RẮN (w < Wp) -->
+  <rect x="40" y="50" width="100" height="60" fill="url(#at-cung)" rx="4" opacity="0.85"/>
+  <text x="90" y="82" text-anchor="middle" font-size="11" font-weight="700" fill="#bf360c">RẮN / NỬA RẮN</text>
+  <text x="90" y="97" text-anchor="middle" font-size="9" fill="#bf360c">(cứng, giòn)</text>
+
+  <!-- Vùng DẺO (Wp ≤ w ≤ WL) -->
+  <rect x="160" y="50" width="180" height="60" fill="url(#at-deo)" rx="4" opacity="0.85"/>
+  <text x="250" y="82" text-anchor="middle" font-size="11" font-weight="700" fill="#1b5e20">DẺO</text>
+  <text x="250" y="97" text-anchor="middle" font-size="9" fill="#1b5e20">(có thể nặn được)</text>
+
+  <!-- Vùng CHẢY (w > WL) -->
+  <rect x="360" y="50" width="130" height="60" fill="url(#at-ran)" rx="4" opacity="0.85"/>
+  <text x="425" y="82" text-anchor="middle" font-size="11" font-weight="700" fill="#e65100">CHẢY</text>
+  <text x="425" y="97" text-anchor="middle" font-size="9" fill="#e65100">(lỏng, chảy)</text>
+
+  <!-- Đường ranh giới Wp, WL -->
+  <line x1="160" y1="45" x2="160" y2="125" stroke="#e53935" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="160" y="138" text-anchor="middle" font-size="11" fill="#e53935" font-weight="700">W_p</text>
+  <text x="160" y="148" text-anchor="middle" font-size="9" fill="#e53935">Giới hạn dẻo</text>
+
+  <line x1="360" y1="45" x2="360" y2="125" stroke="#1565c0" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="360" y="138" text-anchor="middle" font-size="11" fill="#1565c0" font-weight="700">W_L</text>
+  <text x="360" y="148" text-anchor="middle" font-size="9" fill="#1565c0">Giới hạn chảy</text>
+
+  <!-- Chỉ số Ip -->
+  <line x1="162" y1="32" x2="358" y2="32" stroke="#7b1fa2" stroke-width="1.5"/>
+  <line x1="162" y1="28" x2="162" y2="36" stroke="#7b1fa2" stroke-width="1.5"/>
+  <line x1="358" y1="28" x2="358" y2="36" stroke="#7b1fa2" stroke-width="1.5"/>
+  <text x="260" y="26" text-anchor="middle" font-size="10" fill="#7b1fa2" font-weight="700">I_p = W_L − W_p</text>
+
+  <!-- Độ sệt IL -->
+  <rect x="40" y="8" width="200" height="16" fill="#e3f0fd" rx="3"/>
+  <text x="140" y="20" text-anchor="middle" font-size="9.5" fill="#1565c0" font-weight="600">I_L = (w − W_p) / I_p</text>
+</svg>`;
+
+// ── LÝ THUYẾT TRẠNG THÁI ĐẤT DÍNH ──────────────────────────────
+const LY_THUYET_TRANG_THAI = `
+<div class="theory-block">
+  <div class="theory-label">📖 TRẠNG THÁI ĐẤT DÍNH – GIỚI HẠN ATTERBERG</div>
+  ${SVG_ATTERBERG}
+  <div style="margin-top:8px;">
+  <table style="border-collapse:collapse;font-size:.82rem;width:100%;">
+    <thead><tr style="background:#1565c0;color:#fff;text-align:center;">
+      <th style="padding:5px 8px;">Trạng thái</th>
+      <th style="padding:5px 8px;">Điều kiện I_L</th>
+      <th style="padding:5px 8px;">Mô tả</th>
+    </tr></thead>
+    <tbody>
+      <tr style="background:#ffccbc;"><td style="padding:4px 8px;font-weight:700;">Cứng (rắn)</td><td style="padding:4px 8px;text-align:center;">I_L &lt; 0</td><td style="padding:4px 8px;">Cứng, giòn, khó biến dạng</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:700;">Nửa cứng</td><td style="padding:4px 8px;text-align:center;">0 ≤ I_L &lt; 0.25</td><td style="padding:4px 8px;">Tương đối cứng</td></tr>
+      <tr style="background:#f5f5f5;"><td style="padding:4px 8px;font-weight:700;">Dẻo cứng</td><td style="padding:4px 8px;text-align:center;">0.25 ≤ I_L &lt; 0.50</td><td style="padding:4px 8px;">Dẻo, khó biến dạng</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:700;">Dẻo mềm</td><td style="padding:4px 8px;text-align:center;">0.50 ≤ I_L &lt; 0.75</td><td style="padding:4px 8px;">Dẻo, dễ biến dạng hơn</td></tr>
+      <tr style="background:#c8e6c9;"><td style="padding:4px 8px;font-weight:700;">Dẻo chảy</td><td style="padding:4px 8px;text-align:center;">0.75 ≤ I_L ≤ 1.0</td><td style="padding:4px 8px;">Gần chảy</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:700;">Chảy</td><td style="padding:4px 8px;text-align:center;">I_L &gt; 1.0</td><td style="padding:4px 8px;">Chảy lỏng</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>`;
+
+// ── LÝ THUYẾT TRẠNG THÁI ĐẤT RỜI ────────────────────────────────
+const LY_THUYET_TRANG_THAI_ROI = `
+<div class="theory-block">
+  <div class="theory-label">📖 TRẠNG THÁI ĐẤT RỜI – ĐỘ CHẶT TƯƠNG ĐỐI D_r</div>
+  <div style="background:#e3f0fd;border-radius:7px;padding:10px 14px;margin:8px 0;font-size:.85rem;font-family:monospace;line-height:2.1;">
+    D_r = (e_max − e) / (e_max − e_min) × 100%<br>
+    e: hệ số rỗng tự nhiên<br>
+    e_max: hệ số rỗng trạng thái rời nhất<br>
+    e_min: hệ số rỗng trạng thái chặt nhất
+  </div>
+  <table style="border-collapse:collapse;font-size:.82rem;width:100%;margin-top:6px;">
+    <thead><tr style="background:#1565c0;color:#fff;text-align:center;">
+      <th style="padding:5px 8px;">Trạng thái</th>
+      <th style="padding:5px 8px;">D_r (%)</th>
+      <th style="padding:5px 8px;">Hệ số rỗng e (cát)</th>
+    </tr></thead>
+    <tbody>
+      <tr style="background:#ffccbc;"><td style="padding:4px 8px;font-weight:700;">Rời</td><td style="padding:4px 8px;text-align:center;">D_r &lt; 33</td><td style="padding:4px 8px;text-align:center;">e &gt; 0.8</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:700;">Chặt vừa</td><td style="padding:4px 8px;text-align:center;">33 ≤ D_r &lt; 67</td><td style="padding:4px 8px;text-align:center;">0.6 &lt; e ≤ 0.8</td></tr>
+      <tr style="background:#c8e6c9;"><td style="padding:4px 8px;font-weight:700;">Chặt</td><td style="padding:4px 8px;text-align:center;">D_r ≥ 67</td><td style="padding:4px 8px;text-align:center;">e ≤ 0.6</td></tr>
+    </tbody>
+  </table>
+</div>`;
+
+// ─────────────────────────────────────────────────────────────────
+//  BÀI 1.23 – Trạng thái đất DÍNH (tính Ip, IL, kết luận)
+// ─────────────────────────────────────────────────────────────────
+EXERCISES['ch1_tt01'] = {
+  chapterId: 'ch1',
+  title: '1.23 – Trạng thái đất dính: tính I_p và I_L',
+  type: 'guided',
+  theoryHTML: LY_THUYET_TRANG_THAI,
+  hint: `<div class="hint-title">💡 I_p = W_L − W_p. I_L = (w − W_p)/I_p. Rồi tra bảng để kết luận trạng thái.</div>`,
+  genData(rng) {
+    const Wp = r2(18 + rng()*12);          // giới hạn dẻo
+    const Ip = r2(8  + rng()*22);          // chỉ số dẻo
+    const WL = r2(Wp + Ip);                // giới hạn chảy
+    // w ngẫu nhiên trong khoảng -0.2Ip đến 1.3Ip quanh Wp
+    const w  = r2(Wp + (-0.15 + rng()*1.4)*Ip);
+    const IL = r3((w - Wp)/Ip);
+    let trangThai;
+    if      (IL < 0)    trangThai = 'Cứng (rắn)';
+    else if (IL < 0.25) trangThai = 'Nửa cứng';
+    else if (IL < 0.50) trangThai = 'Dẻo cứng';
+    else if (IL < 0.75) trangThai = 'Dẻo mềm';
+    else if (IL <= 1.0) trangThai = 'Dẻo chảy';
+    else                trangThai = 'Chảy';
+    const ttIdx = ['Cứng (rắn)','Nửa cứng','Dẻo cứng','Dẻo mềm','Dẻo chảy','Chảy'].indexOf(trangThai);
+    return {Wp, Ip, WL, w, IL, trangThai, ttIdx};
+  },
+  statement(d) {
+    return `Đất sét có giới hạn chảy W_L = <b>${d.WL}%</b>, giới hạn dẻo W_p = <b>${d.Wp}%</b>.<br>
+    Độ ẩm tự nhiên w = <b>${d.w}%</b>.<br>
+    Xác định chỉ số dẻo I_p, độ sệt I_L và <b>trạng thái</b> của đất.`;
+  },
+  questions: [
+    { id:'q1', type:'fill', label:'I_p = W_L − W_p (%)',      unit:'%', answer: d=>d.Ip, tol:0.1 },
+    { id:'q2', type:'fill', label:'I_L = (w − W_p)/I_p',      unit:'',  answer: d=>d.IL, tol:0.01 },
+    { id:'q3', type:'mcq',  label:'Trạng thái của đất là:',
+      choices: ()=>[
+        'Cứng (rắn) – I_L < 0',
+        'Nửa cứng – 0 ≤ I_L < 0.25',
+        'Dẻo cứng – 0.25 ≤ I_L < 0.50',
+        'Dẻo mềm – 0.50 ≤ I_L < 0.75',
+        'Dẻo chảy – 0.75 ≤ I_L ≤ 1.0',
+        'Chảy – I_L > 1.0',
+      ],
+      correctIndex: d=>d.ttIdx },
+  ]
+};
+
+// ─────────────────────────────────────────────────────────────────
+//  BÀI 1.24 – Trạng thái đất RỜI (tính Dr, kết luận)
+// ─────────────────────────────────────────────────────────────────
+EXERCISES['ch1_tt02'] = {
+  chapterId: 'ch1',
+  title: '1.24 – Trạng thái đất rời: độ chặt tương đối D_r',
+  type: 'guided',
+  theoryHTML: LY_THUYET_TRANG_THAI_ROI,
+  hint: `<div class="hint-title">💡 D_r = (e_max − e)/(e_max − e_min) × 100%. e tự nhiên cần < e_max mới hợp lệ.</div>`,
+  genData(rng) {
+    const e_min = r3(0.40 + rng()*0.15);
+    const e_max = r3(e_min + 0.35 + rng()*0.25);
+    // Chọn Dr ngẫu nhiên → tính e
+    const Dr_pct = r2(10 + rng()*85);
+    const e = r3(e_max - Dr_pct/100*(e_max - e_min));
+    let trangThai;
+    if      (Dr_pct < 33) trangThai = 'Rời';
+    else if (Dr_pct < 67) trangThai = 'Chặt vừa';
+    else                  trangThai = 'Chặt';
+    const ttIdx = ['Rời','Chặt vừa','Chặt'].indexOf(trangThai);
+    return {e_min, e_max, e, Dr_pct, trangThai, ttIdx};
+  },
+  statement(d) {
+    return `Đất cát có hệ số rỗng tự nhiên e = <b>${d.e}</b>.<br>
+    Từ TN xác định được: e_max = <b>${d.e_max}</b> (rời nhất), e_min = <b>${d.e_min}</b> (chặt nhất).<br>
+    Tính độ chặt tương đối D_r và xác định <b>trạng thái</b> đất.`;
+  },
+  questions: [
+    { id:'q1', type:'fill', label:'D_r = (e_max−e)/(e_max−e_min)×100 (%)', unit:'%', answer: d=>d.Dr_pct, tol:0.5 },
+    { id:'q2', type:'mcq',  label:'Trạng thái đất rời:',
+      choices: ()=>[
+        'Rời – D_r < 33%',
+        'Chặt vừa – 33% ≤ D_r < 67%',
+        'Chặt – D_r ≥ 67%',
+      ],
+      correctIndex: d=>d.ttIdx },
+  ]
+};
+
+// ─────────────────────────────────────────────────────────────────
+//  BÀI 1.25 – Xác định tên đất theo TCVN (dựa vào A và cấp phối)
+// ─────────────────────────────────────────────────────────────────
+const LY_THUYET_TEN_DAT = `
+<div class="theory-block">
+  <div class="theory-label">📖 XÁC ĐỊNH TÊN ĐẤT THEO TCVN 9362:2012</div>
+  <p style="font-size:.84rem;margin-bottom:6px;"><b>Bước 1:</b> Dựa vào thành phần hạt (cấp phối) xác định loại đất rời hay dính.</p>
+  <table style="border-collapse:collapse;font-size:.81rem;width:100%;margin-bottom:8px;">
+    <thead><tr style="background:#1565c0;color:#fff;">
+      <th style="padding:5px 8px;">Tên đất</th>
+      <th style="padding:5px 8px;">Điều kiện cấp phối hạt</th>
+    </tr></thead>
+    <tbody>
+      <tr><td style="padding:4px 8px;font-weight:700;">Cuội sỏi</td><td style="padding:4px 8px;">% hạt d &gt; 2mm ≥ 50%</td></tr>
+      <tr style="background:#f5f5f5;"><td style="padding:4px 8px;font-weight:700;">Cát</td><td style="padding:4px 8px;">% hạt 0.05–2mm ≥ 50%</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:700;">Đất dính</td><td style="padding:4px 8px;">% hạt d &lt; 0.005mm chiếm đáng kể; dựa vào I_p</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:.84rem;margin-bottom:6px;"><b>Bước 2 (đất dính):</b> Xác định tên theo chỉ số dẻo I_p:</p>
+  <table style="border-collapse:collapse;font-size:.81rem;width:100%;">
+    <thead><tr style="background:#2e7d32;color:#fff;">
+      <th style="padding:5px 8px;">Tên đất dính</th>
+      <th style="padding:5px 8px;">Chỉ số dẻo I_p (%)</th>
+    </tr></thead>
+    <tbody>
+      <tr><td style="padding:4px 8px;font-weight:700;">Cát pha (Á cát)</td><td style="padding:4px 8px;">1 ≤ I_p &lt; 7</td></tr>
+      <tr style="background:#f5f5f5;"><td style="padding:4px 8px;font-weight:700;">Sét pha (Á sét)</td><td style="padding:4px 8px;">7 ≤ I_p &lt; 17</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:700;">Sét</td><td style="padding:4px 8px;">I_p ≥ 17</td></tr>
+    </tbody>
+  </table>
+</div>`;
+
+EXERCISES['ch1_ten01'] = {
+  chapterId: 'ch1',
+  title: '1.25 – Xác định tên đất dính theo I_p (TCVN)',
+  type: 'guided',
+  theoryHTML: LY_THUYET_TEN_DAT,
+  hint: `<div class="hint-title">💡 I_p = W_L − W_p. Á cát: 1≤Ip&lt;7. Á sét: 7≤Ip&lt;17. Sét: Ip≥17.</div>`,
+  genData(rng) {
+    const Wp = r2(16 + rng()*14);
+    // Chọn loại đất random
+    const loaiIdx = Math.floor(rng()*3); // 0=á cát, 1=á sét, 2=sét
+    let Ip, tenDat, ttIdx;
+    if (loaiIdx === 0) { Ip = r2(1 + rng()*5.9);  tenDat = 'Cát pha (Á cát)'; ttIdx=0; }
+    else if (loaiIdx===1){ Ip = r2(7 + rng()*9.9); tenDat = 'Sét pha (Á sét)'; ttIdx=1; }
+    else                 { Ip = r2(17+ rng()*18);  tenDat = 'Sét';              ttIdx=2; }
+    const WL = r2(Wp + Ip);
+    const w  = r2(Wp + rng()*Ip); // w trong vùng dẻo để hợp lý
+    const IL = r3((w-Wp)/Ip);
+    return {Wp, WL, Ip, w, IL, tenDat, ttIdx};
+  },
+  statement(d) {
+    return `Đất dính có các chỉ tiêu: W_L = <b>${d.WL}%</b>, W_p = <b>${d.Wp}%</b>, w = <b>${d.w}%</b>.<br>
+    Xác định <b>chỉ số dẻo I_p</b> và <b>tên đất</b> theo TCVN.`;
+  },
+  questions: [
+    { id:'q1', type:'fill', label:'I_p = W_L − W_p (%)',  unit:'%', answer: d=>d.Ip, tol:0.1 },
+    { id:'q2', type:'mcq',  label:'Tên đất theo TCVN:',
+      choices: ()=>[
+        'Cát pha (Á cát) – I_p: 1 đến 7',
+        'Sét pha (Á sét) – I_p: 7 đến 17',
+        'Sét – I_p ≥ 17',
+      ],
+      correctIndex: d=>d.ttIdx },
+  ]
+};
+
+EXERCISES['ch1_ten02'] = {
+  chapterId: 'ch1',
+  title: '1.26 – Xác định tên đất rời theo cấp phối hạt (TCVN)',
+  type: 'apply',
+  theoryHTML: LY_THUYET_TEN_DAT,
+  hint: `<div class="hint-title">💡 Đất rời: nếu %hạt>2mm ≥ 50% → cuội sỏi. Nếu %hạt 0.05–2mm ≥ 50% → cát. Trong cát: cát thô (%&gt;0.5mm≥50%), cát vừa (%&gt;0.25mm≥50%), cát mịn (%&gt;0.1mm≥75%).</div>`,
+  genData(rng) {
+    // Random chọn loại đất rời
+    const loaiIdx = Math.floor(rng()*4);
+    let pcts, tenDat, ttIdx;
+    // [>2mm, 2-0.5mm, 0.5-0.25mm, 0.25-0.1mm, 0.1-0.05mm, <0.05mm]
+    if (loaiIdx===0) {
+      // Cuội sỏi: >2mm ≥ 50%
+      const p1 = r2(50 + rng()*45);
+      const rem= 100-p1;
+      const p2 = r2(rem*rng()*0.6); const p3=r2(rem*rng()*0.3);
+      const p4 = r2(rem*rng()*0.2); const p5=r2(Math.max(0,rem-p2-p3-p4)*0.5);
+      const p6 = r2(Math.max(0,rem-p2-p3-p4-p5));
+      pcts=[p1,p2,p3,p4,p5,p6]; tenDat='Cuội sỏi'; ttIdx=0;
+    } else if (loaiIdx===1) {
+      // Cát thô: %hạt>0.5mm ≥ 50% (gồm cột 0+1)
+      const p1=r2(5+rng()*15); const p2=r2(45+rng()*35);
+      const rem=100-p1-p2; const p3=r2(rem*rng()*0.4);
+      const p4=r2(rem*rng()*0.4); const p5=r2(rem*rng()*0.3);
+      const p6=r2(Math.max(0,rem-p3-p4-p5));
+      pcts=[p1,p2,p3,p4,p5,p6]; tenDat='Cát thô'; ttIdx=1;
+    } else if (loaiIdx===2) {
+      // Cát vừa: %hạt>0.25mm ≥ 50%
+      const p1=r2(rng()*8); const p2=r2(10+rng()*20);
+      const p3=r2(25+rng()*25); const rem=100-p1-p2-p3;
+      const p4=r2(rem*rng()*0.4); const p5=r2(rem*rng()*0.3);
+      const p6=r2(Math.max(0,rem-p4-p5));
+      pcts=[p1,p2,p3,p4,p5,p6]; tenDat='Cát vừa'; ttIdx=2;
+    } else {
+      // Cát mịn: %hạt>0.1mm ≥ 75%
+      const p1=r2(rng()*5); const p2=r2(rng()*10);
+      const p3=r2(rng()*15); const p4=r2(45+rng()*30);
+      const rem=100-p1-p2-p3-p4; const p5=r2(rem*rng()*0.5);
+      const p6=r2(Math.max(0,rem-p5));
+      pcts=[p1,p2,p3,p4,p5,p6]; tenDat='Cát mịn'; ttIdx=3;
+    }
+    // Tính % tích lũy từng nhóm
+    const pgt2 = pcts[0];
+    const p2to05= pcts[1];
+    const p05to025=pcts[2];
+    const p025to01=pcts[3];
+    const gt05 = r2(pcts[0]+pcts[1]);    // > 0.5mm
+    const gt025= r2(pcts[0]+pcts[1]+pcts[2]); // > 0.25mm
+    const gt01 = r2(pcts[0]+pcts[1]+pcts[2]+pcts[3]); // > 0.1mm
+    return {pcts, tenDat, ttIdx, pgt2, p2to05, gt05, gt025, gt01};
+  },
+  statement(d) {
+    return `Kết quả phân tích hạt (%):<br>
+    <table style="border-collapse:collapse;font-size:.85rem;margin:8px 0;">
+    <tr style="background:#e3f0fd;">
+      <th style="padding:4px 10px;">d &gt; 2mm</th>
+      <th style="padding:4px 10px;">2–0.5mm</th>
+      <th style="padding:4px 10px;">0.5–0.25mm</th>
+      <th style="padding:4px 10px;">0.25–0.1mm</th>
+      <th style="padding:4px 10px;">0.1–0.05mm</th>
+      <th style="padding:4px 10px;">&lt; 0.05mm</th>
+    </tr>
+    <tr style="text-align:center;">
+      <td style="padding:4px 10px;">${d.pcts[0]}%</td>
+      <td style="padding:4px 10px;">${d.pcts[1]}%</td>
+      <td style="padding:4px 10px;">${d.pcts[2]}%</td>
+      <td style="padding:4px 10px;">${d.pcts[3]}%</td>
+      <td style="padding:4px 10px;">${d.pcts[4]}%</td>
+      <td style="padding:4px 10px;">${d.pcts[5]}%</td>
+    </tr>
+    </table>
+    Xác định <b>tên đất rời</b> theo TCVN:`;
+  },
+  questions: [
+    { id:'q1', type:'fill', label:'% hạt > 2mm (%)',       unit:'%', answer: d=>d.pcts[0],  tol:0.5 },
+    { id:'q2', type:'fill', label:'% hạt > 0.5mm (gộp %)', unit:'%', answer: d=>d.gt05,     tol:0.5 },
+    { id:'q3', type:'fill', label:'% hạt > 0.25mm (gộp %)',unit:'%', answer: d=>d.gt025,    tol:0.5 },
+    { id:'q4', type:'mcq',  label:'Tên đất theo TCVN:',
+      choices: ()=>[
+        'Cuội sỏi – hạt >2mm ≥ 50%',
+        'Cát thô – hạt >0.5mm ≥ 50%',
+        'Cát vừa – hạt >0.25mm ≥ 50%',
+        'Cát mịn – hạt >0.1mm ≥ 75%',
+      ],
+      correctIndex: d=>d.ttIdx },
+  ]
+};
+
+// ─────────────────────────────────────────────────────────────────
+//  TỔNG HỢP CÔNG THỨC CHƯƠNG 1
+// ─────────────────────────────────────────────────────────────────
+
+// Xoá bài tomtat cũ (đã có trong file gốc) và thêm lại đầy đủ
+delete EXERCISES['ch1_tomtat'];
+
+EXERCISES['ch1_tomtat'] = {
+  chapterId: 'ch1',
+  title: '📋 Tổng hợp công thức – Chương 1',
+  type: 'guided',
+  theoryHTML: `
+<style>
+.s1b-sec{margin-bottom:16px}
+.s1b-sec h4{background:var(--primary);color:#fff;padding:6px 14px;border-radius:7px 7px 0 0;margin:0;font-size:.9rem}
+.s1b-body{border:1px solid var(--primary);border-top:none;border-radius:0 0 7px 7px;padding:10px 16px}
+.s1b-row{display:flex;gap:8px;align-items:flex-start;margin-bottom:7px;font-size:.84rem}
+.s1b-f{background:#e3f0fd;border-radius:5px;padding:3px 10px;font-family:monospace;min-width:240px;flex-shrink:0}
+.s1b-n{color:#555;font-size:.82rem;padding-top:3px}
+</style>
+
+<div class="s1b-sec">
+  <h4>A. Thành phần thể tích – Khối lượng</h4>
+  <div class="s1b-body">
+    <div class="s1b-row"><div class="s1b-f">V = V_h + V_r = V_h + V_w + V_k</div><div class="s1b-n">Tổng thể tích</div></div>
+    <div class="s1b-row"><div class="s1b-f">n = V_r/V × 100%</div><div class="s1b-n">Độ rỗng</div></div>
+    <div class="s1b-row"><div class="s1b-f">m = V_h/V; n + m = 1</div><div class="s1b-n">Độ đặc</div></div>
+    <div class="s1b-row"><div class="s1b-f">e = V_r/V_h; e = n/(1−n)</div><div class="s1b-n">Hệ số rỗng</div></div>
+    <div class="s1b-row"><div class="s1b-f">S = V_w/V_r</div><div class="s1b-n">Độ bão hòa (0–1)</div></div>
+    <div class="s1b-row"><div class="s1b-f">w = Q_w/Q_h × 100%</div><div class="s1b-n">Độ ẩm</div></div>
+  </div>
+</div>
+
+<div class="s1b-sec">
+  <h4>B. Trọng lượng riêng (kN/m³)</h4>
+  <div class="s1b-body">
+    <div class="s1b-row"><div class="s1b-f">γ_tn = Q/V × 10</div><div class="s1b-n">Tự nhiên</div></div>
+    <div class="s1b-row"><div class="s1b-f">γ_k  = Q_h/V × 10 = γ_tn/(1+0.01w)</div><div class="s1b-n">Khô</div></div>
+    <div class="s1b-row"><div class="s1b-f">γ_bh = (Δ−1)·γ_w/(1+e) + γ_w</div><div class="s1b-n">Bão hòa</div></div>
+    <div class="s1b-row"><div class="s1b-f">γ_dn = γ_bh − γ_w</div><div class="s1b-n">Đẩy nổi (γ_w=10)</div></div>
+    <div class="s1b-row"><div class="s1b-f">γ_h  = Q_h/V_h × 10 = Δ·γ_w</div><div class="s1b-n">Hạt đất</div></div>
+  </div>
+</div>
+
+<div class="s1b-sec">
+  <h4>C. Tính từ w, γ_tn, Δ</h4>
+  <div class="s1b-body">
+    <div class="s1b-row"><div class="s1b-f">γ_k = γ_tn/(1+0.01w)</div></div>
+    <div class="s1b-row"><div class="s1b-f">n = 1 − γ_k/(Δ·γ_w)</div></div>
+    <div class="s1b-row"><div class="s1b-f">e = n/(1−n)</div></div>
+    <div class="s1b-row"><div class="s1b-f">S = 0.01·w·Δ/e</div></div>
+  </div>
+</div>
+
+<div class="s1b-sec">
+  <h4>D. Trạng thái đất DÍNH – Giới hạn Atterberg</h4>
+  <div class="s1b-body">
+    <div class="s1b-row"><div class="s1b-f">I_p = W_L − W_p</div><div class="s1b-n">Chỉ số dẻo (%)</div></div>
+    <div class="s1b-row"><div class="s1b-f">I_L = (w − W_p)/I_p</div><div class="s1b-n">Độ sệt</div></div>
+    <div class="s1b-row"><div class="s1b-f">I_L&lt;0: Cứng | 0–0.25: Nửa cứng</div></div>
+    <div class="s1b-row"><div class="s1b-f">0.25–0.5: Dẻo cứng | 0.5–0.75: Dẻo mềm</div></div>
+    <div class="s1b-row"><div class="s1b-f">0.75–1.0: Dẻo chảy | &gt;1.0: Chảy</div></div>
+  </div>
+</div>
+
+<div class="s1b-sec">
+  <h4>E. Trạng thái đất RỜI – Độ chặt tương đối</h4>
+  <div class="s1b-body">
+    <div class="s1b-row"><div class="s1b-f">D_r=(e_max−e)/(e_max−e_min)×100%</div></div>
+    <div class="s1b-row"><div class="s1b-f">D_r&lt;33%: Rời | 33–67%: Chặt vừa | &gt;67%: Chặt</div></div>
+  </div>
+</div>
+
+<div class="s1b-sec">
+  <h4>F. Tên đất theo TCVN (I_p)</h4>
+  <div class="s1b-body">
+    <div class="s1b-row"><div class="s1b-f">1 ≤ I_p &lt; 7: Cát pha (Á cát)</div></div>
+    <div class="s1b-row"><div class="s1b-f">7 ≤ I_p &lt; 17: Sét pha (Á sét)</div></div>
+    <div class="s1b-row"><div class="s1b-f">I_p ≥ 17: Sét</div></div>
+    <div class="s1b-row"><div class="s1b-f">%hạt&gt;2mm ≥ 50%: Cuội sỏi</div></div>
+    <div class="s1b-row"><div class="s1b-f">%hạt 0.05–2mm ≥ 50%: Cát (thô/vừa/mịn)</div></div>
+  </div>
+</div>
+
+<div class="s1b-sec">
+  <h4>G. Rây sàng & Cấp phối hạt</h4>
+  <div class="s1b-body">
+    <div class="s1b-row"><div class="s1b-f">P(&lt;d) = ΣKL(≤d)/KL_tổng × 100%</div><div class="s1b-n">Hàm lượng tích lũy</div></div>
+    <div class="s1b-row"><div class="s1b-f">HL nhóm = P₂ − P₁</div><div class="s1b-n">Hiệu 2 tích lũy liên tiếp</div></div>
+  </div>
+</div>`,
+  hint: `<div class="hint-title">📌 Tóm tắt toàn bộ công thức chương 1 – không có câu hỏi tính toán.</div>`,
+  genData(rng){ return {}; },
+  statement(d){ return ''; },
+  questions: []
+};
