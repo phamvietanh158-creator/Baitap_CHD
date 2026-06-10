@@ -950,27 +950,8 @@ EXERCISES['ch4_tomtat'] = {
   </div>
 </div>`,
   hint: `<div class="hint-title">💡 Tóm tắt ôn tập.</div>`,
-  genData(rng) {
-    const sets = [
-      { q:'Công thức c_u đất dính từ SPT (Stroud 1974) là:',
-        choices:['A. c_u = N/k','B. c_u = k·N (kN/m²)','C. c_u = k·N₆₀²','D. c_u = √(k·N)'],
-        correct:1 },
-      { q:'Hệ số C_N trong hiệu chỉnh SPT phụ thuộc vào:',
-        choices:['A. Loại đất','B. Ứng suất hữu hiệu σ\'_v tại độ sâu thí nghiệm','C. Chỉ số N','D. Mức năng lượng búa'],
-        correct:1 },
-      { q:'Trong thí nghiệm bàn nén, ω = 0.88 ứng với:',
-        choices:['A. Bàn nén tròn','B. Bàn nén vuông','C. Bàn nén chữ nhật','D. Tất cả loại bàn'],
-        correct:1 },
-      { q:'E₀ từ CPT tính theo công thức:',
-        choices:['A. E₀ = α·N₆₀','B. E₀ = α·q_c','C. E₀ = q_c/N_k','D. E₀ = p·b·ω/S'],
-        correct:1 },
-    ];
-    const pick = (rng() * sets.length) | 0;
-    return { set: sets[pick], idx: sets[pick].correct };
-  },
-  statement(d) { return d.set.q; },
-  questions: [
-    { id:'q1', type:'mcq', label:'Chọn đáp án đúng:',
-      choices: d => d.set.choices, correctIndex: d => d.idx }
-  ]
+  hint: `<div class="hint-title">📌 Tóm tắt toàn bộ công thức chương 4 – không có câu hỏi tính toán.</div>`,
+    genData(rng) { return {}; },
+    statement(d) { return ''; },
+    questions: []
 };
