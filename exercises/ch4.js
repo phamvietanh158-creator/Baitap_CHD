@@ -775,7 +775,7 @@ EXERCISES['ch4_b2d'] = {
   },
   questions: [
     { id:'q1', type:'fill', label:'α_min (thấp của khoảng) =',
-      unit:'', answer: d => d.alow, tol: 0 },
+      unit:'', answer: d => d.alow, tol: 0.1 },
     { id:'q2', type:'fill', label:'E₀_min = α_min · q_c =',
       unit:'kPa', answer: d => d.E0_lo, tol: 50 },
     { id:'q3', type:'fill', label:'E₀_max = α_max · q_c =',
@@ -829,7 +829,7 @@ EXERCISES['ch4_b3a'] = {
     const mu0 = r2(0.25 + rng() * 0.15);
     const p   = Math.floor(25 + rng() * 75) * 5;
     const S_mm= r2(2 + rng() * 30);
-    const S_m = r2(S_mm / 1000);
+    const S_m = Math.max(r3(S_mm / 1000), 0.001);  // tối thiểu 1mm, r3 giữ 3 chữ số
     const E0  = r2(p * b * om * (1 - mu0 * mu0) / S_m);
     return { is_round, b, om, mu0, p, S_mm, S_m, E0 };
   },
@@ -839,7 +839,7 @@ EXERCISES['ch4_b3a'] = {
   },
   questions: [
     { id:'q1', type:'fill', label:'ω =',
-      unit:'', answer: d => d.om, tol: 0 },
+      unit:'', answer: d => d.om, tol: 0.01 },
     { id:'q2', type:'fill', label:'S đổi về m =',
       unit:'m', answer: d => d.S_m, tol: 0.0005 },
     { id:'q3', type:'fill', label:'E₀ = p·b·ω·(1−μ₀²)/S =',
