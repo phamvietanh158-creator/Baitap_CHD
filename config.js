@@ -1,4 +1,5 @@
 const CHAPTERS_DEF = [
+  { id:'ch1', icon:'🌱', name:'Chương 1', desc:'Tính chất vật lý của đất' },
   { id:'ch2', icon:'⚡', name:'Chương 2', desc:'Ứng suất trong đất' },
   { id:'ch3', icon:'🔬', name:'Chương 3', desc:'Tính chất cơ học đất' },
   { id:'ch4', icon:'🔩', name:'Chương 4', desc:'Thí nghiệm hiện trường' },
@@ -8,6 +9,7 @@ const CHAPTERS_DEF = [
 ];
 
 window.CHAPTER_SCHEDULE = {
+  ch1: { active: true },
   ch2: { active: true },
   ch3: { active: true },
   ch4: { active: true },
