@@ -397,30 +397,36 @@ EXERCISES['ch1_b2_09'] = {
 // ═══════════════════════════════════════════════════════════════════
 
 // Helper: tạo bộ số liệu B3 loại 1 (cho Q, Qk, V, Vh)
+// ── FIX: thay thế _genB3_type1 cũ (công thức a/2 gây Q < Qk) ──
+// Dán đoạn này VÀO ĐẦU ch1.js, TRƯỚC dòng khai báo cũ
+// (hoặc tìm function _genB3_type1 cũ và thay toàn bộ thân hàm)
+
 function _genB3_type1(rng) {
-  // Q_dat = 150 + a/2 (g); Q_k = 90 + a (g); V = 90 + a (cm³); V_h = 34 + a/2 (cm³)
-  // a = STT, nhưng ở đây dùng rng để random hoá
-  const a   = Math.floor(1 + rng()*199);
-  const Q   = r2(150 + a/2);   // g – KL đất tự nhiên
-  const Qk  = r2(90  + a);     // g – KL đất khô
-  const V   = r2(90  + a);     // cm³ – thể tích đất
-  const Vh  = r2(34  + a/2);   // cm³ – thể tích hạt
-  const Qw  = r2(Q - Qk);      // g – KL nước
-  const Vr  = r2(V - Vh);      // cm³ – thể tích lỗ rỗng
-  const Vw  = r2(Qw / 1);      // cm³ ≈ KL nước (γ_w=1 g/cm³)
-  const gw  = 10;               // kN/m³
-  const n   = r3(Vr / V);
-  const m   = r3(Vh / V);
-  const e   = r3(Vr / Vh);
-  const S   = r3(Vw / Vr);
-  const w   = r3(Qw / Qk * 100);
-  const g_tn  = r3(Q  / V * 10);  // kN/m³ (×10 đổi g/cm³→kN/m³)
-  const g_k   = r3(Qk / V * 10);
-  const g_bh  = r3((Qk + Vr*1) / V * 10);
-  const g_dn  = r3(g_bh - 10);
-  const g_h   = r3(Qk / Vh * 10);
-  return {a, Q, Qk, V, Vh, Qw, Vr, Vw, n, m, e, S, w, g_tn, g_k, g_bh, g_dn, g_h};
+  // Sinh từ các đại lượng vật lý trực tiếp → đảm bảo luôn hợp lệ
+  const Vh  = r2(28 + rng()*28);          // cm³ thể tích hạt: 28–56
+  const Vr  = r2(14 + rng()*32);          // cm³ thể tích lỗ rỗng: 14–46
+  const V   = r2(Vh + Vr);                // V tổng (luôn > Vh)
+  const g_h = r2(2.62 + rng()*0.3);       // g/cm³, tỷ trọng hạt: 2.62–2.92
+  const Qk  = r2(Vh * g_h);               // g – KL đất khô
+  const w   = r2(9   + rng()*27);         // % độ ẩm: 9–36%
+  const Qw  = r2(Qk  * w / 100);          // g – KL nước
+  const Q   = r2(Qk  + Qw);               // g – KL đất tự nhiên (luôn > Qk)
+  const Vw  = r2(Qw);                     // cm³ (γ_w = 1 g/cm³)
+
+  // Các chỉ tiêu
+  const n    = r3(Vr / V);
+  const m    = r3(Vh / V);
+  const e    = r3(Vr / Vh);
+  const S    = r3(Math.min(Vw / Vr, 1.0));
+  const g_tn = r3(Q  / V * 10);           // kN/m³
+  const g_k  = r3(Qk / V * 10);
+  const g_bh = r3((Qk + Vr) / V * 10);   // lỗ rỗng đầy nước
+  const g_dn = r3(g_bh - 10);
+  const g_hat= r3(Qk / Vh * 10);
+
+  return {Q, Qk, V, Vh, Qw, Vr, Vw, n, m, e, S, w, g_tn, g_k, g_bh, g_dn, g_h: g_hat};
 }
+
 
 // Helper: tạo bộ số liệu B3 loại 2 (cho w, γ_tn, Δ)
 function _genB3_type2(rng) {
