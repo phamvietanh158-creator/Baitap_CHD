@@ -687,9 +687,10 @@ EXERCISES['ch6_b1c'] = {
     // Tính sigma1 giới hạn đúng
     const cotphi = Math.cos(phi_rad) / Math.sin(phi_rad);
     const sin_phi = Math.sin(phi_rad);
-    const sigma1 = Math.round(sigma3 + sin_phi * (sigma3 + sigma3 + 2 * c_true * cotphi));
-    // c ngược
-    const c_ans = r2(((sigma1 - sigma3) / sin_phi - (sigma1 + sigma3)) * Math.tan(phi_rad) / 2);
+    // CT đúng: σ₁ = σ₃·(1+sinφ)/(1−sinφ) + 2c·cosφ/(1−sinφ)
+    const sigma1 = Math.round(sigma3*(1+sin_phi)/(1-sin_phi) + 2*c_true*Math.cos(phi_rad)/(1-sin_phi));
+    // c ngược (đảm bảo dương)
+    const c_ans = r2(Math.max(0.1, ((sigma1-sigma3)/sin_phi - (sigma1+sigma3)) * Math.tan(phi_rad) / 2));
     return { phi_deg, sigma1, sigma3, c_ans };
   },
   statement(d) {
