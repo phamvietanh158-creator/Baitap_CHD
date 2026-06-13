@@ -94,114 +94,128 @@ const BANG_ALPHA_CPT = `
 // ─────────────────────────────────────────────────────────────────
 
 // SVG minh họa thí nghiệm SPT
+// ── DEFS CHUNG CH4 ───────────────────────────────────────────────
+const _D4 = `<defs>
+  <linearGradient id="d4-sand"  x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFF9C4"/><stop offset="100%" stop-color="#F9A825" stop-opacity="0.5"/></linearGradient>
+  <linearGradient id="d4-soil2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#DCEDC8"/><stop offset="100%" stop-color="#7CB342" stop-opacity="0.5"/></linearGradient>
+  <linearGradient id="d4-conc"  x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#90A4AE"/><stop offset="100%" stop-color="#455A64"/></linearGradient>
+  <pattern id="d4-h" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="10" stroke="#8D6E63" stroke-width="1.2" opacity="0.35"/>
+  </pattern>
+  <marker id="d4-d" markerWidth="7" markerHeight="10" refX="3.5" refY="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L3.5,10 L7,0 Z" fill="#C62828"/></marker>
+  <marker id="d4-r" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,3.5 L0,7 Z" fill="#1565C0"/></marker>
+  <filter id="d4-s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#00000015"/></filter>
+</defs>`;
+
 const SVG_SPT_SETUP = `
-<svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:320px;display:block;margin:8px auto;">
-  <defs>
-    <marker id="spt-dn" markerWidth="5" markerHeight="5" refX="2.5" refY="5" orient="auto">
-      <path d="M0,0 L5,0 L2.5,5 z" fill="#c62828"/>
-    </marker>
-  </defs>
+<svg viewBox="0 0 440 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:440px;display:block;margin:10px auto;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.10)">
+  ${_D4}
+  <rect width="440" height="240" fill="#F8FAFF" rx="10"/>
+  <!-- Lỗ khoan -->
+  <rect x="170" y="10" width="100" height="200" rx="4" fill="#E3F2FD" stroke="#90CAF9" stroke-width="1.5"/>
+  <text x="220" y="26" text-anchor="middle" font-size="10" fill="#1565C0">Lỗ khoan</text>
+  <!-- Đất lớp 1 -->
+  <rect x="10" y="10" width="158" height="80" fill="url(#d4-sand)" stroke="#F9A825" stroke-width="1.5" rx="4"/>
+  <rect x="10" y="10" width="158" height="80" fill="url(#d4-h)" rx="4" opacity="0.4"/>
+  <text x="89" y="55" text-anchor="middle" font-size="11" fill="#4E342E" font-weight="600">Lớp 1 (cát)</text>
+  <!-- Đất lớp 2 -->
+  <rect x="10" y="92" width="158" height="118" fill="url(#d4-soil2)" stroke="#7CB342" stroke-width="1.5" rx="4"/>
+  <rect x="10" y="92" width="158" height="118" fill="url(#d4-h)" rx="4" opacity="0.35"/>
+  <text x="89" y="150" text-anchor="middle" font-size="11" fill="#33691E" font-weight="600">Lớp 2 (sét)</text>
+  <!-- Bên phải tương tự -->
+  <rect x="272" y="10" width="158" height="80" fill="url(#d4-sand)" stroke="#F9A825" stroke-width="1.5" rx="4"/>
+  <rect x="272" y="10" width="158" height="80" fill="url(#d4-h)" rx="4" opacity="0.4"/>
+  <rect x="272" y="92" width="158" height="118" fill="url(#d4-soil2)" stroke="#7CB342" stroke-width="1.5" rx="4"/>
+  <rect x="272" y="92" width="158" height="118" fill="url(#d4-h)" rx="4" opacity="0.35"/>
   <!-- Cần khoan -->
-  <rect x="148" y="10" width="24" height="80" fill="#90a4ae" stroke="#546e7a" stroke-width="1.5" rx="2"/>
-  <text x="160" y="55" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">Cần</text>
-  <!-- Búa 63.5 kg -->
-  <rect x="135" y="5" width="50" height="20" fill="#455a64" stroke="#263238" stroke-width="1.5" rx="3"/>
-  <text x="160" y="18" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">Búa 63.5kg</text>
-  <!-- Rơi 76cm -->
-  <line x1="200" y1="5" x2="200" y2="25" stroke="#e65100" stroke-width="1.5" stroke-dasharray="3,2"/>
-  <text x="205" y="18" font-size="8" fill="#e65100" font-weight="bold">76cm</text>
-  <!-- Mặt đất -->
-  <line x1="20" y1="90" x2="300" y2="90" stroke="#5d4037" stroke-width="2"/>
-  <text x="22" y="86" font-size="8" fill="#5d4037">Mặt đất</text>
-  <!-- Đất -->
-  <rect x="20" y="90" width="280" height="100" fill="#d7c89b"/>
-  <!-- Ống mẫu 45cm -->
-  <rect x="152" y="90" width="16" height="80" fill="#ef9a9a" stroke="#c62828" stroke-width="1.5"/>
-  <text x="160" y="140" text-anchor="middle" font-size="8" fill="#c62828" font-weight="bold">Ống mẫu</text>
-  <text x="160" y="152" text-anchor="middle" font-size="8" fill="#c62828">45cm</text>
-  <!-- Đoạn 15cm đầu (bỏ qua) -->
-  <line x1="140" y1="105" x2="152" y2="105" stroke="#888" stroke-width="1" stroke-dasharray="3,2"/>
-  <text x="116" y="109" font-size="7" fill="#888">15cm (bỏ)</text>
-  <!-- Đoạn 30cm đếm N -->
-  <line x1="140" y1="115" x2="152" y2="115" stroke="#2e7d32" stroke-width="1.2"/>
-  <line x1="140" y1="145" x2="152" y2="145" stroke="#2e7d32" stroke-width="1.2"/>
-  <line x1="140" y1="115" x2="140" y2="145" stroke="#2e7d32" stroke-width="1.2"/>
-  <text x="100" y="132" font-size="7.5" fill="#2e7d32" font-weight="bold">30cm → N</text>
-  <!-- Chú thích -->
-  <text x="22" y="185" font-size="8" fill="#1565c0" font-weight="bold">N = số nhát búa trong 30cm cuối</text>
-  <text x="22" y="197" font-size="8" fill="#555">N₆₀ = N · C_E · C_N</text>
-</svg>`;
-
-// SVG minh họa CPT
-const SVG_CPT_SETUP = `
-<svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:300px;display:block;margin:8px auto;">
-  <!-- Cần xuyên -->
-  <rect x="143" y="10" width="14" height="100" fill="#78909c" stroke="#455a64" stroke-width="1.5"/>
-  <text x="150" y="60" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">Cần</text>
-  <!-- Mặt đất -->
-  <line x1="20" y1="110" x2="280" y2="110" stroke="#5d4037" stroke-width="2"/>
-  <text x="22" y="106" font-size="8" fill="#5d4037">Mặt đất</text>
-  <!-- Đất -->
-  <rect x="20" y="110" width="260" height="80" fill="#d7c89b"/>
-  <!-- Cần trong đất -->
-  <rect x="143" y="110" width="14" height="60" fill="#78909c" stroke="#455a64" stroke-width="1.5"/>
-  <!-- Chuỳ côn -->
-  <polygon points="143,170 157,170 150,188" fill="#ef9a9a" stroke="#c62828" stroke-width="1.5"/>
-  <!-- Mặt côn fs -->
-  <rect x="143" y="155" width="14" height="15" fill="#ffb74d" stroke="#e65100" stroke-width="1"/>
-  <!-- Nhãn -->
-  <text x="168" y="165" font-size="8" fill="#e65100" font-weight="bold">f_s (bên)</text>
-  <text x="168" y="183" font-size="8" fill="#c62828" font-weight="bold">q_c (mũi)</text>
-  <!-- Mũi tên lực ấn -->
-  <line x1="150" y1="10" x2="150" y2="5" stroke="#1565c0" stroke-width="2" marker-end="url(#cpt-dn)"/>
-  <text x="155" y="9" font-size="8" fill="#1565c0" font-weight="bold">F</text>
-  <defs>
-    <marker id="cpt-dn" markerWidth="5" markerHeight="5" refX="2.5" refY="0" orient="auto">
-      <path d="M2.5,5 L0,0 L5,0 z" fill="#1565c0"/>
-    </marker>
-  </defs>
-  <!-- Thông số -->
-  <text x="22" y="200" font-size="8" fill="#1565c0" font-weight="bold">Góc đỉnh 60°, d=35.7mm, F=10cm²</text>
-</svg>`;
-
-// SVG bàn nén hiện trường
-const SVG_BAN_NEN = `
-<svg viewBox="0 0 340 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px;display:block;margin:8px auto;">
-  <defs>
-    <marker id="bn-dn" markerWidth="5" markerHeight="5" refX="2.5" refY="5" orient="auto">
-      <path d="M0,0 L5,0 L2.5,5 z" fill="#e53935"/>
-    </marker>
-  </defs>
-  <!-- Tải trọng P -->
-  <line x1="170" y1="10" x2="170" y2="35" stroke="#e53935" stroke-width="3" marker-end="url(#bn-dn)"/>
-  <text x="178" y="25" font-size="11" fill="#e53935" font-weight="bold">P</text>
-  <!-- Bàn nén -->
-  <rect x="120" y="38" width="100" height="14" fill="#90a4ae" stroke="#455a64" stroke-width="2" rx="2"/>
-  <text x="170" y="49" text-anchor="middle" font-size="9" fill="#1a237e" font-weight="bold">Bàn nén (b)</text>
-  <!-- Mặt đất -->
-  <line x1="40" y1="52" x2="300" y2="52" stroke="#555" stroke-width="1" stroke-dasharray="5,3"/>
-  <!-- Đất -->
-  <rect x="40" y="52" width="260" height="100" fill="#fff9c4" stroke="#f9a825" stroke-width="1"/>
-  <line x1="40" y1="65" x2="75" y2="52" stroke="#8d6e63" stroke-width="0.6"/>
-  <line x1="40" y1="82" x2="95" y2="52" stroke="#8d6e63" stroke-width="0.6"/>
-  <line x1="40" y1="99" x2="115" y2="52" stroke="#8d6e63" stroke-width="0.6"/>
-  <line x1="50" y1="118" x2="120" y2="68" stroke="#8d6e63" stroke-width="0.6"/>
-  <line x1="200" y1="52" x2="235" y2="70" stroke="#8d6e63" stroke-width="0.6"/>
-  <line x1="220" y1="52" x2="268" y2="80" stroke="#8d6e63" stroke-width="0.6"/>
-  <line x1="240" y1="52" x2="290" y2="85" stroke="#8d6e63" stroke-width="0.6"/>
-  <text x="170" y="100" text-anchor="middle" font-size="10" fill="#1b5e20" font-weight="bold">ĐẤT NỀN (γ, φ, c, μ₀)</text>
-  <!-- S lún -->
-  <line x1="230" y1="52" x2="230" y2="75" stroke="#1565c0" stroke-width="2" stroke-dasharray="4,2"/>
-  <text x="234" y="67" font-size="10" fill="#1565c0" font-weight="bold">S</text>
+  <rect x="214" y="10" width="12" height="185" rx="2" fill="url(#d4-conc)"/>
+  <!-- Búa SPT (63.5 kg) -->
+  <rect x="200" y="0" width="40" height="18" rx="4" fill="#37474F" filter="url(#d4-s)"/>
+  <text x="220" y="13" text-anchor="middle" font-size="9" fill="white" font-weight="700">Búa 63.5kg</text>
+  <!-- Mũi tên búa rơi -->
+  <text x="165" y="22" font-size="9.5" fill="#C62828" font-weight="600">H=76cm↓</text>
+  <!-- Mẫu SPT ở đáy -->
+  <rect x="208" y="190" width="24" height="15" rx="3" fill="#8D6E63" stroke="#5D4037" stroke-width="1.5"/>
+  <text x="220" y="201" text-anchor="middle" font-size="8" fill="white">SPT</text>
+  <!-- Độ sâu z -->
+  <line x1="428" y1="10" x2="428" y2="205" stroke="#E65100" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#d4-d)"/>
+  <line x1="422" y1="10"  x2="434" y2="10"  stroke="#E65100" stroke-width="1.5"/>
+  <text x="432" y="115" font-size="11" fill="#E65100" font-weight="700">z</text>
   <!-- Công thức -->
-  <text x="28" y="162" font-size="9.5" fill="#1565c0" font-weight="bold">E₀ = p·b·ω·(1−μ₀²)/S</text>
-  <text x="28" y="175" font-size="8.5" fill="#555">ω=0.79 (tròn) | ω=0.88 (vuông)</text>
+  <rect x="8" y="215" width="424" height="20" rx="5" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1"/>
+  <text x="220" y="229" text-anchor="middle" font-size="10.5" fill="#1B5E20" font-weight="700">N_60 = N × (E_m/60)    |    N₁_60 = C_N × N_60    (C_N = hiệu chỉnh)</text>
 </svg>`;
 
+const SVG_CPT_SETUP = `
+<svg viewBox="0 0 420 235" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;display:block;margin:10px auto;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.10)">
+  ${_D4}
+  <rect width="420" height="235" fill="#F8FAFF" rx="10"/>
+  <!-- Đất trái -->
+  <rect x="10" y="10" width="155" height="200" fill="url(#d4-sand)" stroke="#F9A825" stroke-width="1.5" rx="4"/>
+  <rect x="10" y="10" width="155" height="200" fill="url(#d4-h)" rx="4" opacity="0.4"/>
+  <!-- Đất phải -->
+  <rect x="255" y="10" width="155" height="200" fill="url(#d4-sand)" stroke="#F9A825" stroke-width="1.5" rx="4"/>
+  <rect x="255" y="10" width="155" height="200" fill="url(#d4-h)" rx="4" opacity="0.4"/>
+  <!-- Thanh đẩy -->
+  <rect x="205" y="10" width="10" height="170" rx="2" fill="#546E7A"/>
+  <!-- Mũi côn -->
+  <polygon points="205,180 215,180 210,205" fill="#37474F" stroke="#263238" stroke-width="1.5"/>
+  <!-- Ống ma sát (sleeve) -->
+  <rect x="204" y="148" width="12" height="30" rx="2" fill="#78909C" stroke="#546E7A" stroke-width="1.2"/>
+  <text x="225" y="167" font-size="9" fill="#546E7A">sleeve (f_s)</text>
+  <!-- Mũi tên q_c -->
+  <line x1="210" y1="205" x2="210" y2="222" stroke="#C62828" stroke-width="2.5" marker-end="url(#d4-d)"/>
+  <text x="222" y="218" font-size="10" fill="#C62828" font-weight="700">q_c</text>
+  <!-- Xe tải đẩy -->
+  <rect x="178" y="2" width="64" height="12" rx="3" fill="#455A64"/>
+  <text x="210" y="12" text-anchor="middle" font-size="9" fill="white">Xe đẩy tĩnh</text>
+  <!-- Phân tầng đất -->
+  <text x="87"  y="55"  text-anchor="middle" font-size="11" fill="#4E342E" font-weight="600">Cát</text>
+  <text x="87"  y="130" text-anchor="middle" font-size="11" fill="#4E342E" font-weight="600">Sét</text>
+  <text x="307" y="55"  text-anchor="middle" font-size="11" fill="#4E342E" font-weight="600">Cát</text>
+  <text x="307" y="130" text-anchor="middle" font-size="11" fill="#4E342E" font-weight="600">Sét</text>
+  <line x1="10" y1="90" x2="165" y2="90" stroke="#888" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="255" y1="90" x2="410" y2="90" stroke="#888" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <!-- Công thức -->
+  <rect x="8" y="212" width="404" height="18" rx="5" fill="#E3F2FD" stroke="#1565C0" stroke-width="1"/>
+  <text x="210" y="225" text-anchor="middle" font-size="10" fill="#1565C0" font-weight="700">R_f = f_s / q_c × 100%    |    E₀ = α·q_c    (α = 2–8 tùy loại đất)</text>
+</svg>`;
 
-// ═══════════════════════════════════════════════════════════════════
-//  PHẦN 1 – THÍ NGHIỆM SPT
-// ═══════════════════════════════════════════════════════════════════
+const SVG_BAN_NEN = `
+<svg viewBox="0 0 440 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:440px;display:block;margin:10px auto;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.10)">
+  ${_D4}
+  <rect width="440" height="240" fill="#F8FAFF" rx="10"/>
+  <!-- Nền đất -->
+  <rect x="20" y="100" width="400" height="120" fill="url(#d4-sand)" stroke="#F9A825" stroke-width="1.5" rx="5"/>
+  <rect x="20" y="100" width="400" height="120" fill="url(#d4-h)" rx="5" opacity="0.45"/>
+  <text x="220" y="158" text-anchor="middle" font-size="12" fill="#4E342E" font-weight="700">Đất nền: E₀, γ, μ</text>
+  <!-- Bàn nén tròn -->
+  <ellipse cx="220" cy="102" rx="65" ry="8" fill="#455A64" stroke="#263238" stroke-width="2"/>
+  <rect x="155" y="70" width="130" height="32" rx="4" fill="url(#d4-conc)" stroke="#263238" stroke-width="2" filter="url(#d4-s)"/>
+  <text x="220" y="91" text-anchor="middle" font-size="11" fill="white" font-weight="700">Bàn nén (D hoặc b×l)</text>
+  <!-- Kích/lực P -->
+  <rect x="195" y="32" width="50" height="38" rx="4" fill="#78909C" stroke="#546E7A" stroke-width="1.5"/>
+  <text x="220" y="52" text-anchor="middle" font-size="9" fill="white">Kích thủy</text>
+  <text x="220" y="64" text-anchor="middle" font-size="9" fill="white">lực P</text>
+  <!-- Tải P mũi tên -->
+  <line x1="220" y1="10" x2="220" y2="32" stroke="#C62828" stroke-width="3" marker-end="url(#d4-d)"/>
+  <text x="232" y="24" font-size="12" fill="#C62828" font-weight="700">P</text>
+  <!-- Độ lún S -->
+  <line x1="335" y1="100" x2="335" y2="122" stroke="#1565C0" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#d4-d)"/>
+  <line x1="328" y1="100" x2="342" y2="100" stroke="#1565C0" stroke-width="1.5"/>
+  <text x="345" y="115" font-size="11" fill="#1565C0" font-weight="700">S</text>
+  <!-- Biểu đồ P-S nhỏ -->
+  <rect x="22" y="102" width="100" height="70" rx="5" fill="white" stroke="#E0E0E0" stroke-width="1" opacity="0.9"/>
+  <text x="72" y="118" text-anchor="middle" font-size="9" fill="#555" font-weight="700">Biểu đồ P-S</text>
+  <line x1="30" y1="165" x2="115" y2="165" stroke="#546E7A" stroke-width="1"/>
+  <line x1="30" y1="122" x2="30"  y2="167" stroke="#546E7A" stroke-width="1"/>
+  <path d="M32,125 Q50,135 65,148 Q80,158 112,163" fill="none" stroke="#C62828" stroke-width="2"/>
+  <text x="116" y="167" font-size="8" fill="#546E7A">P→</text>
+  <text x="22"  y="128" font-size="8" fill="#546E7A">S↓</text>
+  <!-- Công thức -->
+  <rect x="8" y="218" width="424" height="18" rx="5" fill="#FFF3E0" stroke="#FF9800" stroke-width="1"/>
+  <text x="220" y="231" text-anchor="middle" font-size="10.5" fill="#E65100" font-weight="700">E₀ = ω·p·b·(1−μ²)/S    |    ω = 0.88 (tròn), 0.82 (vuông), 0.79 (chữ nhật)</text>
+</svg>`;
 
 const LY_THUYET_SPT = `
 <div class="theory-block">

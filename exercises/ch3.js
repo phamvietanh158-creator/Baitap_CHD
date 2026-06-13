@@ -3,217 +3,264 @@
 //  Phần 1: Tính thấm | Phần 2: Biến dạng | Phần 3: Chống cắt
 // ═══════════════════════════════════════════════════════
 
-// ── SVG helpers ───────────────────────────────────────
+// ══════════════════════════════════════════════════════
+//  SVG NÂNG CẤP – CH3 (thay thế toàn bộ phần SVG helpers)
+// ══════════════════════════════════════════════════════
+
+// Defs chung dùng cho tất cả SVG ch3
+const _D3 = `<defs>
+  <linearGradient id="d3-water" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#B3E5FC"/><stop offset="100%" stop-color="#0288D1" stop-opacity="0.7"/></linearGradient>
+  <linearGradient id="d3-sand"  x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFF9C4"/><stop offset="100%" stop-color="#F9A825" stop-opacity="0.6"/></linearGradient>
+  <linearGradient id="d3-clay"  x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#DCEDC8"/><stop offset="100%" stop-color="#7CB342" stop-opacity="0.6"/></linearGradient>
+  <linearGradient id="d3-conc"  x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#90A4AE"/><stop offset="100%" stop-color="#455A64"/></linearGradient>
+  <pattern id="d3-h" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="10" stroke="#8D6E63" stroke-width="1.2" opacity="0.35"/>
+  </pattern>
+  <marker id="d3-r" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1565C0"/></marker>
+  <marker id="d3-d" markerWidth="7" markerHeight="9" refX="3.5" refY="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L3.5,9 L7,0 Z" fill="#C62828"/></marker>
+  <marker id="d3-u" markerWidth="7" markerHeight="9" refX="3.5" refY="1" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,9 L3.5,0 L7,9 Z" fill="#E65100"/></marker>
+  <filter id="d3-s"><feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="#00000018"/></filter>
+</defs>`;
+
 function _svgThamCotNuocKhongDoi() {
-  return `<svg viewBox="0 0 280 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:280px;border-radius:8px;border:1px solid #dce3ed">
-  <rect width="280" height="220" fill="#f8faff"/>
-  <!-- Bình chứa trên -->
-  <rect x="20" y="10" width="60" height="100" fill="#bce0fd" stroke="#1565c0" stroke-width="1.5"/>
-  <text x="35" y="70" font-family="sans-serif" font-size="10" fill="#1565c0">Nước</text>
-  <!-- Mẫu đất -->
-  <rect x="100" y="60" width="80" height="60" fill="#d4b896" stroke="#9c7a5a" stroke-width="1.5"/>
-  <text x="115" y="93" font-family="sans-serif" font-size="11" fill="#5a3a1a">Mẫu đất</text>
+  return `<svg viewBox="0 0 380 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:380px;display:block;margin:10px auto;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.10)">
+  ${_D3}
+  <rect width="380" height="220" fill="#F8FAFF" rx="10"/>
+  <!-- Bình cấp nước (trái) -->
+  <rect x="15" y="15" width="55" height="120" rx="5" fill="url(#d3-water)" stroke="#0277BD" stroke-width="1.5"/>
+  <text x="42" y="80" text-anchor="middle" font-size="10" fill="#01579B" font-weight="600">Nước</text>
+  <!-- Mực nước H -->
+  <line x1="5"  y1="15"  x2="5"  y2="135" stroke="#E65100" stroke-width="1.5" marker-end="url(#d3-d)"/>
+  <line x1="1"  y1="15"  x2="9"  y2="15"  stroke="#E65100" stroke-width="1.5"/>
+  <text x="0" y="80" font-size="10" fill="#E65100" font-weight="700" transform="rotate(-90,0,80)">h</text>
+  <!-- Ống dẫn -->
+  <line x1="70" y1="75" x2="100" y2="75" stroke="#0288D1" stroke-width="2.5" marker-end="url(#d3-r)"/>
+  <!-- Mẫu đất (hộp) -->
+  <rect x="100" y="50" width="130" height="90" rx="6" fill="url(#d3-sand)" stroke="#F57F17" stroke-width="2" filter="url(#d3-s)"/>
+  <rect x="100" y="50" width="130" height="90" fill="url(#d3-h)" rx="6" opacity="0.5"/>
+  <text x="165" y="93" text-anchor="middle" font-size="12" fill="#4E342E" font-weight="700">Mẫu đất</text>
+  <text x="165" y="110" text-anchor="middle" font-size="10" fill="#6D4C41">A (tiết diện)</text>
   <!-- Lưới lọc -->
-  <line x1="100" y1="120" x2="180" y2="120" stroke="#555" stroke-width="2" stroke-dasharray="4,2"/>
-  <text x="185" y="124" font-family="sans-serif" font-size="9" fill="#555">Lưới lọc</text>
-  <!-- Ống dẫn A→B -->
-  <line x1="80" y1="80" x2="100" y2="80" stroke="#1565c0" stroke-width="2"/>
-  <line x1="180" y1="80" x2="240" y2="80" stroke="#1565c0" stroke-width="2"/>
-  <!-- Bình thu -->
-  <rect x="220" y="60" width="50" height="80" fill="#e3f0fd" stroke="#1565c0" stroke-width="1.5"/>
-  <text x="225" y="102" font-family="sans-serif" font-size="9" fill="#1565c0">Thu Q</text>
-  <!-- Nhãn h, L -->
-  <line x1="25" y1="10" x2="25" y2="80" stroke="#e53935" stroke-width="1.5" stroke-dasharray="4,2"/>
-  <text x="1" y="50" font-family="sans-serif" font-size="10" fill="#e53935">h</text>
-  <line x1="100" y1="145" x2="180" y2="145" stroke="#333" stroke-width="1"/>
-  <text x="130" y="158" font-family="sans-serif" font-size="10" fill="#333">L</text>
-  <!-- Nhãn A -->
-  <text x="107" y="55" font-family="sans-serif" font-size="9" fill="#555">A (tiết diện)</text>
-  <!-- Điểm áp kế -->
-  <circle cx="130" cy="60" r="3" fill="#e53935"/>
-  <text x="108" y="58" font-family="sans-serif" font-size="8" fill="#e53935">B</text>
-  <circle cx="150" cy="120" r="3" fill="#e53935"/>
-  <text x="152" y="124" font-family="sans-serif" font-size="8" fill="#e53935">A</text>
+  <line x1="100" y1="140" x2="230" y2="140" stroke="#546E7A" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="235" y="144" font-size="9" fill="#546E7A">lưới lọc</text>
+  <!-- Chiều dài L -->
+  <line x1="100" y1="155" x2="230" y2="155" stroke="#1565C0" stroke-width="1.5"/>
+  <line x1="100" y1="150" x2="100" y2="160" stroke="#1565C0" stroke-width="1.5"/>
+  <line x1="230" y1="150" x2="230" y2="160" stroke="#1565C0" stroke-width="1.5"/>
+  <text x="165" y="170" text-anchor="middle" font-size="11" fill="#1565C0" font-weight="700">L</text>
+  <!-- Ống ra + bình thu -->
+  <line x1="230" y1="95" x2="270" y2="95" stroke="#0288D1" stroke-width="2.5" marker-end="url(#d3-r)"/>
+  <rect x="290" y="65" width="70" height="85" rx="6" fill="#E3F2FD" stroke="#1565C0" stroke-width="1.5"/>
+  <text x="325" y="108" text-anchor="middle" font-size="10" fill="#1565C0" font-weight="600">Thu Q</text>
+  <!-- Nhãn điểm A, B -->
+  <circle cx="120" cy="50" r="4" fill="#C62828"/>
+  <text x="108" y="46" font-size="9" fill="#C62828" font-weight="700">B</text>
+  <circle cx="210" cy="140" r="4" fill="#C62828"/>
+  <text x="198" y="136" font-size="9" fill="#C62828" font-weight="700">A</text>
+  <!-- Công thức -->
+  <rect x="10" y="185" width="355" height="22" rx="5" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1"/>
+  <text x="188" y="200" text-anchor="middle" font-size="10.5" fill="#1B5E20" font-weight="700">v = k·i = k·h/L    →    Q = k·i·A</text>
 </svg>`;
 }
 
 function _svgThamCotNuocThayDoi() {
-  return `<svg viewBox="0 0 260 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:260px;border-radius:8px;border:1px solid #dce3ed">
-  <rect width="260" height="220" fill="#f8faff"/>
+  return `<svg viewBox="0 0 360 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;display:block;margin:10px auto;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.10)">
+  ${_D3}
+  <rect width="360" height="230" fill="#F8FAFF" rx="10"/>
   <!-- Ống đứng -->
-  <rect x="80" y="10" width="25" height="130" fill="#bce0fd" stroke="#1565c0" stroke-width="1.5"/>
-  <text x="55" y="40" font-family="sans-serif" font-size="9" fill="#1565c0">h₁</text>
-  <text x="55" y="120" font-family="sans-serif" font-size="9" fill="#1565c0">h₂</text>
-  <line x1="72" y1="15" x2="80" y2="15" stroke="#333" stroke-width="1"/>
-  <line x1="72" y1="105" x2="80" y2="105" stroke="#333" stroke-width="1"/>
-  <line x1="74" y1="15" x2="74" y2="105" stroke="#333" stroke-width="1" marker-end="url(#da)" marker-start="url(#da2)"/>
-  <!-- Mẫu đất -->
-  <rect x="70" y="140" width="80" height="50" fill="#d4b896" stroke="#9c7a5a" stroke-width="1.5"/>
-  <text x="85" y="168" font-family="sans-serif" font-size="11" fill="#5a3a1a">Mẫu đất</text>
-  <text x="82" y="183" font-family="sans-serif" font-size="9" fill="#9c7a5a">tiết diện a</text>
-  <!-- Tràn ra -->
-  <line x1="150" y1="175" x2="210" y2="175" stroke="#1565c0" stroke-width="1.5"/>
-  <text x="155" y="168" font-family="sans-serif" font-size="9" fill="#1565c0">Thoát Q</text>
-  <!-- Nhãn L -->
-  <line x1="155" y1="140" x2="155" y2="190" stroke="#555" stroke-width="1"/>
-  <text x="158" y="168" font-family="sans-serif" font-size="9" fill="#555">L</text>
-  <!-- Nhãn t -->
-  <text x="30" y="75" font-family="sans-serif" font-size="10" fill="#e53935">Δh giảm</text>
-  <text x="30" y="90" font-family="sans-serif" font-size="10" fill="#e53935">theo t</text>
-  <defs>
-    <marker id="da" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#333"/></marker>
-    <marker id="da2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 Z" fill="#333"/></marker>
-  </defs>
+  <rect x="120" y="12" width="30" height="120" rx="4" fill="url(#d3-water)" stroke="#0277BD" stroke-width="1.5"/>
+  <!-- h1 mực nước ban đầu -->
+  <line x1="95" y1="12"  x2="120" y2="12"  stroke="#C62828" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="60" y="16" font-size="10" fill="#C62828" font-weight="700">h₁ (ban đầu)</text>
+  <!-- h2 mực nước sau -->
+  <line x1="95" y1="90"  x2="120" y2="90"  stroke="#E65100" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="60" y="94" font-size="10" fill="#E65100" font-weight="700">h₂ (sau t giây)</text>
+  <!-- Mũi tên giảm -->
+  <line x1="135" y1="20" x2="135" y2="85" stroke="#7B1FA2" stroke-width="2" marker-end="url(#d3-d)"/>
+  <text x="142" y="58" font-size="9" fill="#7B1FA2">Δh giảm</text>
+  <!-- Mẫu đất (hộp) -->
+  <rect x="100" y="132" width="100" height="62" rx="6" fill="url(#d3-sand)" stroke="#F57F17" stroke-width="2" filter="url(#d3-s)"/>
+  <rect x="100" y="132" width="100" height="62" fill="url(#d3-h)" rx="6" opacity="0.5"/>
+  <text x="150" y="162" text-anchor="middle" font-size="11" fill="#4E342E" font-weight="700">Mẫu đất</text>
+  <text x="150" y="178" text-anchor="middle" font-size="9.5" fill="#6D4C41">tiết diện a</text>
+  <!-- Chiều dài L -->
+  <line x1="205" y1="132" x2="205" y2="194" stroke="#1565C0" stroke-width="1.5"/>
+  <line x1="200" y1="132" x2="210" y2="132" stroke="#1565C0" stroke-width="1.5"/>
+  <line x1="200" y1="194" x2="210" y2="194" stroke="#1565C0" stroke-width="1.5"/>
+  <text x="215" y="168" font-size="11" fill="#1565C0" font-weight="700">L</text>
+  <!-- Thoát Q -->
+  <line x1="200" y1="163" x2="240" y2="163" stroke="#0288D1" stroke-width="2" marker-end="url(#d3-r)"/>
+  <text x="245" y="167" font-size="10" fill="#0288D1">Q ra</text>
+  <!-- Công thức -->
+  <rect x="10" y="205" width="340" height="20" rx="5" fill="#E3F2FD" stroke="#1565C0" stroke-width="1"/>
+  <text x="180" y="219" text-anchor="middle" font-size="10" fill="#1565C0" font-weight="700">k = (a·L)/(A·t) · ln(h₁/h₂)</text>
 </svg>`;
 }
 
 function _svgLopSongSong() {
-  return `<svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:300px;border-radius:8px;border:1px solid #dce3ed">
-  <rect width="300" height="180" fill="#f8faff"/>
-  <!-- Hướng thấm ngang -->
-  <text x="10" y="25" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1565c0">→ Hướng thấm (song song)</text>
+  return `<svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:380px;display:block;margin:10px auto;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.10)">
+  ${_D3}
+  <rect width="380" height="200" fill="#F8FAFF" rx="10"/>
+  <text x="190" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#1565C0">→ Thấm SONG SONG các lớp</text>
   <!-- Lớp 1 -->
-  <rect x="40" y="35" width="220" height="50" fill="#d4b896" stroke="#9c7a5a" stroke-width="1.5"/>
-  <text x="100" y="62" font-family="sans-serif" font-size="11" fill="#5a3a1a">Lớp 1: h₁, k₁</text>
+  <rect x="60" y="35" width="250" height="55" rx="5" fill="url(#d3-sand)" stroke="#F9A825" stroke-width="2"/>
+  <rect x="60" y="35" width="250" height="55" fill="url(#d3-h)" rx="5" opacity="0.4"/>
+  <text x="185" y="62" text-anchor="middle" font-size="12" fill="#4E342E" font-weight="700">Lớp 1: h₁, k₁</text>
   <!-- Lớp 2 -->
-  <rect x="40" y="85" width="220" height="60" fill="#c8dbb0" stroke="#5a8a3a" stroke-width="1.5"/>
-  <text x="100" y="118" font-family="sans-serif" font-size="11" fill="#2a5a1a">Lớp 2: h₂, k₂</text>
-  <!-- Mũi tên thấm -->
-  <line x1="15" y1="60" x2="40" y2="60" stroke="#1565c0" stroke-width="2" marker-end="url(#ba3)"/>
-  <line x1="15" y1="115" x2="40" y2="115" stroke="#2e7d32" stroke-width="2" marker-end="url(#ba4)"/>
-  <!-- k_eq công thức -->
-  <rect x="40" y="155" width="220" height="20" fill="#e3f0fd" rx="4"/>
-  <text x="60" y="169" font-family="sans-serif" font-size="11" fill="#1565c0">k_h_eq = (k₁h₁ + k₂h₂)/(h₁+h₂)</text>
-  <defs>
-    <marker id="ba3" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1565c0"/></marker>
-    <marker id="ba4" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2e7d32"/></marker>
-  </defs>
+  <rect x="60" y="90" width="250" height="65" rx="5" fill="url(#d3-clay)" stroke="#7CB342" stroke-width="2"/>
+  <rect x="60" y="90" width="250" height="65" fill="url(#d3-h)" rx="5" opacity="0.35"/>
+  <text x="185" y="126" text-anchor="middle" font-size="12" fill="#33691E" font-weight="700">Lớp 2: h₂, k₂</text>
+  <!-- Mũi tên thấm ngang -->
+  <line x1="20" y1="62" x2="58" y2="62" stroke="#1565C0" stroke-width="2.5" marker-end="url(#d3-r)"/>
+  <line x1="20" y1="122" x2="58" y2="122" stroke="#2E7D32" stroke-width="2.5" marker-end="url(#d3-r)"/>
+  <!-- Công thức -->
+  <rect x="30" y="168" width="320" height="22" rx="5" fill="#E3F2FD" stroke="#1565C0" stroke-width="1"/>
+  <text x="190" y="183" text-anchor="middle" font-size="10.5" fill="#1565C0" font-weight="700">k_h = (k₁h₁ + k₂h₂) / (h₁ + h₂)</text>
 </svg>`;
 }
 
 function _svgLopNoiTiep() {
-  return `<svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:300px;border-radius:8px;border:1px solid #dce3ed">
-  <rect width="300" height="180" fill="#f8faff"/>
-  <text x="10" y="25" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1565c0">↓ Hướng thấm (nối tiếp)</text>
+  return `<svg viewBox="0 0 340 215" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px;display:block;margin:10px auto;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.10)">
+  ${_D3}
+  <rect width="340" height="215" fill="#F8FAFF" rx="10"/>
+  <text x="170" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#1565C0">↓ Thấm NỐI TIẾP các lớp</text>
+  <!-- Mũi tên xuống (vào) -->
+  <line x1="170" y1="28" x2="170" y2="45" stroke="#C62828" stroke-width="2.5" marker-end="url(#d3-d)"/>
   <!-- Lớp 1 -->
-  <rect x="60" y="35" width="180" height="45" fill="#d4b896" stroke="#9c7a5a" stroke-width="1.5"/>
-  <text x="110" y="60" font-family="sans-serif" font-size="11" fill="#5a3a1a">Lớp 1: h₁, k₁</text>
+  <rect x="80" y="45" width="180" height="55" rx="5" fill="url(#d3-sand)" stroke="#F9A825" stroke-width="2"/>
+  <rect x="80" y="45" width="180" height="55" fill="url(#d3-h)" rx="5" opacity="0.4"/>
+  <text x="170" y="72" text-anchor="middle" font-size="12" fill="#4E342E" font-weight="700">Lớp 1: h₁, k₁</text>
   <!-- Lớp 2 -->
-  <rect x="60" y="80" width="180" height="55" fill="#b0c8e8" stroke="#4a7ab5" stroke-width="1.5"/>
-  <text x="110" y="110" font-family="sans-serif" font-size="11" fill="#1a3a6c">Lớp 2: h₂, k₂</text>
-  <!-- Mũi tên thấm đứng -->
-  <line x1="150" y1="15" x2="150" y2="35" stroke="#1565c0" stroke-width="2" marker-end="url(#ba5)"/>
-  <line x1="150" y1="135" x2="150" y2="155" stroke="#1565c0" stroke-width="2" marker-end="url(#ba5)"/>
-  <!-- k_eq công thức -->
-  <rect x="40" y="155" width="220" height="20" fill="#e3f0fd" rx="4"/>
-  <text x="50" y="169" font-family="sans-serif" font-size="11" fill="#1565c0">k_v_eq = (h₁+h₂)/(h₁/k₁ + h₂/k₂)</text>
-  <defs>
-    <marker id="ba5" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1565c0"/></marker>
-  </defs>
+  <rect x="80" y="100" width="180" height="65" rx="5" fill="url(#d3-clay)" stroke="#7CB342" stroke-width="2"/>
+  <rect x="80" y="100" width="180" height="65" fill="url(#d3-h)" rx="5" opacity="0.35"/>
+  <text x="170" y="135" text-anchor="middle" font-size="12" fill="#33691E" font-weight="700">Lớp 2: h₂, k₂</text>
+  <!-- Mũi tên xuống (ra) -->
+  <line x1="170" y1="165" x2="170" y2="182" stroke="#C62828" stroke-width="2.5" marker-end="url(#d3-d)"/>
+  <!-- Công thức -->
+  <rect x="20" y="188" width="300" height="20" rx="5" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1"/>
+  <text x="170" y="202" text-anchor="middle" font-size="10.5" fill="#1B5E20" font-weight="700">k_v = (h₁+h₂) / (h₁/k₁ + h₂/k₂)</text>
 </svg>`;
 }
 
 function _svgOedometer() {
-  return `<svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:300px;border-radius:8px;border:1px solid #dce3ed">
-  <rect width="300" height="200" fill="#f8faff"/>
-  <!-- Vỏ oedometer -->
-  <rect x="60" y="30" width="180" height="100" fill="none" stroke="#546e7a" stroke-width="2"/>
+  return `<svg viewBox="0 0 420 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;display:block;margin:10px auto;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.10)">
+  ${_D3}
+  <rect width="420" height="220" fill="#F8FAFF" rx="10"/>
+  <!-- Khung oedometer -->
+  <rect x="90" y="35" width="160" height="120" rx="6" fill="none" stroke="#455A64" stroke-width="3"/>
+  <!-- Tấm nén trên -->
+  <rect x="92" y="35" width="156" height="14" rx="3" fill="url(#d3-conc)"/>
   <!-- Đất trong hộp -->
-  <rect x="62" y="32" width="176" height="70" fill="#d4b896" opacity="0.8"/>
-  <text x="120" y="72" font-family="sans-serif" font-size="11" fill="#5a3a1a">Mẫu đất</text>
-  <text x="108" y="88" font-family="sans-serif" font-size="10" fill="#9c7a5a">h₀, e₀ ban đầu</text>
-  <!-- Tấm nén -->
-  <rect x="62" y="25" width="176" height="7" fill="#78909c"/>
-  <!-- Lực tác dụng -->
-  <line x1="150" y1="5" x2="150" y2="25" stroke="#e53935" stroke-width="2.5" marker-end="url(#ra_oe)"/>
-  <text x="158" y="18" font-family="sans-serif" font-size="11" font-weight="bold" fill="#e53935">σ</text>
+  <rect x="92" y="49" width="156" height="75" fill="url(#d3-sand)"/>
+  <rect x="92" y="49" width="156" height="75" fill="url(#d3-h)" opacity="0.5"/>
+  <text x="170" y="90" text-anchor="middle" font-size="12" fill="#4E342E" font-weight="700">Mẫu đất</text>
+  <text x="170" y="107" text-anchor="middle" font-size="10" fill="#6D4C41">e₀, h₀ ban đầu</text>
   <!-- Lưới lọc dưới -->
-  <line x1="62" y1="102" x2="238" y2="102" stroke="#555" stroke-width="1.5" stroke-dasharray="4,2"/>
-  <!-- Vành -->
-  <rect x="60" y="130" width="180" height="12" fill="#90a4ae"/>
-  <!-- Nhãn -->
-  <text x="245" y="72" font-family="sans-serif" font-size="10" fill="#555">h</text>
-  <line x1="238" y1="32" x2="248" y2="32" stroke="#555" stroke-width="1"/>
-  <line x1="238" y1="102" x2="248" y2="102" stroke="#555" stroke-width="1"/>
-  <line x1="243" y1="32" x2="243" y2="102" stroke="#555" stroke-width="1"/>
-  <!-- Biểu đồ e-σ nhỏ -->
-  <text x="10" y="160" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1565c0">Đường cong e-p:</text>
-  <path d="M10,195 Q60,175 100,180 Q150,185 200,190" fill="none" stroke="#1565c0" stroke-width="2"/>
-  <text x="205" y="193" font-family="sans-serif" font-size="9" fill="#1565c0">σ→</text>
-  <line x1="10" y1="165" x2="10" y2="200" stroke="#555" stroke-width="1"/>
-  <text x="1" y="172" font-family="sans-serif" font-size="8" fill="#555">e↑</text>
-  <defs>
-    <marker id="ra_oe" markerWidth="6" markerHeight="6" refX="3" refY="6" orient="auto"><path d="M0,0 L3,6 L6,0 Z" fill="#e53935"/></marker>
-  </defs>
+  <line x1="92" y1="124" x2="248" y2="124" stroke="#546E7A" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="255" y="128" font-size="9" fill="#546E7A">lưới lọc</text>
+  <!-- Vành dưới -->
+  <rect x="85" y="155" width="170" height="12" rx="3" fill="#78909C"/>
+  <!-- Lực σ -->
+  <line x1="170" y1="8" x2="170" y2="35" stroke="#C62828" stroke-width="3" marker-end="url(#d3-d)"/>
+  <text x="185" y="28" font-size="13" fill="#C62828" font-weight="700">σ</text>
+  <!-- h kích thước -->
+  <line x1="260" y1="49"  x2="260" y2="124" stroke="#1565C0" stroke-width="1.5"/>
+  <line x1="255" y1="49"  x2="265" y2="49"  stroke="#1565C0" stroke-width="1.5"/>
+  <line x1="255" y1="124" x2="265" y2="124" stroke="#1565C0" stroke-width="1.5"/>
+  <text x="268" y="92" font-size="11" fill="#1565C0" font-weight="700">h</text>
+  <!-- Biểu đồ e-lgP -->
+  <text x="10" y="175" font-size="10" fill="#1565C0" font-weight="700">Đường cong nén lún e–lgP:</text>
+  <line x1="10" y1="215" x2="80"  y2="215" stroke="#546E7A" stroke-width="1"/>
+  <line x1="10" y1="178" x2="10"  y2="217" stroke="#546E7A" stroke-width="1"/>
+  <path d="M12,182 Q30,188 50,200 Q65,208 78,213" fill="none" stroke="#C62828" stroke-width="2.5"/>
+  <text x="82" y="216" font-size="9" fill="#546E7A">lgP→</text>
+  <text x="1" y="188" font-size="8" fill="#546E7A" transform="rotate(-90,1,188)">e↑</text>
+  <!-- Công thức lún -->
+  <rect x="90" y="180" width="320" height="30" rx="5" fill="#E3F2FD" stroke="#1565C0" stroke-width="1"/>
+  <text x="250" y="196" text-anchor="middle" font-size="10.5" fill="#1565C0" font-weight="700">S = (a·Δσ·h₀)/(1+e₀)   hoặc   S = (Cc·h₀)/(1+e₀)·lg(σ₂/σ₁)</text>
 </svg>`;
 }
 
 function _svgCatPhang() {
-  return `<svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:300px;border-radius:8px;border:1px solid #dce3ed">
-  <rect width="300" height="200" fill="#f8faff"/>
+  return `<svg viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:400px;display:block;margin:10px auto;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.10)">
+  ${_D3}
+  <rect width="400" height="225" fill="#F8FAFF" rx="10"/>
   <!-- Tải đứng P -->
-  <line x1="150" y1="5" x2="150" y2="30" stroke="#e53935" stroke-width="2.5" marker-end="url(#rcp)"/>
-  <text x="158" y="20" font-family="sans-serif" font-size="12" font-weight="bold" fill="#e53935">P</text>
-  <!-- Nắp nén -->
-  <rect x="70" y="30" width="160" height="12" fill="#78909c"/>
-  <text x="210" y="40" font-family="sans-serif" font-size="9" fill="#546e7a">Nắp nén</text>
-  <!-- Hộp trên (mẫu đất trên) -->
-  <rect x="70" y="42" width="160" height="45" fill="#d4b896" stroke="#9c7a5a" stroke-width="1.5"/>
-  <text x="120" y="68" font-family="sans-serif" font-size="11" fill="#5a3a1a">Mẫu đất</text>
-  <!-- Mặt cắt -->
-  <line x1="60" y1="87" x2="240" y2="87" stroke="#e53935" stroke-width="2.5" stroke-dasharray="6,3"/>
-  <text x="245" y="91" font-family="sans-serif" font-size="10" fill="#e53935">Mặt cắt</text>
-  <!-- Hộp dưới (cố định) -->
-  <rect x="70" y="87" width="160" height="45" fill="#c8dbb0" stroke="#5a8a3a" stroke-width="1.5"/>
-  <text x="100" y="113" font-family="sans-serif" font-size="11" fill="#2a5a1a">Hộp cắt dưới</text>
+  <line x1="180" y1="5" x2="180" y2="28" stroke="#C62828" stroke-width="3" marker-end="url(#d3-d)"/>
+  <text x="192" y="22" font-size="13" fill="#C62828" font-weight="700">P (σ)</text>
+  <!-- Tấm nén trên -->
+  <rect x="80" y="28" width="200" height="14" rx="3" fill="url(#d3-conc)"/>
+  <!-- Hộp trên – đất -->
+  <rect x="80" y="42" width="200" height="52" rx="0" fill="url(#d3-sand)" stroke="#F9A825" stroke-width="1.5"/>
+  <rect x="80" y="42" width="200" height="52" fill="url(#d3-h)" opacity="0.45"/>
+  <text x="180" y="72" text-anchor="middle" font-size="12" fill="#4E342E" font-weight="700">Mẫu đất</text>
+  <!-- Mặt cắt phá hoại -->
+  <line x1="70" y1="94" x2="290" y2="94" stroke="#C62828" stroke-width="3" stroke-dasharray="7,3"/>
+  <text x="295" y="98" font-size="10" fill="#C62828" font-weight="700">Mặt cắt</text>
+  <!-- Hộp dưới – cố định -->
+  <rect x="80" y="94" width="200" height="52" fill="url(#d3-clay)" stroke="#7CB342" stroke-width="1.5"/>
+  <rect x="80" y="94" width="200" height="52" fill="url(#d3-h)" opacity="0.35"/>
+  <text x="180" y="124" text-anchor="middle" font-size="11" fill="#33691E" font-weight="700">Hộp cắt dưới (cố định)</text>
   <!-- Lực ngang T -->
-  <line x1="230" y1="65" x2="260" y2="65" stroke="#1565c0" stroke-width="2.5" marker-end="url(#rct)"/>
-  <text x="262" y="69" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1565c0">T</text>
-  <!-- Bi trơn -->
-  <circle cx="90" cy="143" r="5" fill="#aaa" stroke="#555" stroke-width="1"/>
-  <circle cx="120" cy="143" r="5" fill="#aaa" stroke="#555" stroke-width="1"/>
-  <circle cx="150" cy="143" r="5" fill="#aaa" stroke="#555" stroke-width="1"/>
-  <circle cx="180" cy="143" r="5" fill="#aaa" stroke="#555" stroke-width="1"/>
-  <circle cx="210" cy="143" r="5" fill="#aaa" stroke="#555" stroke-width="1"/>
+  <line x1="280" y1="68" x2="318" y2="68" stroke="#1565C0" stroke-width="3" marker-end="url(#d3-r)"/>
+  <text x="322" y="73" font-size="13" fill="#1565C0" font-weight="700">T (τ)</text>
+  <!-- Bi trơn dưới -->
+  <circle cx="110" cy="157" r="6" fill="#B0BEC5" stroke="#546E7A" stroke-width="1.2"/>
+  <circle cx="145" cy="157" r="6" fill="#B0BEC5" stroke="#546E7A" stroke-width="1.2"/>
+  <circle cx="180" cy="157" r="6" fill="#B0BEC5" stroke="#546E7A" stroke-width="1.2"/>
+  <circle cx="215" cy="157" r="6" fill="#B0BEC5" stroke="#546E7A" stroke-width="1.2"/>
+  <circle cx="250" cy="157" r="6" fill="#B0BEC5" stroke="#546E7A" stroke-width="1.2"/>
   <!-- Biểu đồ τ-σ -->
-  <text x="10" y="168" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1565c0">Bao phá hoại: τ = c + σ tanφ</text>
-  <line x1="10" y1="195" x2="280" y2="195" stroke="#555" stroke-width="1"/>
-  <line x1="10" y1="170" x2="10" y2="198" stroke="#555" stroke-width="1"/>
-  <line x1="30" y1="193" x2="250" y2="173" stroke="#e53935" stroke-width="2"/>
-  <text x="252" y="175" font-family="sans-serif" font-size="9" fill="#e53935">τ↑</text>
-  <text x="282" y="198" font-family="sans-serif" font-size="9" fill="#555">σ→</text>
-  <defs>
-    <marker id="rcp" markerWidth="6" markerHeight="6" refX="3" refY="6" orient="auto"><path d="M0,0 L3,6 L6,0 Z" fill="#e53935"/></marker>
-    <marker id="rct" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1565c0"/></marker>
-  </defs>
+  <text x="10" y="178" font-size="10" fill="#C62828" font-weight="700">Đường bao phá hoại Mohr-Coulomb:</text>
+  <line x1="10" y1="220" x2="210" y2="220" stroke="#546E7A" stroke-width="1.2"/>
+  <line x1="10" y1="182" x2="10"  y2="222" stroke="#546E7A" stroke-width="1.2"/>
+  <line x1="22" y1="218" x2="200" y2="196" stroke="#C62828" stroke-width="2.5"/>
+  <!-- c và phi -->
+  <circle cx="22" cy="218" r="3" fill="#C62828"/>
+  <text x="15" y="215" font-size="9" fill="#C62828">c</text>
+  <text x="215" y="222" font-size="9" fill="#546E7A">σ→</text>
+  <text x="8"  y="192" font-size="8" fill="#546E7A" transform="rotate(-90,8,192)">τ↑</text>
+  <!-- Công thức -->
+  <rect x="220" y="178" width="175" height="32" rx="5" fill="#FCE4EC" stroke="#C62828" stroke-width="1"/>
+  <text x="308" y="193" text-anchor="middle" font-size="10.5" fill="#B71C1C" font-weight="700">τ = c + σ·tanφ</text>
+  <text x="308" y="207" text-anchor="middle" font-size="9.5" fill="#B71C1C">Coulomb (1776)</text>
 </svg>`;
 }
 
 function _svgNen3Truc() {
-  return `<svg viewBox="0 0 280 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:280px;border-radius:8px;border:1px solid #dce3ed">
-  <rect width="280" height="210" fill="#f8faff"/>
+  return `<svg viewBox="0 0 420 225" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;display:block;margin:10px auto;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.10)">
+  ${_D3}
+  <rect width="420" height="225" fill="#F8FAFF" rx="10"/>
   <!-- Buồng nén -->
-  <rect x="60" y="20" width="160" height="150" fill="#e3f0fd" stroke="#1565c0" stroke-width="2" rx="5"/>
-  <text x="85" y="110" font-family="sans-serif" font-size="10" fill="#1565c0">σ₃ (áp lực buồng)</text>
+  <rect x="95" y="22" width="175" height="165" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="2.5" filter="url(#d3-s)"/>
+  <!-- Label σ₃ trong buồng -->
+  <text x="108" y="135" font-size="10" fill="#1565C0" font-weight="600">σ₃ (áp lực buồng)</text>
   <!-- Mẫu đất trụ -->
-  <rect x="105" y="35" width="70" height="120" fill="#d4b896" stroke="#9c7a5a" stroke-width="1.5"/>
-  <text x="112" y="98" font-family="sans-serif" font-size="11" fill="#5a3a1a">Mẫu</text>
-  <text x="112" y="113" font-family="sans-serif" font-size="11" fill="#5a3a1a">đất</text>
-  <!-- Lực dọc trục -->
-  <line x1="140" y1="5" x2="140" y2="35" stroke="#e53935" stroke-width="2.5" marker-end="url(#rn3)"/>
-  <text x="148" y="22" font-family="sans-serif" font-size="11" font-weight="bold" fill="#e53935">σ₁−σ₃</text>
-  <text x="95" y="18" font-family="sans-serif" font-size="10" fill="#e53935">(deviatoric)</text>
-  <!-- Áp lực ngang -->
-  <line x1="20" y1="95" x2="60" y2="95" stroke="#1565c0" stroke-width="2" marker-end="url(#rn4)"/>
-  <text x="15" y="90" font-family="sans-serif" font-size="9" fill="#1565c0">σ₃</text>
-  <line x1="260" y1="95" x2="220" y2="95" stroke="#1565c0" stroke-width="2" marker-end="url(#rn4)"/>
-  <!-- Nhãn -->
-  <text x="65" y="180" font-family="sans-serif" font-size="10" fill="#555">σ₁ = σ₃ + q_max</text>
-  <text x="65" y="195" font-family="sans-serif" font-size="10" fill="#555">σ'₁ = σ₁ − u</text>
-  <defs>
-    <marker id="rn3" markerWidth="6" markerHeight="6" refX="3" refY="6" orient="auto"><path d="M0,0 L3,6 L6,0 Z" fill="#e53935"/></marker>
-    <marker id="rn4" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1565c0"/></marker>
-  </defs>
+  <rect x="145" y="38" width="75" height="133" rx="5" fill="url(#d3-sand)" stroke="#F9A825" stroke-width="2"/>
+  <rect x="145" y="38" width="75" height="133" fill="url(#d3-h)" rx="5" opacity="0.5"/>
+  <text x="183" y="102" text-anchor="middle" font-size="12" fill="#4E342E" font-weight="700">Mẫu</text>
+  <text x="183" y="118" text-anchor="middle" font-size="12" fill="#4E342E" font-weight="700">đất</text>
+  <!-- σ₁ - σ₃ dọc trục -->
+  <line x1="183" y1="5"  x2="183" y2="38" stroke="#C62828" stroke-width="3.5" marker-end="url(#d3-d)"/>
+  <text x="195" y="26" font-size="11" fill="#C62828" font-weight="700">Δσ = σ₁−σ₃</text>
+  <line x1="183" y1="171" x2="183" y2="205" stroke="#C62828" stroke-width="2" marker-end="url(#d3-d)" stroke-dasharray="4,2" opacity="0.5"/>
+  <!-- σ₃ áp lực ngang -->
+  <line x1="50"  y1="105" x2="93"  y2="105" stroke="#1565C0" stroke-width="2.5" marker-end="url(#d3-r)"/>
+  <text x="10" y="109" font-size="11" fill="#1565C0" font-weight="700">σ₃</text>
+  <line x1="315" y1="105" x2="272" y2="105" stroke="#1565C0" stroke-width="2.5" marker-end="url(#d3-r)"/>
+  <text x="320" y="109" font-size="11" fill="#1565C0" font-weight="700">σ₃</text>
+  <!-- Vòng tròn Mohr nhỏ -->
+  <text x="345" y="40" font-size="10" fill="#555" font-weight="700">Vòng Mohr:</text>
+  <line x1="340" y1="160" x2="415" y2="160" stroke="#546E7A" stroke-width="1.2"/>
+  <line x1="340" y1="60"  x2="340" y2="162" stroke="#546E7A" stroke-width="1.2"/>
+  <ellipse cx="378" cy="160" rx="35" ry="0" fill="none" stroke="#C62828" stroke-width="2"/>
+  <ellipse cx="378" cy="140" rx="35" ry="20" fill="rgba(198,40,40,0.08)" stroke="#C62828" stroke-width="2"/>
+  <line x1="343" y1="140" x2="413" y2="140" stroke="#C62828" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="358" y="128" font-size="9"  fill="#C62828">σ₃</text>
+  <text x="400" y="128" font-size="9"  fill="#C62828">σ₁</text>
+  <!-- Công thức -->
+  <rect x="10" y="192" width="300" height="28" rx="5" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1"/>
+  <text x="160" y="207" text-anchor="middle" font-size="10.5" fill="#1B5E20" font-weight="700">sinφ = (σ₁−σ₃) / (σ₁+σ₃+2c/tanφ)</text>
 </svg>`;
 }
 

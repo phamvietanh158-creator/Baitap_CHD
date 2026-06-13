@@ -4,99 +4,100 @@
 // ═══════════════════════════════════════════════════════════════════
 
 // ── SVG sơ đồ 3 pha đất ──────────────────────────────────────────
+const _D1 = `<defs>
+  <linearGradient id="d1-khi"  x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E3F2FD"/><stop offset="100%" stop-color="#90CAF9"/></linearGradient>
+  <linearGradient id="d1-nuoc" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4FC3F7"/><stop offset="100%" stop-color="#0277BD" stop-opacity="0.8"/></linearGradient>
+  <linearGradient id="d1-hat"  x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#D7CCC8"/><stop offset="100%" stop-color="#795548"/></linearGradient>
+  <pattern id="d1-h" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="10" stroke="#795548" stroke-width="1.2" opacity="0.3"/>
+  </pattern>
+  <filter id="d1-s"><feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="#00000018"/></filter>
+</defs>`;
+
 const SVG_3_PHA = `
-<svg viewBox="0 0 520 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:8px auto;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.1)">
-  <defs>
-    <linearGradient id="p-khi" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e3f2fd"/><stop offset="100%" stop-color="#bbdefb"/></linearGradient>
-    <linearGradient id="p-nuoc" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#81d4fa"/><stop offset="100%" stop-color="#0288d1"/></linearGradient>
-    <linearGradient id="p-hat" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d7ccc8"/><stop offset="100%" stop-color="#8d6e63"/></linearGradient>
-    <pattern id="p-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#bcaaa4" stroke-width="1"/></pattern>
-  </defs>
-  <rect width="520" height="200" fill="#fafbff" rx="8"/>
+<svg viewBox="0 0 560 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:10px auto;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.10)">
+  ${_D1}
+  <rect width="560" height="195" fill="#FAFBFF" rx="10"/>
 
-  <!-- ① ĐẤT TỰ NHIÊN (3 pha) -->
-  <rect x="10" y="8" width="155" height="184" rx="6" fill="#f5f5f5" stroke="#bdbdbd" stroke-width="1.5"/>
-  <text x="88" y="22" text-anchor="middle" font-size="10" font-weight="700" fill="#333">Đất tự nhiên (3 pha)</text>
+  <!-- ① ĐẤT TỰ NHIÊN -->
+  <rect x="8"  y="8" width="172" height="180" rx="8" fill="#FFFDE7" stroke="#F9A825" stroke-width="1.5"/>
+  <text x="94" y="24" text-anchor="middle" font-size="10.5" font-weight="700" fill="#E65100">① Đất tự nhiên (3 pha)</text>
   <!-- Khí -->
-  <rect x="20" y="28" width="135" height="40" fill="url(#p-khi)" stroke="#90caf9" stroke-width="1" rx="3"/>
-  <text x="88" y="50" text-anchor="middle" font-size="11" fill="#1565c0" font-weight="600">Khí (Air)   V_k</text>
+  <rect x="18" y="30" width="152" height="42" rx="5" fill="url(#d1-khi)" stroke="#64B5F6" stroke-width="1.2"/>
+  <text x="94" y="55" text-anchor="middle" font-size="11" fill="#1565C0" font-weight="600">Khí  V_k</text>
   <!-- Nước -->
-  <rect x="20" y="70" width="135" height="50" fill="url(#p-nuoc)" stroke="#0288d1" stroke-width="1" rx="3"/>
-  <text x="88" y="98" text-anchor="middle" font-size="11" fill="#fff" font-weight="600">Nước (Water)  V_w</text>
+  <rect x="18" y="74" width="152" height="52" rx="5" fill="url(#d1-nuoc)" stroke="#0277BD" stroke-width="1.2"/>
+  <text x="94" y="103" text-anchor="middle" font-size="11" fill="#fff" font-weight="600">Nước  V_w</text>
   <!-- Hạt -->
-  <rect x="20" y="122" width="135" height="58" fill="url(#p-hat)" stroke="#5d4037" stroke-width="1" rx="3"/>
-  <rect x="20" y="122" width="135" height="58" fill="url(#p-hatch)" opacity="0.3" rx="3"/>
-  <text x="88" y="154" text-anchor="middle" font-size="11" fill="#fff" font-weight="600">Hạt đất (Solid)  V_h</text>
+  <rect x="18" y="128" width="152" height="52" rx="5" fill="url(#d1-hat)" stroke="#5D4037" stroke-width="1.2"/>
+  <rect x="18" y="128" width="152" height="52" rx="5" fill="url(#d1-h)" opacity="0.4"/>
+  <text x="94" y="157" text-anchor="middle" font-size="11" fill="#fff" font-weight="600">Hạt đất  V_h</text>
+  <text x="94" y="185" text-anchor="middle" font-size="10" fill="#E65100" font-weight="700">A</text>
 
-  <!-- ② ĐẤT BÃO HÒA (2 pha: nước + hạt) -->
-  <rect x="182" y="8" width="155" height="184" rx="6" fill="#e8f5e9" stroke="#81c784" stroke-width="1.5"/>
-  <text x="260" y="22" text-anchor="middle" font-size="10" font-weight="700" fill="#1b5e20">Đất bão hòa (2 pha)</text>
-  <rect x="192" y="28" width="135" height="93" fill="url(#p-nuoc)" stroke="#0288d1" stroke-width="1" rx="3"/>
-  <text x="260" y="77" text-anchor="middle" font-size="11" fill="#fff" font-weight="600">Nước (Water)</text>
-  <rect x="192" y="122" width="135" height="58" fill="url(#p-hat)" stroke="#5d4037" stroke-width="1" rx="3"/>
-  <rect x="192" y="122" width="135" height="58" fill="url(#p-hatch)" opacity="0.3" rx="3"/>
-  <text x="260" y="154" text-anchor="middle" font-size="11" fill="#fff" font-weight="600">Hạt đất (Solid)</text>
+  <!-- ② ĐẤT BÃO HÒA -->
+  <rect x="196" y="8" width="172" height="180" rx="8" fill="#E8F5E9" stroke="#66BB6A" stroke-width="1.5"/>
+  <text x="282" y="24" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2E7D32">② Đất bão hòa (2 pha)</text>
+  <!-- Nước đầy -->
+  <rect x="206" y="30" width="152" height="95" rx="5" fill="url(#d1-nuoc)" stroke="#0277BD" stroke-width="1.2"/>
+  <text x="282" y="82" text-anchor="middle" font-size="11" fill="#fff" font-weight="600">Nước  V_r = V_w</text>
+  <!-- Hạt -->
+  <rect x="206" y="127" width="152" height="53" rx="5" fill="url(#d1-hat)" stroke="#5D4037" stroke-width="1.2"/>
+  <rect x="206" y="127" width="152" height="53" rx="5" fill="url(#d1-h)" opacity="0.4"/>
+  <text x="282" y="157" text-anchor="middle" font-size="11" fill="#fff" font-weight="600">Hạt đất</text>
+  <text x="282" y="185" text-anchor="middle" font-size="10" fill="#2E7D32" font-weight="700">B</text>
 
-  <!-- ③ ĐẤT KHÔ (2 pha: khí + hạt) -->
-  <rect x="354" y="8" width="155" height="184" rx="6" fill="#fff8e1" stroke="#ffb74d" stroke-width="1.5"/>
-  <text x="432" y="22" text-anchor="middle" font-size="10" font-weight="700" fill="#e65100">Đất khô (2 pha)</text>
-  <rect x="364" y="28" width="135" height="93" fill="url(#p-khi)" stroke="#90caf9" stroke-width="1" rx="3"/>
-  <text x="432" y="77" text-anchor="middle" font-size="11" fill="#1565c0" font-weight="600">Khí (Air)</text>
-  <rect x="364" y="122" width="135" height="58" fill="url(#p-hat)" stroke="#5d4037" stroke-width="1" rx="3"/>
-  <rect x="364" y="122" width="135" height="58" fill="url(#p-hatch)" opacity="0.3" rx="3"/>
-  <text x="432" y="154" text-anchor="middle" font-size="11" fill="#fff" font-weight="600">Hạt đất (Solid)</text>
-
-  <!-- Nhãn A B C -->
-  <text x="88"  y="195" text-anchor="middle" font-size="13" font-weight="700" fill="#555">A</text>
-  <text x="260" y="195" text-anchor="middle" font-size="13" font-weight="700" fill="#555">B</text>
-  <text x="432" y="195" text-anchor="middle" font-size="13" font-weight="700" fill="#555">C</text>
+  <!-- ③ ĐẤT KHÔ -->
+  <rect x="384" y="8" width="172" height="180" rx="8" fill="#FFF8E1" stroke="#FFB300" stroke-width="1.5"/>
+  <text x="470" y="24" text-anchor="middle" font-size="10.5" font-weight="700" fill="#E65100">③ Đất khô (2 pha)</text>
+  <!-- Khí đầy -->
+  <rect x="394" y="30" width="152" height="95" rx="5" fill="url(#d1-khi)" stroke="#64B5F6" stroke-width="1.2"/>
+  <text x="470" y="82" text-anchor="middle" font-size="11" fill="#1565C0" font-weight="600">Khí  V_r = V_k</text>
+  <!-- Hạt -->
+  <rect x="394" y="127" width="152" height="53" rx="5" fill="url(#d1-hat)" stroke="#5D4037" stroke-width="1.2"/>
+  <rect x="394" y="127" width="152" height="53" rx="5" fill="url(#d1-h)" opacity="0.4"/>
+  <text x="470" y="157" text-anchor="middle" font-size="11" fill="#fff" font-weight="600">Hạt đất</text>
+  <text x="470" y="185" text-anchor="middle" font-size="10" fill="#E65100" font-weight="700">C</text>
 </svg>`;
 
 // ── SVG sơ đồ quan hệ thể tích - khối lượng ─────────────────────
 const SVG_CONG_THUC = `
-<svg viewBox="0 0 480 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:480px;display:block;margin:8px auto;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.1)">
-  <defs>
-    <linearGradient id="ct-khi"  x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e3f2fd"/><stop offset="100%" stop-color="#bbdefb"/></linearGradient>
-    <linearGradient id="ct-nuoc" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#81d4fa"/><stop offset="100%" stop-color="#0288d1"/></linearGradient>
-    <linearGradient id="ct-hat"  x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d7ccc8"/><stop offset="100%" stop-color="#8d6e63"/></linearGradient>
-  </defs>
-  <rect width="480" height="220" fill="#fafbff" rx="8"/>
-  <!-- Cột trái: Thể tích -->
-  <text x="90" y="20" text-anchor="middle" font-size="11" font-weight="700" fill="#1565c0">Thể tích (V)</text>
+<svg viewBox="0 0 500 215" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:500px;display:block;margin:10px auto;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.10)">
+  ${_D1}
+  <rect width="500" height="215" fill="#FAFBFF" rx="10"/>
+  <!-- Cột trái: sơ đồ thể tích -->
+  <text x="90" y="20" text-anchor="middle" font-size="11" font-weight="700" fill="#1565C0">Thể tích (V)</text>
   <!-- V_k -->
-  <rect x="20" y="28" width="140" height="40" fill="url(#ct-khi)" stroke="#90caf9" stroke-width="1.5" rx="2"/>
-  <text x="90" y="52" text-anchor="middle" font-size="10" fill="#1565c0">V_k (khí)</text>
-  <!-- V_r = V_k + V_w -->
-  <line x1="165" y1="28" x2="165" y2="82" stroke="#888" stroke-width="1" stroke-dasharray="3,2"/>
-  <text x="168" y="60" font-size="9" fill="#888">V_r</text>
+  <rect x="20" y="28" width="140" height="40" rx="5" fill="url(#d1-khi)" stroke="#64B5F6" stroke-width="1.5"/>
+  <text x="90" y="52" text-anchor="middle" font-size="10.5" fill="#1565C0" font-weight="600">V_k (khí)</text>
+  <!-- V_r ngoặc -->
+  <line x1="165" y1="28" x2="165" y2="85" stroke="#7B1FA2" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="168" y="60" font-size="9" fill="#7B1FA2">V_r</text>
   <!-- V_w -->
-  <rect x="20" y="70" width="140" height="50" fill="url(#ct-nuoc)" stroke="#0288d1" stroke-width="1.5" rx="2"/>
-  <text x="90" y="98" text-anchor="middle" font-size="10" fill="#fff">V_w (nước)</text>
+  <rect x="20" y="70" width="140" height="48" rx="5" fill="url(#d1-nuoc)" stroke="#0277BD" stroke-width="1.5"/>
+  <text x="90" y="98" text-anchor="middle" font-size="10.5" fill="#fff" font-weight="600">V_w (nước)</text>
   <!-- V_h -->
-  <rect x="20" y="122" width="140" height="70" fill="url(#ct-hat)" stroke="#5d4037" stroke-width="1.5" rx="2"/>
-  <text x="90" y="160" text-anchor="middle" font-size="10" fill="#fff">V_h (hạt đất)</text>
+  <rect x="20" y="120" width="140" height="68" rx="5" fill="url(#d1-hat)" stroke="#5D4037" stroke-width="1.5"/>
+  <rect x="20" y="120" width="140" height="68" rx="5" fill="url(#d1-h)" opacity="0.4"/>
+  <text x="90" y="158" text-anchor="middle" font-size="10.5" fill="#fff" font-weight="600">V_h (hạt đất)</text>
   <!-- V tổng -->
-  <line x1="8" y1="28"  x2="8" y2="192" stroke="#e53935" stroke-width="2"/>
-  <line x1="4" y1="28"  x2="12" y2="28"  stroke="#e53935" stroke-width="1.5"/>
-  <line x1="4" y1="192" x2="12" y2="192" stroke="#e53935" stroke-width="1.5"/>
-  <text x="1" y="115" font-size="11" fill="#e53935" font-weight="700" transform="rotate(-90,1,115)">V</text>
-
-  <!-- Cột phải: Công thức -->
-  <text x="340" y="20" text-anchor="middle" font-size="11" font-weight="700" fill="#1b5e20">Công thức chính</text>
-  <rect x="195" y="28" width="270" height="184" fill="white" stroke="#e0e0e0" stroke-width="1" rx="5"/>
-  <!-- Các công thức -->
-  <text x="205" y="48"  font-size="9.5" fill="#333">n  = V_r/V       (độ rỗng, %)</text>
-  <text x="205" y="64"  font-size="9.5" fill="#333">e  = V_r/V_h     (hệ số rỗng)</text>
-  <text x="205" y="80"  font-size="9.5" fill="#333">m  = V_h/V       (độ đặc)</text>
-  <text x="205" y="96"  font-size="9.5" fill="#333">S  = V_w/V_r     (độ bão hòa)</text>
-  <text x="205" y="112" font-size="9.5" fill="#333">w  = Q_w/Q_h     (độ ẩm, %)</text>
-  <line x1="200" y1="118" x2="460" y2="118" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="205" y="132" font-size="9.5" fill="#1565c0">γ_tn = Q/V       (TL riêng tự nhiên)</text>
-  <text x="205" y="148" font-size="9.5" fill="#1565c0">γ_k  = Q_h/V     (TL riêng khô)</text>
-  <text x="205" y="164" font-size="9.5" fill="#1565c0">γ_bh = (Q_h+V_r·γ_w)/V  (bão hòa)</text>
-  <text x="205" y="180" font-size="9.5" fill="#1565c0">γ_dn = γ_bh − γ_w       (đẩy nổi)</text>
-  <text x="205" y="196" font-size="9.5" fill="#e65100">γ_h  = Q_h/V_h   (TL riêng hạt)</text>
-  <text x="205" y="208" font-size="9.5" fill="#555">n + m = 1  |  e = n/(1-n)</text>
+  <line x1="8" y1="28"  x2="8"  y2="188" stroke="#C62828" stroke-width="2"/>
+  <line x1="4" y1="28"  x2="12" y2="28"  stroke="#C62828" stroke-width="1.5"/>
+  <line x1="4" y1="188" x2="12" y2="188" stroke="#C62828" stroke-width="1.5"/>
+  <text x="1" y="110" font-size="11" fill="#C62828" font-weight="700" transform="rotate(-90,1,110)">V (tổng)</text>
+  <!-- Cột phải: công thức -->
+  <text x="345" y="20" text-anchor="middle" font-size="11" font-weight="700" fill="#1B5E20">Công thức chính</text>
+  <rect x="185" y="28" width="300" height="180" rx="8" fill="white" stroke="#E0E0E0" stroke-width="1" filter="url(#d1-s)"/>
+  <text x="195" y="48"  font-size="10"   fill="#1565C0">n = V_r / V × 100%     (độ rỗng)</text>
+  <text x="195" y="64"  font-size="10"   fill="#1565C0">m = V_h / V            (độ đặc)</text>
+  <text x="195" y="80"  font-size="10"   fill="#1565C0">e = V_r / V_h          (hệ số rỗng)</text>
+  <text x="195" y="96"  font-size="10"   fill="#1565C0">S = V_w / V_r          (độ bão hòa)</text>
+  <text x="195" y="112" font-size="10"   fill="#1565C0">w = Q_w / Q_h × 100%   (độ ẩm)</text>
+  <line x1="190" y1="118" x2="480" y2="118" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="195" y="133" font-size="10"   fill="#C62828">γ_tn = Q/V × 10         (kN/m³)</text>
+  <text x="195" y="149" font-size="10"   fill="#C62828">γ_k  = Q_h/V × 10</text>
+  <text x="195" y="165" font-size="10"   fill="#C62828">γ_bh = (Δ−1)γ_w/(1+e) + γ_w</text>
+  <text x="195" y="181" font-size="10"   fill="#C62828">γ_dn = γ_bh − γ_w</text>
+  <text x="195" y="197" font-size="10"   fill="#555">n + m = 1  |  e = n/(1−n)</text>
 </svg>`;
 
 // ── LÝ THUYẾT HTML ────────────────────────────────────────────────
@@ -896,52 +897,40 @@ EXERCISES['ch1_b3_11'] = {
 
 // ── SVG sơ đồ giới hạn Atterberg ─────────────────────────────────
 const SVG_ATTERBERG = `
-<svg viewBox="0 0 520 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:8px auto;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.1)">
-  <defs>
-    <linearGradient id="at-ran" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#fff9c4"/><stop offset="100%" stop-color="#ffe082"/></linearGradient>
-    <linearGradient id="at-deo" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#c8e6c9"/><stop offset="100%" stop-color="#81c784"/></linearGradient>
-    <linearGradient id="at-cung" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffccbc"/><stop offset="100%" stop-color="#ff8a65"/></linearGradient>
-  </defs>
-  <rect width="520" height="160" fill="#fafbff" rx="8"/>
-
+<svg viewBox="0 0 540 165" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:540px;display:block;margin:10px auto;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.10)">
+  ${_D1}
+  <rect width="540" height="165" fill="#FAFBFF" rx="10"/>
   <!-- Trục w -->
-  <line x1="30" y1="120" x2="500" y2="120" stroke="#555" stroke-width="1.5"/>
-  <text x="510" y="124" font-size="11" fill="#555" font-weight="700">w→</text>
-  <text x="20" y="90" font-size="10" fill="#555" transform="rotate(-90,20,90)">đất</text>
-
-  <!-- Vùng RẮN (w < Wp) -->
-  <rect x="40" y="50" width="100" height="60" fill="url(#at-cung)" rx="4" opacity="0.85"/>
-  <text x="90" y="82" text-anchor="middle" font-size="11" font-weight="700" fill="#bf360c">RẮN / NỬA RẮN</text>
-  <text x="90" y="97" text-anchor="middle" font-size="9" fill="#bf360c">(cứng, giòn)</text>
-
-  <!-- Vùng DẺO (Wp ≤ w ≤ WL) -->
-  <rect x="160" y="50" width="180" height="60" fill="url(#at-deo)" rx="4" opacity="0.85"/>
-  <text x="250" y="82" text-anchor="middle" font-size="11" font-weight="700" fill="#1b5e20">DẺO</text>
-  <text x="250" y="97" text-anchor="middle" font-size="9" fill="#1b5e20">(có thể nặn được)</text>
-
-  <!-- Vùng CHẢY (w > WL) -->
-  <rect x="360" y="50" width="130" height="60" fill="url(#at-ran)" rx="4" opacity="0.85"/>
-  <text x="425" y="82" text-anchor="middle" font-size="11" font-weight="700" fill="#e65100">CHẢY</text>
-  <text x="425" y="97" text-anchor="middle" font-size="9" fill="#e65100">(lỏng, chảy)</text>
-
-  <!-- Đường ranh giới Wp, WL -->
-  <line x1="160" y1="45" x2="160" y2="125" stroke="#e53935" stroke-width="2" stroke-dasharray="5,3"/>
-  <text x="160" y="138" text-anchor="middle" font-size="11" fill="#e53935" font-weight="700">W_p</text>
-  <text x="160" y="148" text-anchor="middle" font-size="9" fill="#e53935">Giới hạn dẻo</text>
-
-  <line x1="360" y1="45" x2="360" y2="125" stroke="#1565c0" stroke-width="2" stroke-dasharray="5,3"/>
-  <text x="360" y="138" text-anchor="middle" font-size="11" fill="#1565c0" font-weight="700">W_L</text>
-  <text x="360" y="148" text-anchor="middle" font-size="9" fill="#1565c0">Giới hạn chảy</text>
-
-  <!-- Chỉ số Ip -->
-  <line x1="162" y1="32" x2="358" y2="32" stroke="#7b1fa2" stroke-width="1.5"/>
-  <line x1="162" y1="28" x2="162" y2="36" stroke="#7b1fa2" stroke-width="1.5"/>
-  <line x1="358" y1="28" x2="358" y2="36" stroke="#7b1fa2" stroke-width="1.5"/>
-  <text x="260" y="26" text-anchor="middle" font-size="10" fill="#7b1fa2" font-weight="700">I_p = W_L − W_p</text>
-
-  <!-- Độ sệt IL -->
-  <rect x="40" y="8" width="200" height="16" fill="#e3f0fd" rx="3"/>
-  <text x="140" y="20" text-anchor="middle" font-size="9.5" fill="#1565c0" font-weight="600">I_L = (w − W_p) / I_p</text>
+  <line x1="30" y1="118" x2="515" y2="118" stroke="#546E7A" stroke-width="1.5"/>
+  <text x="520" y="122" font-size="11" fill="#546E7A" font-weight="700">w →</text>
+  <!-- Vùng RẮN -->
+  <rect x="35"  y="48" width="110" height="62" rx="6" fill="#FFCCBC" stroke="#E64A19" stroke-width="1.5"/>
+  <text x="90"  y="78" text-anchor="middle" font-size="11" font-weight="700" fill="#BF360C">RẮN</text>
+  <text x="90"  y="93" text-anchor="middle" font-size="9"  fill="#BF360C">I_L &lt; 0</text>
+  <!-- Vùng DẺO -->
+  <rect x="170" y="48" width="180" height="62" rx="6" fill="#C8E6C9" stroke="#388E3C" stroke-width="1.5"/>
+  <text x="260" y="78" text-anchor="middle" font-size="11" font-weight="700" fill="#1B5E20">DẺO</text>
+  <text x="260" y="93" text-anchor="middle" font-size="9"  fill="#1B5E20">0 ≤ I_L ≤ 1</text>
+  <!-- Vùng CHẢY -->
+  <rect x="375" y="48" width="130" height="62" rx="6" fill="#B3E5FC" stroke="#0288D1" stroke-width="1.5"/>
+  <text x="440" y="78" text-anchor="middle" font-size="11" font-weight="700" fill="#01579B">CHẢY</text>
+  <text x="440" y="93" text-anchor="middle" font-size="9"  fill="#01579B">I_L &gt; 1</text>
+  <!-- Đường W_p -->
+  <line x1="170" y1="42" x2="170" y2="122" stroke="#C62828" stroke-width="2.5" stroke-dasharray="6,3"/>
+  <text x="170" y="135" text-anchor="middle" font-size="11" fill="#C62828" font-weight="700">W_p</text>
+  <text x="170" y="148" text-anchor="middle" font-size="9"  fill="#C62828">Giới hạn dẻo</text>
+  <!-- Đường W_L -->
+  <line x1="375" y1="42" x2="375" y2="122" stroke="#1565C0" stroke-width="2.5" stroke-dasharray="6,3"/>
+  <text x="375" y="135" text-anchor="middle" font-size="11" fill="#1565C0" font-weight="700">W_L</text>
+  <text x="375" y="148" text-anchor="middle" font-size="9"  fill="#1565C0">Giới hạn chảy</text>
+  <!-- I_p mũi tên -->
+  <line x1="172" y1="30" x2="373" y2="30" stroke="#7B1FA2" stroke-width="1.8"/>
+  <line x1="172" y1="25" x2="172" y2="35" stroke="#7B1FA2" stroke-width="1.5"/>
+  <line x1="373" y1="25" x2="373" y2="35" stroke="#7B1FA2" stroke-width="1.5"/>
+  <text x="273" y="24" text-anchor="middle" font-size="10.5" fill="#7B1FA2" font-weight="700">I_p = W_L − W_p</text>
+  <!-- I_L công thức -->
+  <rect x="32" y="10" width="215" height="16" rx="4" fill="#E3F2FD" stroke="#90CAF9" stroke-width="1"/>
+  <text x="140" y="21" text-anchor="middle" font-size="10" fill="#1565C0" font-weight="700">I_L = (w − W_p) / I_p</text>
 </svg>`;
 
 // ── LÝ THUYẾT TRẠNG THÁI ĐẤT DÍNH ──────────────────────────────
