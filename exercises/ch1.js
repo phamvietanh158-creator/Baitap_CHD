@@ -273,7 +273,7 @@ EXERCISES['ch1_b2_04'] = {
   theoryHTML: `<div class="theory-block">
     <div class="theory-label">📖 ĐỌC KẾT QUẢ RÂY SÀNG</div>
     <div style="font-size:.85rem;line-height:1.8;margin-top:6px;">
-      Hạt có kích thước từ $d_1$ đến $d_2$ ($d_1 < d_2$) nằm trên rây có đường kính $d_1$<br>
+      Hạt có kích thước từ $d_1$ đến $d_2$ ($d_1 {<} d_2$) nằm trên rây có đường kính $d_1$<br>
       (vì lọt qua rây $d_2$ nhưng không lọt qua rây $d_1$).<br><br>
       <b>Ví dụ:</b> Hạt kích thước 0.5–1.0 mm → nằm trên Rây số 5 (d = 0.5mm)
     </div>
@@ -312,15 +312,15 @@ EXERCISES['ch1_b2_05'] = {
   theoryHTML: `<div class="theory-block">
     <div class="theory-label">📖 KHỐI LƯỢNG HẠT CÓ KÍCH THƯỚC &lt; NGƯỠNG</div>
     <div style="font-size:.85rem;line-height:1.8;">
-      Khối lượng hạt có kích thước $< d$ = tổng khối lượng trên tất cả các rây <b>phía dưới</b> rây $d$.<br>
+      Khối lượng hạt có kích thước $d' {<} d$ = tổng khối lượng trên tất cả các rây <b>phía dưới</b> rây $d$.<br>
       Hoặc = tổng khối lượng hạt lọt qua rây $d$ (đáy hộp + các rây nhỏ hơn $d$).
     </div>
     <div style="background:#e3f0fd;border-radius:6px;padding:6px 12px;margin-top:8px;font-size:.83rem;">
-      <b>Ví dụ:</b> Hạt $d < 0.25\,\\text{mm}$ = khối lượng trên Rây 7 ($d=0.10$mm) + phần đáy (nếu có)<br>
-      (vì hạt $d < 0.25$mm lọt qua Rây 6 và chỉ còn lại trên Rây 7 hoặc đáy)
+      <b>Ví dụ:</b> Hạt $d {<} 0.25\,\\text{mm}$ = khối lượng trên Rây 7 ($d=0.10$mm) + phần đáy (nếu có)<br>
+      (vì hạt $d {<} 0.25$ mm lọt qua Rây 6 và chỉ còn lại trên Rây 7 hoặc đáy)
     </div>
   </div>`,
-  hint: `<div class="hint-title">💡 Hạt $d < 0.25\,\\text{mm}$ = lọt qua Rây 6 (d = 0.25mm) → nằm trên Rây 7 (d = 0.10mm). Khối lượng = $m_7$ (bài này đơn giản hóa, bỏ qua đáy).</div>`,
+  hint: `<div class="hint-title">💡 Hạt $d {<} 0.25\,\\text{mm}$ = lọt qua Rây 6 (d = 0.25mm) → nằm trên Rây 7 (d = 0.10mm). Khối lượng = $m_7$ (bài này đơn giản hóa, bỏ qua đáy).</div>`,
   genData(rng){
     const a = Math.floor(1 + rng()*199);
     const m7 = 15 + 2*a;
@@ -337,10 +337,10 @@ EXERCISES['ch1_b2_05'] = {
   statement(d){
     const ms = [45+d.a,25+d.a,100+d.a,60+d.a,5+5*d.a,20+3*d.a,15+2*d.a];
     return `Kết quả TN rây sàng:<br>${_bangRay(ms)}<br>
-    Tính khối lượng hạt có kích thước <b>$d < 0.25\,\\text{mm}$</b> ($d < 0.25$mm):`;
+    Tính khối lượng hạt có kích thước <b>$d {<} 0.25\,\\text{mm}$</b> ($d {<} 0.25$ mm):`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$m(d < 0.25\\,\\text{mm})$ (g)', unit:'g', answer: d=>d.lt025, tol:1 }
+    { id:'q1', type:'fill', label:'m(d < 0.25 mm) (g)', unit:'g', answer: d=>d.lt025, tol:1 }
   ]
 };
 
@@ -351,16 +351,16 @@ EXERCISES['ch1_b2_06'] = {
   theoryHTML: `<div class="theory-block">
     <div class="theory-label">📖 TỔNG HỢP KHỐI LƯỢNG TÍCH LŨY</div>
     <div style="font-size:.85rem;line-height:1.8;margin-top:6px;">
-      Khối lượng hạt $d < d_i$ = tổng khối lượng trên các rây có đường kính &lt; $d_i$:<br>
+      Khối lượng hạt $d {<} d_i$ = tổng khối lượng trên các rây có đường kính &lt; $d_i$:<br>
       $$m(d {<} d_i) = \\sum_{d_{\\text{rây}} {<} d_i} m_{\\text{rây}}$$
     </div>
     <div style="background:#e3f0fd;border-radius:6px;padding:6px 12px;margin-top:6px;font-size:.83rem;">
       <b>Ví dụ:</b><br>
-      Hạt $d < 0.50\,\\text{mm}$ = $m_{\\text{Rây 6}} + m_{\\text{Rây 7}}$ &nbsp;(d = 0.25mm và d = 0.10mm)<br>
-      Hạt $d < 1.0\,\\text{mm}$ = $m_{\\text{Rây 5}} + m_{\\text{Rây 6}} + m_{\\text{Rây 7}}$
+      Hạt $d {<} 0.50\,\\text{mm}$ = $m_{\\text{Rây 6}} + m_{\\text{Rây 7}}$ &nbsp;(d = 0.25mm và d = 0.10mm)<br>
+      Hạt $d {<} 1.0\,\\text{mm}$ = $m_{\\text{Rây 5}} + m_{\\text{Rây 6}} + m_{\\text{Rây 7}}$
     </div>
   </div>`,
-  hint: `<div class="hint-title">💡 Hạt $d < 0.50\,\\text{mm}$ = $m_6 + m_7$. Hạt $d < 1.0\,\\text{mm}$ = $m_5 + m_6 + m_7$.</div>`,
+  hint: `<div class="hint-title">💡 Hạt $d {<} 0.50\,\\text{mm}$ = $m_6 + m_7$. Hạt $d {<} 1.0\,\\text{mm}$ = $m_5 + m_6 + m_7$.</div>`,
   genData(rng){
     const a = Math.floor(1 + rng()*199);
     const m7=15+2*a, m6=20+3*a, m5=5+5*a;
@@ -369,11 +369,11 @@ EXERCISES['ch1_b2_06'] = {
   },
   statement(d){
     return `Kết quả TN rây sàng:<br>${_bangRay(d.ms)}<br>
-    Tính khối lượng hạt <b>$d < 0.5\,\\text{mm}$</b> và <b>$d < 1.0\,\\text{mm}$</b>:`;
+    Tính khối lượng hạt <b>$d {<} 0.5\,\\text{mm}$</b> và <b>$d {<} 1.0\,\\text{mm}$</b>:`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$m(d < 0.5\\,\\text{mm})$ (g)',  unit:'g', answer: d=>d.lt05,  tol:1 },
-    { id:'q2', type:'fill', label:'$m(d < 1.0\\,\\text{mm})$ (g)', unit:'g', answer: d=>d.lt10,  tol:1 },
+    { id:'q1', type:'fill', label:'m(d < 0.5 mm) (g)',  unit:'g', answer: d=>d.lt05,  tol:1 },
+    { id:'q2', type:'fill', label:'m(d < 1.0 mm) (g)', unit:'g', answer: d=>d.lt10,  tol:1 },
   ]
 };
 
@@ -384,11 +384,13 @@ EXERCISES['ch1_b2_07'] = {
   theoryHTML: `<div class="theory-block">
     <div class="theory-label">📖 HÀM LƯỢNG TÍCH LŨY P(&lt;d) (%)</div>
     <div style="background:#e3f0fd;border-radius:7px;padding:9px 14px;margin:8px 0;font-size:.88rem;">
-      $$P(d {<} d_0) = \\dfrac{\\sum m(d {<} d_0)}{m_{\\text{tổng}}} \\times 100\\%$$
+      <div style="font-size:.92rem;padding:4px 0;">
+        $P(d_0) = \\dfrac{\\text{Tổng KL hạt có } d {<} d_0}{m_{\\text{tổng}}} \\times 100\\%$
+      </div>
     </div>
     <div style="font-size:.84rem;line-height:1.7;">
       Trong đó:<br>
-      $\\sum m(<d)$ = tổng khối lượng các hạt có kích thước nhỏ hơn $d$<br>
+      $\\sum m({<}d)$ = tổng khối lượng các hạt có kích thước nhỏ hơn $d$<br>
       $m_{\\text{tổng}}$ = tổng khối lượng toàn bộ mẫu (tổng tất cả các rây)
     </div>
   </div>`,
@@ -411,9 +413,9 @@ EXERCISES['ch1_b2_07'] = {
     Tính $P({<}d)$ (hàm lượng tích lũy):`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$P(d<0.5\\,\\text{mm})$ (%)',      unit:'%',  answer: d=>d.p05,   tol:0.5 },
-    { id:'q3', type:'fill', label:'$P(d<1.0\\,\\text{mm})$ (%)', unit:'%',  answer: d=>d.p10,   tol:0.5 },
-    { id:'q4', type:'fill', label:'$P(d<5.0\\,\\text{mm})$ (%)', unit:'%',  answer: d=>d.p50,   tol:0.5 },
+    { id:'q1', type:'fill', label:'P(d<0.5 mm) (%)',      unit:'%',  answer: d=>d.p05,   tol:0.5 },
+    { id:'q3', type:'fill', label:'P(d<1.0 mm) (%)', unit:'%',  answer: d=>d.p10,   tol:0.5 },
+    { id:'q4', type:'fill', label:'P(d<5.0 mm) (%)', unit:'%',  answer: d=>d.p50,   tol:0.5 },
   ]
 };
 
@@ -429,10 +431,10 @@ EXERCISES['ch1_b2_08'] = {
     </div>
     <div style="background:#E3F2FD;border-radius:7px;padding:8px 14px;margin:8px 0;font-size:.86rem;">
       $$P(d_1 \\rightarrow d_2) = P({<}d_2) - P({<}d_1)$$
-      <b>Ví dụ:</b> $P(0.05\,\\text{mm} \\text{ đến } 0.25\,\\text{mm}) = P(<0.25) - P(<0.05) = 44.3 - 25.0 = 19.3\%$
+      <b>Ví dụ:</b> $P(0.05\,\\text{–}\,0.25\,\\text{mm}) = P({<}0.25) - P({<}0.05) = 44.3 - 25.0 = 19.3\%$
     </div>
   </div>`,
-  hint: `<div class="hint-title">💡 Hàm lượng nhóm 0.05–0.25mm $= P(<0.25) - P(<0.05) = 44.3 - 25.0 = 19.3\%$</div>`,
+  hint: `<div class="hint-title">💡 Hàm lượng nhóm 0.05–0.25mm $= P({<}0.25) - P({<}0.05) = 44.3 - 25.0 = 19.3\%$</div>`,
   genData(rng){ return {}; },
   statement(d){ return `Bảng cấp phối hạt:
     <table style="border-collapse:collapse;font-size:.83rem;margin:8px 0;width:100%;">
@@ -459,10 +461,10 @@ EXERCISES['ch1_b2_08'] = {
     Xác định hàm lượng các nhóm hạt:`;},
 
   questions: [
-    { id:'q1', type:'fill', label:'Hàm lượng nhóm $0.05$–$0.25$mm (%)', unit:'%', answer: ()=>19.3, tol:0.5 },
-    { id:'q2', type:'fill', label:'Hàm lượng nhóm $0.25$–$1.00$mm (%)', unit:'%', answer: ()=>43.4, tol:0.5 },
-    { id:'q3', type:'fill', label:'$P(d<0.05\\,\\text{mm})$ (%)',       unit:'%', answer: ()=>25.0, tol:0.5 },
-    { id:'q4', type:'fill', label:'$P(d<2.0\\,\\text{mm})$ (%)',        unit:'%', answer: ()=>96.8, tol:0.5 },
+    { id:'q1', type:'fill', label:'Hàm lượng nhóm 0.05–0.25mm (%)', unit:'%', answer: ()=>19.3, tol:0.5 },
+    { id:'q2', type:'fill', label:'Hàm lượng nhóm 0.25–1.00mm (%)', unit:'%', answer: ()=>43.4, tol:0.5 },
+    { id:'q3', type:'fill', label:'P(d<0.05 mm) (%)',       unit:'%', answer: ()=>25.0, tol:0.5 },
+    { id:'q4', type:'fill', label:'P(d<2.0 mm) (%)',        unit:'%', answer: ()=>96.8, tol:0.5 },
   ]
 };
 
@@ -632,7 +634,7 @@ EXERCISES['ch1_b3_05'] = {
   questions: [
     { id:'q1', type:'fill', label:'$\\gamma_k = \\gamma_{tn}/(1 + 0.01w)$ (kN/m³)',  unit:'kN/m³', answer: d=>d.g_k, tol:0.05 },
     { id:'q2', type:'fill', label:'$n = 1 - \\gamma_k/(\\Delta \\cdot \\gamma_w)$',   unit:'',      answer: d=>d.n,   tol:0.005 },
-    { id:'q3', type:'fill', label:'$e = n/(1-n)$',                                     unit:'',      answer: d=>d.e,   tol:0.005 },
+    { id:'q3', type:'fill', label:'$e = n/(1-n)$',                                   unit:'',      answer: d=>d.e,   tol:0.005 },
   ]
 };
 
@@ -681,7 +683,7 @@ EXERCISES['ch1_b3_07'] = {
   genData(rng){ return {}; },
   statement(d){ return 'Trả lời các câu hỏi định nghĩa chỉ tiêu vật lý:'; },
   questions: [
-    { id:'q1', type:'mcq', label:'Hệ số rỗng $e$ của đất là:',
+    { id:'q1', type:'mcq', label:'Hệ số rỗng e của đất là:',
       choices: ()=>[
         'Tỷ số giữa thể tích lỗ rỗng và thể tích phần hạt đất',
         'Tỷ số giữa thể tích hạt và thể tích đất',
@@ -689,7 +691,7 @@ EXERCISES['ch1_b3_07'] = {
         'Cả 3 đáp án trên đều sai',
       ],
       correctIndex: ()=>0 },
-    { id:'q2', type:'mcq', label:'Độ bão hòa $S$ của đất là:',
+    { id:'q2', type:'mcq', label:'Độ bão hòa S của đất là:',
       choices: ()=>[
         'Tỷ số giữa thể tích lỗ rỗng và thể tích đất',
         'Tỷ lệ giữa thể tích lỗ rỗng và thể tích hạt đất',
@@ -786,7 +788,7 @@ EXERCISES['ch1_tomtat'] = {
 <div class="s1-sec">
   <h4>D. Rây sàng & Cấp phối hạt</h4>
   <div class="s1-body">
-    <div class="s1-row"><div class="s1-f">Đất trên rây $d$ → hạt có kích thước $> d$</div><div class="s1-n">Lọt qua rây → hạt $< d$</div></div>
+    <div class="s1-row"><div class="s1-f">Đất trên rây $d$ → hạt có kích thước $> d$</div><div class="s1-n">Lọt qua rây → hạt $d' {<} d$</div></div>
     <div class="s1-row"><div class="s1-f">$P({<}d) = \\sum m(<d)\,/\,m_{\\text{tổng}} \\times 100\%$</div><div class="s1-n">Hàm lượng tích lũy</div></div>
     <div class="s1-row"><div class="s1-f">$P(d_1\\text{–}d_2) = P(<d_2) - P(<d_1)$</div><div class="s1-n">Hiệu 2 giá trị tích lũy</div></div>
   </div>
@@ -852,7 +854,7 @@ EXERCISES['ch1_b2_11'] = {
       Tổng tất cả hàm lượng từng nhóm = 100%
     </div>
   </div>`,
-  hint: `<div class="hint-title">💡 Tổng tất cả hàm lượng từng nhóm = 100%. $P(d < 5\,\\text{mm}) = 100 - \%\\text{nhóm} > 5\,\\text{mm}$.</div>`,
+  hint: `<div class="hint-title">💡 Tổng tất cả hàm lượng từng nhóm = 100%. $P(d {<} 5\,\\text{mm}) = 100 - \\%\\text{nhóm} > 5\,\\text{mm}$.</div>`,
   genData(rng){
     const a   = Math.floor(1 + rng()*199);
     const ms  = [45+a, 25+a, 100+a, 60+a, 5+5*a, 20+3*a, 15+2*a];
@@ -870,12 +872,12 @@ EXERCISES['ch1_b2_11'] = {
     return `Kết quả TN rây sàng:<br>${_bangRay(d.ms)}<br>Tính $P({<}d)$ (hàm lượng tích lũy):`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$P(d<0.1\\,\\text{mm})$ (%)',   unit:'%', answer: d=>d.lt01,  tol:0.5 },
-    { id:'q2', type:'fill', label:'$P(d<0.25\\,\\text{mm})$ (%)',  unit:'%', answer: d=>d.lt025, tol:0.5 },
-    { id:'q3', type:'fill', label:'$P(d<0.5\\,\\text{mm})$ (%)',   unit:'%', answer: d=>d.lt05,  tol:0.5 },
-    { id:'q4', type:'fill', label:'$P(d<1.0\\,\\text{mm})$ (%)',   unit:'%', answer: d=>d.lt10,  tol:0.5 },
-    { id:'q5', type:'fill', label:'$P(d<2.0\\,\\text{mm})$ (%)',   unit:'%', answer: d=>d.lt20,  tol:0.5 },
-    { id:'q6', type:'fill', label:'$P(d<5.0\\,\\text{mm})$ (%)',   unit:'%', answer: d=>d.lt50,  tol:0.5 },
+    { id:'q1', type:'fill', label:'P(d<0.1 mm) (%)',   unit:'%', answer: d=>d.lt01,  tol:0.5 },
+    { id:'q2', type:'fill', label:'P(d<0.25 mm) (%)',  unit:'%', answer: d=>d.lt025, tol:0.5 },
+    { id:'q3', type:'fill', label:'P(d<0.5 mm) (%)',   unit:'%', answer: d=>d.lt05,  tol:0.5 },
+    { id:'q4', type:'fill', label:'P(d<1.0 mm) (%)',   unit:'%', answer: d=>d.lt10,  tol:0.5 },
+    { id:'q5', type:'fill', label:'P(d<2.0 mm) (%)',   unit:'%', answer: d=>d.lt20,  tol:0.5 },
+    { id:'q6', type:'fill', label:'P(d<5.0 mm) (%)',   unit:'%', answer: d=>d.lt50,  tol:0.5 },
   ]
 };
 
@@ -931,7 +933,7 @@ EXERCISES['ch1_b3_10'] = {
   questions: [
     { id:'q1', type:'fill', label:'$\\gamma_k = \\gamma_{tn}/(1+0.01w)$ (kN/m³)',           unit:'kN/m³', answer: d=>d.g_k,  tol:0.05  },
     { id:'q2', type:'fill', label:'$n = 1 - \\gamma_k/(\\Delta \\cdot \\gamma_w)$',           unit:'',      answer: d=>d.n,    tol:0.005 },
-    { id:'q3', type:'fill', label:'$e = n/(1-n)$',                                             unit:'',      answer: d=>d.e,    tol:0.005 },
+    { id:'q3', type:'fill', label:'$e = n/(1-n)$',                                          unit:'',      answer: d=>d.e,    tol:0.005 },
     { id:'q4', type:'fill', label:'$S = 0.01\\,w\\,\\Delta/e$',                                unit:'',      answer: d=>d.S,    tol:0.005 },
     { id:'q5', type:'fill', label:'$\\gamma_{bh} = (\\Delta-1) \\cdot 10/(1+e)+10$ (kN/m³)',  unit:'kN/m³', answer: d=>d.g_bh, tol:0.05  },
     { id:'q6', type:'fill', label:'$\\gamma_{dn} = \\gamma_{bh} - 10$ (kN/m³)',               unit:'kN/m³', answer: d=>d.g_dn, tol:0.05  },
@@ -1045,7 +1047,7 @@ const LY_THUYET_TRANG_THAI = `
       <th style="padding:5px 8px;">Mô tả</th>
     </tr></thead>
     <tbody>
-      <tr style="background:#ffccbc;"><td style="padding:4px 8px;font-weight:700;">Cứng (rắn)</td><td style="padding:4px 8px;text-align:center;">$I_L < 0$</td><td style="padding:4px 8px;">Cứng, giòn, khó biến dạng</td></tr>
+      <tr style="background:#ffccbc;"><td style="padding:4px 8px;font-weight:700;">Cứng (rắn)</td><td style="padding:4px 8px;text-align:center;">$I_L {<} 0$</td><td style="padding:4px 8px;">Cứng, giòn, khó biến dạng</td></tr>
       <tr><td style="padding:4px 8px;font-weight:700;">Nửa cứng</td><td style="padding:4px 8px;text-align:center;">$0 \\leq I_L < 0.25$</td><td style="padding:4px 8px;">Tương đối cứng</td></tr>
       <tr style="background:#f5f5f5;"><td style="padding:4px 8px;font-weight:700;">Dẻo cứng</td><td style="padding:4px 8px;text-align:center;">$0.25 \\leq I_L < 0.50$</td><td style="padding:4px 8px;">Dẻo, khó biến dạng</td></tr>
       <tr><td style="padding:4px 8px;font-weight:700;">Dẻo mềm</td><td style="padding:4px 8px;text-align:center;">$0.50 \\leq I_L < 0.75$</td><td style="padding:4px 8px;">Dẻo, dễ biến dạng hơn</td></tr>
@@ -1071,7 +1073,7 @@ const LY_THUYET_TRANG_THAI_ROI = `
       <th style="padding:5px 8px;">Hệ số rỗng $e$ (cát)</th>
     </tr></thead>
     <tbody>
-      <tr style="background:#ffccbc;"><td style="padding:4px 8px;font-weight:700;">Rời</td><td style="padding:4px 8px;text-align:center;">$D_r < 33$</td><td style="padding:4px 8px;text-align:center;">$e > 0.8$</td></tr>
+      <tr style="background:#ffccbc;"><td style="padding:4px 8px;font-weight:700;">Rời</td><td style="padding:4px 8px;text-align:center;">$D_r {<} 33$</td><td style="padding:4px 8px;text-align:center;">$e > 0.8$</td></tr>
       <tr><td style="padding:4px 8px;font-weight:700;">Chặt vừa</td><td style="padding:4px 8px;text-align:center;">$33 \\leq D_r < 67$</td><td style="padding:4px 8px;text-align:center;">$0.6 < e \\leq 0.8$</td></tr>
       <tr style="background:#c8e6c9;"><td style="padding:4px 8px;font-weight:700;">Chặt</td><td style="padding:4px 8px;text-align:center;">$D_r \\geq 67$</td><td style="padding:4px 8px;text-align:center;">$e \\leq 0.6$</td></tr>
     </tbody>
@@ -1113,7 +1115,7 @@ EXERCISES['ch1_tt01'] = {
     { id:'q2', type:'fill', label:'$I_L = (w - W_P)/I_P$',    unit:'',  answer: d=>d.IL, tol:0.01 },
     { id:'q3', type:'mcq',  label:'Trạng thái của đất là:',
       choices: ()=>[
-        'Cứng (rắn) – $I_L < 0$',
+        'Cứng (rắn) – $I_L {<} 0$',
         'Nửa cứng – $0 \\leq I_L < 0.25$',
         'Dẻo cứng – $0.25 \\leq I_L < 0.50$',
         'Dẻo mềm – $0.50 \\leq I_L < 0.75$',
@@ -1177,7 +1179,7 @@ const LY_THUYET_TEN_DAT = `
     <tbody>
       <tr><td style="padding:4px 8px;font-weight:700;">Cuội sỏi</td><td style="padding:4px 8px;">% hạt $d > 2\,\\text{mm} \\geq 50\%$</td></tr>
       <tr style="background:#f5f5f5;"><td style="padding:4px 8px;font-weight:700;">Cát</td><td style="padding:4px 8px;">% hạt $0.05\,\\text{mm} \\leq d \\leq 2\,\\text{mm} \\geq 50\%$</td></tr>
-      <tr><td style="padding:4px 8px;font-weight:700;">Đất dính</td><td style="padding:4px 8px;">% hạt $d < 0.005\,\\text{mm}$ chiếm đáng kể; dựa vào $I_P$</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:700;">Đất dính</td><td style="padding:4px 8px;">% hạt $d {<} 0.005\,\\text{mm}$ chiếm đáng kể; dựa vào $I_P$</td></tr>
     </tbody>
   </table>
   <p style="font-size:.84rem;margin-bottom:6px;"><b>Bước 2 (đất dính):</b> Xác định tên theo chỉ số dẻo $I_P$:</p>
@@ -1187,8 +1189,8 @@ const LY_THUYET_TEN_DAT = `
       <th style="padding:5px 8px;">Chỉ số dẻo $I_P$ (%)</th>
     </tr></thead>
     <tbody>
-      <tr><td style="padding:4px 8px;font-weight:700;">Cát pha (Á cát)</td><td style="padding:4px 8px;">$1 \\leq I_P < 7$</td></tr>
-      <tr style="background:#f5f5f5;"><td style="padding:4px 8px;font-weight:700;">Sét pha (Á sét)</td><td style="padding:4px 8px;">$7 \\leq I_P < 17$</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:700;">Cát pha (Á cát)</td><td style="padding:4px 8px;">$1 \\leq I_P {<} 7$</td></tr>
+      <tr style="background:#f5f5f5;"><td style="padding:4px 8px;font-weight:700;">Sét pha (Á sét)</td><td style="padding:4px 8px;">$7 \\leq I_P {<} 17$</td></tr>
       <tr><td style="padding:4px 8px;font-weight:700;">Sét</td><td style="padding:4px 8px;">$I_P \\geq 17$</td></tr>
     </tbody>
   </table>
@@ -1199,7 +1201,7 @@ EXERCISES['ch1_ten01'] = {
   title: '1.25 – Xác định tên đất dính theo $I_P$ (TCVN)',
   type: 'guided',
   theoryHTML: LY_THUYET_TEN_DAT,
-  hint: `<div class="hint-title">💡 $I_P = W_L - W_P$. Á cát: $1 \\leq I_P < 7$. Á sét: $7 \\leq I_P < 17$. Sét: $I_P \\geq 17$.</div>`,
+  hint: `<div class="hint-title">💡 $I_P = W_L - W_P$. Á cát: $1 \\leq I_P {<} 7$. Á sét: $7 \\leq I_P {<} 17$. Sét: $I_P \\geq 17$.</div>`,
   genData(rng) {
     const Wp = r2(16 + rng()*14);
     const loaiIdx = Math.floor(rng()*3);
@@ -1220,8 +1222,8 @@ EXERCISES['ch1_ten01'] = {
     { id:'q1', type:'fill', label:'$I_P = W_L - W_P$ (%)',  unit:'%', answer: d=>d.Ip, tol:0.1 },
     { id:'q2', type:'mcq',  label:'Tên đất theo TCVN:',
       choices: ()=>[
-        'Cát pha (Á cát) – $1 \\leq I_P < 7$',
-        'Sét pha (Á sét) – $7 \\leq I_P < 17$',
+        'Cát pha (Á cát) – $1 \\leq I_P {<} 7$',
+        'Sét pha (Á sét) – $7 \\leq I_P {<} 17$',
         'Sét – $I_P \\geq 17$',
       ],
       correctIndex: d=>d.ttIdx },
@@ -1280,7 +1282,7 @@ EXERCISES['ch1_ten02'] = {
       <th style="padding:4px 10px;">0.5–0.25mm</th>
       <th style="padding:4px 10px;">0.25–0.1mm</th>
       <th style="padding:4px 10px;">0.1–0.05mm</th>
-      <th style="padding:4px 10px;">$< 0.05\,\\text{mm}$</th>
+      <th style="padding:4px 10px;">$d {<} 0.05\,\\text{mm}$</th>
     </tr></thead>
     <tbody><tr style="text-align:center;">
       <td style="padding:4px 10px;">${d.pcts[0]}%</td>
@@ -1293,9 +1295,9 @@ EXERCISES['ch1_ten02'] = {
     Xác định <b>tên đất rời</b> theo TCVN:`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'% hạt $d > 2\\,\\text{mm}$ (%)',        unit:'%', answer: d=>d.pcts[0], tol:0.5 },
-    { id:'q2', type:'fill', label:'% hạt $d > 0.5\\,\\text{mm}$ (gộp %)',  unit:'%', answer: d=>d.gt05,     tol:0.5 },
-    { id:'q3', type:'fill', label:'% hạt $d > 0.25\\,\\text{mm}$ (gộp %)', unit:'%', answer: d=>d.gt025,    tol:0.5 },
+    { id:'q1', type:'fill', label:'% hạt d > 2 mm (%)',        unit:'%', answer: d=>d.pcts[0], tol:0.5 },
+    { id:'q2', type:'fill', label:'% hạt d > 0.5 mm (gộp %)',  unit:'%', answer: d=>d.gt05,     tol:0.5 },
+    { id:'q3', type:'fill', label:'% hạt d > 0.25 mm (gộp %)', unit:'%', answer: d=>d.gt025,    tol:0.5 },
     { id:'q4', type:'mcq',  label:'Tên đất theo TCVN:',
       choices: ()=>[
         'Cuội sỏi – hạt $d > 2\\,\\text{mm} \\geq 50\\%$',
@@ -1365,7 +1367,7 @@ EXERCISES['ch1_tomtat'] = {
   <div class="s1b-body">
     <div class="s1b-row"><div class="s1b-f">$I_P = W_L - W_P$</div><div class="s1b-n">Chỉ số dẻo (%)</div></div>
     <div class="s1b-row"><div class="s1b-f">$I_L = (w - W_P)/I_P$</div><div class="s1b-n">Độ sệt</div></div>
-    <div class="s1b-row"><div class="s1b-f">$I_L < 0$: Cứng &nbsp;|&nbsp; $0$–$0.25$: Nửa cứng</div></div>
+    <div class="s1b-row"><div class="s1b-f">$I_L {<} 0$: Cứng &nbsp;|&nbsp; $0$–$0.25$: Nửa cứng</div></div>
     <div class="s1b-row"><div class="s1b-f">$0.25$–$0.5$: Dẻo cứng &nbsp;|&nbsp; $0.5$–$0.75$: Dẻo mềm</div></div>
     <div class="s1b-row"><div class="s1b-f">$0.75$–$1.0$: Dẻo chảy &nbsp;|&nbsp; $> 1.0$: Chảy</div></div>
   </div>
@@ -1375,15 +1377,15 @@ EXERCISES['ch1_tomtat'] = {
   <h4>E. Trạng thái đất RỜI – Độ chặt tương đối</h4>
   <div class="s1b-body">
     <div class="s1b-row"><div class="s1b-f">$D_r = (e_{\\max} - e)/(e_{\\max} - e_{\\min}) \\times 100\%$</div></div>
-    <div class="s1b-row"><div class="s1b-f">$D_r < 33\%$: Rời &nbsp;|&nbsp; $33$–$67\%$: Chặt vừa &nbsp;|&nbsp; $> 67\%$: Chặt</div></div>
+    <div class="s1b-row"><div class="s1b-f">$D_r {<} 33\%$: Rời &nbsp;|&nbsp; $33$–$67\%$: Chặt vừa &nbsp;|&nbsp; $> 67\%$: Chặt</div></div>
   </div>
 </div>
 
 <div class="s1b-sec">
   <h4>F. Tên đất theo TCVN (theo $I_P$)</h4>
   <div class="s1b-body">
-    <div class="s1b-row"><div class="s1b-f">$1 \\leq I_P < 7$: Cát pha (Á cát)</div></div>
-    <div class="s1b-row"><div class="s1b-f">$7 \\leq I_P < 17$: Sét pha (Á sét)</div></div>
+    <div class="s1b-row"><div class="s1b-f">$1 \\leq I_P {<} 7$: Cát pha (Á cát)</div></div>
+    <div class="s1b-row"><div class="s1b-f">$7 \\leq I_P {<} 17$: Sét pha (Á sét)</div></div>
     <div class="s1b-row"><div class="s1b-f">$I_P \\geq 17$: Sét</div></div>
     <div class="s1b-row"><div class="s1b-f">% hạt $d > 2\,\\text{mm} \\geq 50\%$: Cuội sỏi</div></div>
     <div class="s1b-row"><div class="s1b-f">% hạt $0.05 \\leq d \\leq 2\,\\text{mm} \\geq 50\%$: Cát (thô/vừa/mịn)</div></div>
@@ -1394,7 +1396,7 @@ EXERCISES['ch1_tomtat'] = {
   <h4>G. Rây sàng & Cấp phối hạt</h4>
   <div class="s1b-body">
     <div class="s1b-row"><div class="s1b-f">$P({<}d) = \\sum m(<d)\,/\,m_{\\text{tổng}} \\times 100\%$</div><div class="s1b-n">Hàm lượng tích lũy</div></div>
-    <div class="s1b-row"><div class="s1b-f">$P(d_1 \\text{–} d_2) = P(<d_2) - P(<d_1)$</div><div class="s1b-n">Hiệu 2 tích lũy liên tiếp</div></div>
+    <div class="s1b-row"><div class="s1b-f">$P(d_1 \\text{–} d_2) = P({<}d_2) - P({<}d_1)$</div><div class="s1b-n">Hiệu 2 tích lũy liên tiếp</div></div>
   </div>
 </div>`,
   hint: `<div class="hint-title">📌 Tóm tắt toàn bộ công thức chương 1 – không có câu hỏi tính toán.</div>`,
