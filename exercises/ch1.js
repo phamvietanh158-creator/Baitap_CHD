@@ -145,9 +145,9 @@ const LY_THUYET_CHI_TIEU = `
   ${SVG_CONG_THUC}
   <div style="background:#e3f0fd;border-radius:7px;padding:8px 14px;margin-top:6px;font-size:.83rem;line-height:1.9;">
     <b>Quan hệ quan trọng:</b>
-    $e = \dfrac{n}{1-n}$ &nbsp;|&nbsp; $n = \dfrac{e}{1+e}$ &nbsp;|&nbsp;
-    $\\gamma_k = \dfrac{\\gamma_{tn}}{1+0.01w}$ &nbsp;|&nbsp;
-    $S = \dfrac{0.01\,w\,\\Delta}{e}$
+    $e = \\dfrac{n}{1-n}$ &nbsp;|&nbsp; $n = \\dfrac{e}{1+e}$ &nbsp;|&nbsp;
+    $\\gamma_k = \\dfrac{\\gamma_{tn}}{1+0.01w}$ &nbsp;|&nbsp;
+    $S = \\dfrac{0.01\,w\,\\Delta}{e}$
   </div>
 </div>`;
 
@@ -352,7 +352,7 @@ EXERCISES['ch1_b2_06'] = {
     <div class="theory-label">📖 TỔNG HỢP KHỐI LƯỢNG TÍCH LŨY</div>
     <div style="font-size:.85rem;line-height:1.8;margin-top:6px;">
       Khối lượng hạt $d < d_i$ = tổng khối lượng trên các rây có đường kính &lt; $d_i$:<br>
-      $$m(d < d_i) = \\sum_{d_{\\text{rây}} < d_i} m_{\\text{rây}}$$
+      $$m(d {<} d_i) = \\sum_{d_{\\text{rây}} {<} d_i} m_{\\text{rây}}$$
     </div>
     <div style="background:#e3f0fd;border-radius:6px;padding:6px 12px;margin-top:6px;font-size:.83rem;">
       <b>Ví dụ:</b><br>
@@ -384,7 +384,7 @@ EXERCISES['ch1_b2_07'] = {
   theoryHTML: `<div class="theory-block">
     <div class="theory-label">📖 HÀM LƯỢNG TÍCH LŨY P(&lt;d) (%)</div>
     <div style="background:#e3f0fd;border-radius:7px;padding:9px 14px;margin:8px 0;font-size:.88rem;">
-      $$P(<d) = \\frac{\displaystyle\\sum m(<d)}{m_{\\text{tổng}}} \\times 100\%$$
+      $$P(d {<} d_0) = \\dfrac{\\sum m(d {<} d_0)}{m_{\\text{tổng}}} \\times 100\\%$$
     </div>
     <div style="font-size:.84rem;line-height:1.7;">
       Trong đó:<br>
@@ -392,7 +392,7 @@ EXERCISES['ch1_b2_07'] = {
       $m_{\\text{tổng}}$ = tổng khối lượng toàn bộ mẫu (tổng tất cả các rây)
     </div>
   </div>`,
-  hint: `<div class="hint-title">💡 $P(<d) = $ (khối lượng hạt nhỏ hơn $d$ / tổng khối lượng toàn mẫu) $\\times$ 100</div>`,
+  hint: `<div class="hint-title">💡 $P({<}d) = $ (khối lượng hạt nhỏ hơn $d$ / tổng khối lượng toàn mẫu) $\\times$ 100</div>`,
   genData(rng){
     const a = Math.floor(1 + rng()*199);
     const m1=45+a, m2=25+a, m3=100+a, m4=60+a, m5=5+5*a, m6=20+3*a, m7=15+2*a;
@@ -408,7 +408,7 @@ EXERCISES['ch1_b2_07'] = {
   statement(d){
     const ms = [d.m1,d.m2,d.m3,d.m4,d.m5,d.m6,d.m7];
     return `Kết quả TN rây sàng:<br>${_bangRay(ms)}<br>
-    Tính $P(<d)$ (hàm lượng tích lũy):`;
+    Tính $P({<}d)$ (hàm lượng tích lũy):`;
   },
   questions: [
     { id:'q1', type:'fill', label:'$P(d<0.5\\,\\text{mm})$ (%)',      unit:'%',  answer: d=>d.p05,   tol:0.5 },
@@ -424,11 +424,11 @@ EXERCISES['ch1_b2_08'] = {
   theoryHTML: `<div class="theory-block">
     <div class="theory-label">📖 ĐƯỜNG CONG CẤP PHỐI HẠT</div>
     <div style="font-size:.85rem;line-height:1.8;margin-top:6px;">
-      Bảng cấp phối cho biết <b>hàm lượng tích lũy</b> $P(<d)$ (%) – phần trăm hạt có kích thước ≤ $d$.<br>
+      Bảng cấp phối cho biết <b>hàm lượng tích lũy</b> $P({<}d)$ (%) – phần trăm hạt có kích thước ≤ $d$.<br>
       <b>Hàm lượng từng nhóm</b> = hiệu của 2 giá trị tích lũy liên tiếp:
     </div>
     <div style="background:#E3F2FD;border-radius:7px;padding:8px 14px;margin:8px 0;font-size:.86rem;">
-      $$P(d_1 \\text{ đến } d_2) = P(<d_2) - P(<d_1)$$
+      $$P(d_1 \\rightarrow d_2) = P({<}d_2) - P({<}d_1)$$
       <b>Ví dụ:</b> $P(0.05\,\\text{mm} \\text{ đến } 0.25\,\\text{mm}) = P(<0.25) - P(<0.05) = 44.3 - 25.0 = 19.3\%$
     </div>
   </div>`,
@@ -450,7 +450,7 @@ EXERCISES['ch1_b2_08'] = {
         <td style="padding:4px 8px;">13.3</td><td style="padding:4px 8px;">11.7</td>
       </tr>
       <tr style="text-align:center;background:#E3F2FD;font-weight:700;">
-        <td style="padding:4px 8px;">$P(<d)$ Tích lũy (%)</td>
+        <td style="padding:4px 8px;">$P({<}d)$ Tích lũy (%)</td>
         <td style="padding:4px 8px;">100</td><td style="padding:4px 8px;">96.8</td>
         <td style="padding:4px 8px;">87.7</td><td style="padding:4px 8px;">44.3</td>
         <td style="padding:4px 8px;">25.0</td><td style="padding:4px 8px;">11.7</td>
@@ -787,7 +787,7 @@ EXERCISES['ch1_tomtat'] = {
   <h4>D. Rây sàng & Cấp phối hạt</h4>
   <div class="s1-body">
     <div class="s1-row"><div class="s1-f">Đất trên rây $d$ → hạt có kích thước $> d$</div><div class="s1-n">Lọt qua rây → hạt $< d$</div></div>
-    <div class="s1-row"><div class="s1-f">$P(<d) = \\sum m(<d)\,/\,m_{\\text{tổng}} \\times 100\%$</div><div class="s1-n">Hàm lượng tích lũy</div></div>
+    <div class="s1-row"><div class="s1-f">$P({<}d) = \\sum m(<d)\,/\,m_{\\text{tổng}} \\times 100\%$</div><div class="s1-n">Hàm lượng tích lũy</div></div>
     <div class="s1-row"><div class="s1-f">$P(d_1\\text{–}d_2) = P(<d_2) - P(<d_1)$</div><div class="s1-n">Hiệu 2 giá trị tích lũy</div></div>
   </div>
 </div>`,
@@ -848,7 +848,7 @@ EXERCISES['ch1_b2_11'] = {
     <div class="theory-label">📖 BẢNG CẤP PHỐI HẠT ĐẦY ĐỦ</div>
     <div style="font-size:.84rem;line-height:1.8;">
       <b>Hàm lượng từng nhóm (%)</b> $= m_{\\text{rây}} / m_{\\text{tổng}} \\times 100$<br>
-      <b>Hàm lượng tích lũy $P(<d)$ (%)</b> = cộng dồn từ nhóm hạt nhỏ nhất lên<br>
+      <b>Hàm lượng tích lũy $P({<}d)$ (%)</b> = cộng dồn từ nhóm hạt nhỏ nhất lên<br>
       Tổng tất cả hàm lượng từng nhóm = 100%
     </div>
   </div>`,
@@ -867,7 +867,7 @@ EXERCISES['ch1_b2_11'] = {
     return {a, ms, total, pct, lt01, lt025, lt05, lt10, lt20, lt50};
   },
   statement(d){
-    return `Kết quả TN rây sàng:<br>${_bangRay(d.ms)}<br>Tính $P(<d)$ (hàm lượng tích lũy):`;
+    return `Kết quả TN rây sàng:<br>${_bangRay(d.ms)}<br>Tính $P({<}d)$ (hàm lượng tích lũy):`;
   },
   questions: [
     { id:'q1', type:'fill', label:'$P(d<0.1\\,\\text{mm})$ (%)',   unit:'%', answer: d=>d.lt01,  tol:0.5 },
@@ -1393,7 +1393,7 @@ EXERCISES['ch1_tomtat'] = {
 <div class="s1b-sec">
   <h4>G. Rây sàng & Cấp phối hạt</h4>
   <div class="s1b-body">
-    <div class="s1b-row"><div class="s1b-f">$P(<d) = \\sum m(<d)\,/\,m_{\\text{tổng}} \\times 100\%$</div><div class="s1b-n">Hàm lượng tích lũy</div></div>
+    <div class="s1b-row"><div class="s1b-f">$P({<}d) = \\sum m(<d)\,/\,m_{\\text{tổng}} \\times 100\%$</div><div class="s1b-n">Hàm lượng tích lũy</div></div>
     <div class="s1b-row"><div class="s1b-f">$P(d_1 \\text{–} d_2) = P(<d_2) - P(<d_1)$</div><div class="s1b-n">Hiệu 2 tích lũy liên tiếp</div></div>
   </div>
 </div>`,
