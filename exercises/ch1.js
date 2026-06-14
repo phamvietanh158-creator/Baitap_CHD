@@ -554,9 +554,9 @@ EXERCISES['ch1_b3_01'] = {
     return `Mẫu đất TN cho: $Q = ${d.Q}$ g, $Q_k = ${d.Qk}$ g, $V = ${d.V}$ cm³, $V_h = ${d.Vh}$ cm³.<br>Xác định <b>thể tích lỗ rỗng $V_r$</b>, <b>độ rỗng $n$</b> và <b>độ đặc $m$</b>:`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$V_r = V - V_h$ (cm³)',       unit:'cm³', answer: d=>d.Vr, tol:0.1 },
-    { id:'q2', type:'fill', label:'$n = V_r/V$',                  unit:'',    answer: d=>d.n,  tol:0.005 },
-    { id:'q3', type:'fill', label:'$m = V_h/V$ &nbsp;($n+m=1$)', unit:'',    answer: d=>d.m,  tol:0.005 },
+    { id:'q1', type:'fill', label:'V<sub>r</sub> = V - V<sub>h</sub> (cm³)',       unit:'cm³', answer: d=>d.Vr, tol:0.1 },
+    { id:'q2', type:'fill', label:'n = V<sub>r</sub>/V',                  unit:'',    answer: d=>d.n,  tol:0.005 },
+    { id:'q3', type:'fill', label:'m = V<sub>h</sub>/V (n+m=1)', unit:'',    answer: d=>d.m,  tol:0.005 },
   ]
 };
 
@@ -571,10 +571,10 @@ EXERCISES['ch1_b3_02'] = {
     return `Mẫu đất: $Q = ${d.Q}$ g, $Q_k = ${d.Qk}$ g, $V = ${d.V}$ cm³, $V_h = ${d.Vh}$ cm³.<br>Biết $V_r = ${d.Vr}$ cm³. Xác định <b>hệ số rỗng $e$</b> và <b>độ bão hòa $S$</b>:`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$Q_w = Q - Q_k$ (g)',         unit:'g',   answer: d=>d.Qw, tol:0.1 },
-    { id:'q2', type:'fill', label:'$V_w \\approx Q_w$ (cm³)',    unit:'cm³', answer: d=>d.Vw, tol:0.1 },
-    { id:'q3', type:'fill', label:'$e = V_r/V_h$',               unit:'',    answer: d=>d.e,  tol:0.005 },
-    { id:'q4', type:'fill', label:'$S = V_w/V_r$',               unit:'',    answer: d=>d.S,  tol:0.005 },
+    { id:'q1', type:'fill', label:'Q<sub>w</sub> = Q - Q<sub>k</sub> (g)',         unit:'g',   answer: d=>d.Qw, tol:0.1 },
+    { id:'q2', type:'fill', label:'V<sub>w</sub> \≈ Q<sub>w</sub> (cm³)',    unit:'cm³', answer: d=>d.Vw, tol:0.1 },
+    { id:'q3', type:'fill', label:'e = V<sub>r</sub>/V<sub>h</sub>',               unit:'',    answer: d=>d.e,  tol:0.005 },
+    { id:'q4', type:'fill', label:'S = V<sub>w</sub>/V<sub>r</sub>',               unit:'',    answer: d=>d.S,  tol:0.005 },
   ]
 };
 
@@ -589,8 +589,8 @@ EXERCISES['ch1_b3_03'] = {
     return `Mẫu đất: $Q = ${d.Q}$ g, $Q_k = ${d.Qk}$ g, $V = ${d.V}$ cm³.<br>Xác định <b>độ ẩm $w$ (%)</b> và <b>trọng lượng riêng tự nhiên $\\gamma_{tn}$ (kN/m³)</b>:`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$w = Q_w/Q_k \\times 100$ (%)',             unit:'%',     answer: d=>d.w,    tol:0.2 },
-    { id:'q2', type:'fill', label:'$\\gamma_{tn} = Q/V \\times 10$ (kN/m³)',   unit:'kN/m³', answer: d=>d.g_tn, tol:0.05 },
+    { id:'q1', type:'fill', label:'w = Q<sub>w</sub>/Q<sub>k</sub> \× 100 (%)',             unit:'%',     answer: d=>d.w,    tol:0.2 },
+    { id:'q2', type:'fill', label:'\γ<sub>tn</sub> = Q/V \× 10 (kN/m³)',   unit:'kN/m³', answer: d=>d.g_tn, tol:0.05 },
   ]
 };
 
@@ -605,10 +605,10 @@ EXERCISES['ch1_b3_04'] = {
     return `Mẫu đất: $Q_k = ${d.Qk}$ g, $V = ${d.V}$ cm³, $V_h = ${d.Vh}$ cm³, $V_r = ${d.Vr}$ cm³.<br>Xác định $\\gamma_k$, $\\gamma_{bh}$, $\\gamma_{dn}$ và $\\gamma_h$ (kN/m³):`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$\\gamma_k = Q_k/V \\times 10$ (kN/m³)',              unit:'kN/m³', answer: d=>d.g_k,  tol:0.05 },
-    { id:'q2', type:'fill', label:'$\\gamma_{bh} = (Q_k + V_r)/V \\times 10$ (kN/m³)',   unit:'kN/m³', answer: d=>d.g_bh, tol:0.05 },
-    { id:'q3', type:'fill', label:'$\\gamma_{dn} = \\gamma_{bh} - 10$ (kN/m³)',           unit:'kN/m³', answer: d=>d.g_dn, tol:0.05 },
-    { id:'q4', type:'fill', label:'$\\gamma_h = Q_k/V_h \\times 10$ (kN/m³)',             unit:'kN/m³', answer: d=>d.g_h,  tol:0.05 },
+    { id:'q1', type:'fill', label:'\γ<sub>k</sub> = Q<sub>k</sub>/V \× 10 (kN/m³)',              unit:'kN/m³', answer: d=>d.g_k,  tol:0.05 },
+    { id:'q2', type:'fill', label:'\γ<sub>bh</sub> = (Q<sub>k</sub> + V<sub>r</sub>)/V \× 10 (kN/m³)',   unit:'kN/m³', answer: d=>d.g_bh, tol:0.05 },
+    { id:'q3', type:'fill', label:'\γ<sub>dn</sub> = \γ<sub>bh</sub> - 10 (kN/m³)',           unit:'kN/m³', answer: d=>d.g_dn, tol:0.05 },
+    { id:'q4', type:'fill', label:'\γ<sub>h</sub> = Q<sub>k</sub>/V<sub>h</sub> \× 10 (kN/m³)',             unit:'kN/m³', answer: d=>d.g_h,  tol:0.05 },
   ]
 };
 
@@ -632,9 +632,9 @@ EXERCISES['ch1_b3_05'] = {
     return `Mẫu đất có: $w = ${d.w}\%$, $\\gamma_{tn} = ${d.g_tn}$ kN/m³, $\\Delta$ (tỷ trọng hạt) $= ${d.D}$.<br>Xác định $\\gamma_k$, $n$ và $e$:`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$\\gamma_k = \\gamma_{tn}/(1 + 0.01w)$ (kN/m³)',  unit:'kN/m³', answer: d=>d.g_k, tol:0.05 },
-    { id:'q2', type:'fill', label:'$n = 1 - \\gamma_k/(\\Delta \\cdot \\gamma_w)$',   unit:'',      answer: d=>d.n,   tol:0.005 },
-    { id:'q3', type:'fill', label:'$e = n/(1-n)$',                                   unit:'',      answer: d=>d.e,   tol:0.005 },
+    { id:'q1', type:'fill', label:'\γ<sub>k</sub> = \γ<sub>tn</sub>/(1 + 0.01w) (kN/m³)',  unit:'kN/m³', answer: d=>d.g_k, tol:0.05 },
+    { id:'q2', type:'fill', label:'n = 1 - \γ<sub>k</sub>/(\Δ \· \γ<sub>w</sub>)',   unit:'',      answer: d=>d.n,   tol:0.005 },
+    { id:'q3', type:'fill', label:'e = n/(1-n)',                                   unit:'',      answer: d=>d.e,   tol:0.005 },
   ]
 };
 
@@ -656,9 +656,9 @@ EXERCISES['ch1_b3_06'] = {
     return `Mẫu đất: $w = ${d.w}\%$, $\\Delta = ${d.D}$, $e = ${d.e}$ (đã tính).<br>Xác định $S$, $\\gamma_{bh}$ và $\\gamma_{dn}$:`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$S = 0.01\\,w\\,\\Delta/e$',                              unit:'',      answer: d=>d.S,    tol:0.005 },
-    { id:'q2', type:'fill', label:'$\\gamma_{bh} = (\\Delta-1) \\cdot 10/(1+e)+10$ (kN/m³)', unit:'kN/m³', answer: d=>d.g_bh, tol:0.05  },
-    { id:'q3', type:'fill', label:'$\\gamma_{dn} = \\gamma_{bh} - 10$ (kN/m³)',               unit:'kN/m³', answer: d=>d.g_dn, tol:0.05  },
+    { id:'q1', type:'fill', label:'S = 0.01\ w\ \Δ/e',                              unit:'',      answer: d=>d.S,    tol:0.005 },
+    { id:'q2', type:'fill', label:'\γ<sub>bh</sub> = (\Δ-1) \· 10/(1+e)+10 (kN/m³)', unit:'kN/m³', answer: d=>d.g_bh, tol:0.05  },
+    { id:'q3', type:'fill', label:'\γ<sub>dn</sub> = \γ<sub>bh</sub> - 10 (kN/m³)',               unit:'kN/m³', answer: d=>d.g_dn, tol:0.05  },
   ]
 };
 
@@ -731,7 +731,7 @@ EXERCISES['ch1_b3_08'] = {
     return `Mẫu đất có thể tích $V = ${d.V}$ cm³, khối lượng ướt $Q = ${d.Q_uot}$ g, khối lượng khô $Q_k = ${d.Q_kho}$ g, tỷ trọng hạt $\\Delta = ${d.D}$.<br>Tính <b>trọng lượng riêng tự nhiên $\\gamma_{tn}$</b> (kN/m³):`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$\\gamma_{tn} = Q/V \\times 10$ (kN/m³)', unit:'kN/m³', answer: d=>d.g_uot, tol:0.05 },
+    { id:'q1', type:'fill', label:'\γ<sub>tn</sub> = Q/V \× 10 (kN/m³)', unit:'kN/m³', answer: d=>d.g_uot, tol:0.05 },
   ]
 };
 
@@ -901,16 +901,16 @@ EXERCISES['ch1_b3_09'] = {
     Tính <b>đầy đủ 10 chỉ tiêu vật lý</b> của đất:`;
   },
   questions: [
-    { id:'q1',  type:'fill', label:'$V_r = V - V_h$ (cm³)',                          unit:'cm³',   answer: d=>d.Vr,   tol:0.1  },
-    { id:'q2',  type:'fill', label:'$n = V_r/V$ (độ rỗng)',                          unit:'',      answer: d=>d.n,    tol:0.005},
-    { id:'q3',  type:'fill', label:'$m = V_h/V$ (độ đặc, $n+m=1$)',                 unit:'',      answer: d=>d.m,    tol:0.005},
-    { id:'q4',  type:'fill', label:'$e = V_r/V_h$ (hệ số rỗng)',                    unit:'',      answer: d=>d.e,    tol:0.005},
-    { id:'q5',  type:'fill', label:'$S = V_w/V_r$ (độ bão hòa)',                    unit:'',      answer: d=>d.S,    tol:0.005},
-    { id:'q6',  type:'fill', label:'$w = Q_w/Q_k \\times 100$ (%)',                 unit:'%',     answer: d=>d.w,    tol:0.2  },
-    { id:'q7',  type:'fill', label:'$\\gamma_{tn} = Q/V \\times 10$ (kN/m³)',       unit:'kN/m³', answer: d=>d.g_tn, tol:0.05 },
-    { id:'q8',  type:'fill', label:'$\\gamma_k = Q_k/V \\times 10$ (kN/m³)',        unit:'kN/m³', answer: d=>d.g_k,  tol:0.05 },
-    { id:'q9',  type:'fill', label:'$\\gamma_{bh} = (Q_k+V_r)/V \\times 10$ (kN/m³)', unit:'kN/m³', answer: d=>d.g_bh, tol:0.05 },
-    { id:'q10', type:'fill', label:'$\\gamma_{dn} = \\gamma_{bh} - 10$ (kN/m³)',    unit:'kN/m³', answer: d=>d.g_dn, tol:0.05 },
+    { id:'q1',  type:'fill', label:'V<sub>r</sub> = V - V<sub>h</sub> (cm³)',                          unit:'cm³',   answer: d=>d.Vr,   tol:0.1  },
+    { id:'q2',  type:'fill', label:'n = V<sub>r</sub>/V (độ rỗng)',                          unit:'',      answer: d=>d.n,    tol:0.005},
+    { id:'q3',  type:'fill', label:'m = V<sub>h</sub>/V (độ đặc, n+m=1)',                 unit:'',      answer: d=>d.m,    tol:0.005},
+    { id:'q4',  type:'fill', label:'e = V<sub>r</sub>/V<sub>h</sub> (hệ số rỗng)',                    unit:'',      answer: d=>d.e,    tol:0.005},
+    { id:'q5',  type:'fill', label:'S = V<sub>w</sub>/V<sub>r</sub> (độ bão hòa)',                    unit:'',      answer: d=>d.S,    tol:0.005},
+    { id:'q6',  type:'fill', label:'w = Q<sub>w</sub>/Q<sub>k</sub> \× 100 (%)',                 unit:'%',     answer: d=>d.w,    tol:0.2  },
+    { id:'q7',  type:'fill', label:'\γ<sub>tn</sub> = Q/V \× 10 (kN/m³)',       unit:'kN/m³', answer: d=>d.g_tn, tol:0.05 },
+    { id:'q8',  type:'fill', label:'\γ<sub>k</sub> = Q<sub>k</sub>/V \× 10 (kN/m³)',        unit:'kN/m³', answer: d=>d.g_k,  tol:0.05 },
+    { id:'q9',  type:'fill', label:'\γ<sub>bh</sub> = (Q<sub>k</sub>+V<sub>r</sub>)/V \× 10 (kN/m³)', unit:'kN/m³', answer: d=>d.g_bh, tol:0.05 },
+    { id:'q10', type:'fill', label:'\γ<sub>dn</sub> = \γ<sub>bh</sub> - 10 (kN/m³)',    unit:'kN/m³', answer: d=>d.g_dn, tol:0.05 },
   ]
 };
 
@@ -931,12 +931,12 @@ EXERCISES['ch1_b3_10'] = {
     Xác định các chỉ tiêu vật lý còn lại ($\\gamma_w = 10$ kN/m³):`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$\\gamma_k = \\gamma_{tn}/(1+0.01w)$ (kN/m³)',           unit:'kN/m³', answer: d=>d.g_k,  tol:0.05  },
-    { id:'q2', type:'fill', label:'$n = 1 - \\gamma_k/(\\Delta \\cdot \\gamma_w)$',           unit:'',      answer: d=>d.n,    tol:0.005 },
-    { id:'q3', type:'fill', label:'$e = n/(1-n)$',                                          unit:'',      answer: d=>d.e,    tol:0.005 },
-    { id:'q4', type:'fill', label:'$S = 0.01\\,w\\,\\Delta/e$',                                unit:'',      answer: d=>d.S,    tol:0.005 },
-    { id:'q5', type:'fill', label:'$\\gamma_{bh} = (\\Delta-1) \\cdot 10/(1+e)+10$ (kN/m³)',  unit:'kN/m³', answer: d=>d.g_bh, tol:0.05  },
-    { id:'q6', type:'fill', label:'$\\gamma_{dn} = \\gamma_{bh} - 10$ (kN/m³)',               unit:'kN/m³', answer: d=>d.g_dn, tol:0.05  },
+    { id:'q1', type:'fill', label:'\γ<sub>k</sub> = \γ<sub>tn</sub>/(1+0.01w) (kN/m³)',           unit:'kN/m³', answer: d=>d.g_k,  tol:0.05  },
+    { id:'q2', type:'fill', label:'n = 1 - \γ<sub>k</sub>/(\Δ \· \γ<sub>w</sub>)',           unit:'',      answer: d=>d.n,    tol:0.005 },
+    { id:'q3', type:'fill', label:'e = n/(1-n)',                                          unit:'',      answer: d=>d.e,    tol:0.005 },
+    { id:'q4', type:'fill', label:'S = 0.01\ w\ \Δ/e',                                unit:'',      answer: d=>d.S,    tol:0.005 },
+    { id:'q5', type:'fill', label:'\γ<sub>bh</sub> = (\Δ-1) \· 10/(1+e)+10 (kN/m³)',  unit:'kN/m³', answer: d=>d.g_bh, tol:0.05  },
+    { id:'q6', type:'fill', label:'\γ<sub>dn</sub> = \γ<sub>bh</sub> - 10 (kN/m³)',               unit:'kN/m³', answer: d=>d.g_dn, tol:0.05  },
   ]
 };
 
@@ -972,11 +972,11 @@ EXERCISES['ch1_b3_11'] = {
     return `Mẫu đất có thể tích $V = ${d.V}$ cm³, khối lượng ướt $Q = ${d.Q_uot}$ g, khối lượng khô $Q_k = ${d.Q_k}$ g, tỷ trọng hạt $\\Delta = ${d.D}$.<br>Tính các chỉ tiêu:`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$\\gamma_{tn} = Q/V \\times 10$ (kN/m³)',           unit:'kN/m³', answer: d=>d.g_tn_ans, tol:0.05 },
-    { id:'q2', type:'fill', label:'$w = (Q - Q_k)/Q_k \\times 100$ (%)',               unit:'%',     answer: d=>d.w_ans,    tol:0.3  },
-    { id:'q3', type:'fill', label:'$\\gamma_k = \\gamma_{tn}/(1+0.01w)$ (kN/m³)',      unit:'kN/m³', answer: d=>d.g_k_ans,  tol:0.05 },
-    { id:'q4', type:'fill', label:'$V_h = Q_k/\\Delta$ (cm³)',                          unit:'cm³',   answer: d=>d.Vh_ans,   tol:0.2  },
-    { id:'q5', type:'fill', label:'$e = (V - V_h)/V_h$',                               unit:'',      answer: d=>d.e_ans,    tol:0.01 },
+    { id:'q1', type:'fill', label:'\γ<sub>tn</sub> = Q/V \× 10 (kN/m³)',           unit:'kN/m³', answer: d=>d.g_tn_ans, tol:0.05 },
+    { id:'q2', type:'fill', label:'w = (Q - Q<sub>k</sub>)/Q<sub>k</sub> \× 100 (%)',               unit:'%',     answer: d=>d.w_ans,    tol:0.3  },
+    { id:'q3', type:'fill', label:'\γ<sub>k</sub> = \γ<sub>tn</sub>/(1+0.01w) (kN/m³)',      unit:'kN/m³', answer: d=>d.g_k_ans,  tol:0.05 },
+    { id:'q4', type:'fill', label:'V<sub>h</sub> = Q<sub>k</sub>/\Δ (cm³)',                          unit:'cm³',   answer: d=>d.Vh_ans,   tol:0.2  },
+    { id:'q5', type:'fill', label:'e = (V - V<sub>h</sub>)/V<sub>h</sub>',                               unit:'',      answer: d=>d.e_ans,    tol:0.01 },
   ]
 };
 
@@ -1111,8 +1111,8 @@ EXERCISES['ch1_tt01'] = {
     Xác định chỉ số dẻo $I_P$, độ sệt $I_L$ và <b>trạng thái</b> của đất.`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$I_P = W_L - W_P$ (%)',    unit:'%', answer: d=>d.Ip, tol:0.1 },
-    { id:'q2', type:'fill', label:'$I_L = (w - W_P)/I_P$',    unit:'',  answer: d=>d.IL, tol:0.01 },
+    { id:'q1', type:'fill', label:'I<sub>P</sub> = W<sub>L</sub> - W<sub>P</sub> (%)',    unit:'%', answer: d=>d.Ip, tol:0.1 },
+    { id:'q2', type:'fill', label:'I<sub>L</sub> = (w - W<sub>P</sub>)/I<sub>P</sub>',    unit:'',  answer: d=>d.IL, tol:0.01 },
     { id:'q3', type:'mcq',  label:'Trạng thái của đất là:',
       choices: ()=>[
         'Cứng (rắn) – $I_L {<} 0$',
@@ -1153,7 +1153,7 @@ EXERCISES['ch1_tt02'] = {
     Tính độ chặt tương đối $D_r$ và xác định <b>trạng thái</b> đất.`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$D_r = (e_{\\max}-e)/(e_{\\max}-e_{\\min}) \\times 100$ (%)', unit:'%', answer: d=>d.Dr_pct, tol:0.5 },
+    { id:'q1', type:'fill', label:'D<sub>r</sub> = (e<sub>\max</sub>-e)/(e<sub>\max</sub>-e<sub>\min</sub>) \× 100 (%)', unit:'%', answer: d=>d.Dr_pct, tol:0.5 },
     { id:'q2', type:'mcq',  label:'Trạng thái đất rời:',
       choices: ()=>[
         'Rời – $D_r < 33\\%$',
@@ -1219,7 +1219,7 @@ EXERCISES['ch1_ten01'] = {
     Xác định <b>chỉ số dẻo $I_P$</b> và <b>tên đất</b> theo TCVN.`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$I_P = W_L - W_P$ (%)',  unit:'%', answer: d=>d.Ip, tol:0.1 },
+    { id:'q1', type:'fill', label:'I<sub>P</sub> = W<sub>L</sub> - W<sub>P</sub> (%)',  unit:'%', answer: d=>d.Ip, tol:0.1 },
     { id:'q2', type:'mcq',  label:'Tên đất theo TCVN:',
       choices: ()=>[
         'Cát pha (Á cát) – $1 \\leq I_P {<} 7$',
