@@ -388,8 +388,8 @@ EXERCISES['ch1_b2_07'] = {
     </div>
     <div style="font-size:.84rem;line-height:1.7;">
       Trong đó:<br>
-      $\\sum m(<d)$ = tổng khối lượng các hạt có kích thước nhỏ hơn $d$<br>
-      $m_{\\text{tổng}}$ = tổng khối lượng toàn bộ mẫu (tổng tất cả các rây)
+      $\\sum m(d < d_0)$ = Tổng khối lượng các hạt có kích thước nhỏ hơn $d_0$<br>  
+      $m_{\\text{tổng}}$ = Tổng khối lượng toàn bộ mẫu (tổng tất cả các rây)
     </div>
   </div>`,
   hint: `<div class="hint-title">💡 $P({<}d) = $ (khối lượng hạt nhỏ hơn $d$ / tổng khối lượng toàn mẫu) $\\times$ 100</div>`,
@@ -411,7 +411,7 @@ EXERCISES['ch1_b2_07'] = {
     Tính $P({<}d)$ (hàm lượng tích lũy):`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$P(d<0.5\\,\\text{mm})$ (%)',      unit:'%',  answer: d=>d.p05,   tol:0.5 },
+    { id:'q1', type:'fill', label:'$P(d<0.5\\,\\text{mm})$ (%)', unit:'%',  answer: d=>d.p05,   tol:0.5 },
     { id:'q3', type:'fill', label:'$P(d<1.0\\,\\text{mm})$ (%)', unit:'%',  answer: d=>d.p10,   tol:0.5 },
     { id:'q4', type:'fill', label:'$P(d<5.0\\,\\text{mm})$ (%)', unit:'%',  answer: d=>d.p50,   tol:0.5 },
   ]
@@ -569,7 +569,7 @@ EXERCISES['ch1_b3_02'] = {
     return `Mẫu đất: $Q = ${d.Q}$ g, $Q_k = ${d.Qk}$ g, $V = ${d.V}$ cm³, $V_h = ${d.Vh}$ cm³.<br>Biết $V_r = ${d.Vr}$ cm³. Xác định <b>hệ số rỗng $e$</b> và <b>độ bão hòa $S$</b>:`;
   },
   questions: [
-    { id:'q1', type:'fill', label:'$Q_w = Q - Q_k$ (g)',         unit:'g',   answer: d=>d.Qw, tol:0.1 },
+    { id:'q1', type:'fill', label:'\\( Q_w = Q - Q_k \) (g),         unit:'g',   answer: d=>d.Qw, tol:0.1 },
     { id:'q2', type:'fill', label:'$V_w \\approx Q_w$ (cm³)',    unit:'cm³', answer: d=>d.Vw, tol:0.1 },
     { id:'q3', type:'fill', label:'$e = V_r/V_h$',               unit:'',    answer: d=>d.e,  tol:0.005 },
     { id:'q4', type:'fill', label:'$S = V_w/V_r$',               unit:'',    answer: d=>d.S,  tol:0.005 },
