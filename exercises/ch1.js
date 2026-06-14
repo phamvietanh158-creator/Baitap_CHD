@@ -146,8 +146,8 @@ const LY_THUYET_CHI_TIEU = `
   <div style="background:#e3f0fd;border-radius:7px;padding:8px 14px;margin-top:6px;font-size:.83rem;line-height:1.9;">
     <b>Quan hệ quan trọng:</b>
     $e = \dfrac{n}{1-n}$ &nbsp;|&nbsp; $n = \dfrac{e}{1+e}$ &nbsp;|&nbsp;
-    $\gamma_k = \dfrac{\gamma_{tn}}{1+0.01w}$ &nbsp;|&nbsp;
-    $S = \dfrac{0.01\,w\,\Delta}{e}$
+    $\\gamma_k = \dfrac{\\gamma_{tn}}{1+0.01w}$ &nbsp;|&nbsp;
+    $S = \dfrac{0.01\,w\,\\Delta}{e}$
   </div>
 </div>`;
 
@@ -316,11 +316,11 @@ EXERCISES['ch1_b2_05'] = {
       Hoặc = tổng khối lượng hạt lọt qua rây $d$ (đáy hộp + các rây nhỏ hơn $d$).
     </div>
     <div style="background:#e3f0fd;border-radius:6px;padding:6px 12px;margin-top:8px;font-size:.83rem;">
-      <b>Ví dụ:</b> Hạt $d < 0.25\,\text{mm}$ = khối lượng trên Rây 7 ($d=0.10$mm) + phần đáy (nếu có)<br>
+      <b>Ví dụ:</b> Hạt $d < 0.25\,\\text{mm}$ = khối lượng trên Rây 7 ($d=0.10$mm) + phần đáy (nếu có)<br>
       (vì hạt $d < 0.25$mm lọt qua Rây 6 và chỉ còn lại trên Rây 7 hoặc đáy)
     </div>
   </div>`,
-  hint: `<div class="hint-title">💡 Hạt $d < 0.25\,\text{mm}$ = lọt qua Rây 6 (d = 0.25mm) → nằm trên Rây 7 (d = 0.10mm). Khối lượng = $m_7$ (bài này đơn giản hóa, bỏ qua đáy).</div>`,
+  hint: `<div class="hint-title">💡 Hạt $d < 0.25\,\\text{mm}$ = lọt qua Rây 6 (d = 0.25mm) → nằm trên Rây 7 (d = 0.10mm). Khối lượng = $m_7$ (bài này đơn giản hóa, bỏ qua đáy).</div>`,
   genData(rng){
     const a = Math.floor(1 + rng()*199);
     const m7 = 15 + 2*a;
@@ -352,15 +352,15 @@ EXERCISES['ch1_b2_06'] = {
     <div class="theory-label">📖 TỔNG HỢP KHỐI LƯỢNG TÍCH LŨY</div>
     <div style="font-size:.85rem;line-height:1.8;margin-top:6px;">
       Khối lượng hạt $d < d_i$ = tổng khối lượng trên các rây có đường kính &lt; $d_i$:<br>
-      $$m(d < d_i) = \sum_{d_{\text{rây}} < d_i} m_{\text{rây}}$$
+      $$m(d < d_i) = \\sum_{d_{\\text{rây}} < d_i} m_{\\text{rây}}$$
     </div>
     <div style="background:#e3f0fd;border-radius:6px;padding:6px 12px;margin-top:6px;font-size:.83rem;">
       <b>Ví dụ:</b><br>
-      Hạt $d < 0.50\,\text{mm}$ = $m_{\text{Rây 6}} + m_{\text{Rây 7}}$ &nbsp;(d = 0.25mm và d = 0.10mm)<br>
-      Hạt $d < 1.0\,\text{mm}$ = $m_{\text{Rây 5}} + m_{\text{Rây 6}} + m_{\text{Rây 7}}$
+      Hạt $d < 0.50\,\\text{mm}$ = $m_{\\text{Rây 6}} + m_{\\text{Rây 7}}$ &nbsp;(d = 0.25mm và d = 0.10mm)<br>
+      Hạt $d < 1.0\,\\text{mm}$ = $m_{\\text{Rây 5}} + m_{\\text{Rây 6}} + m_{\\text{Rây 7}}$
     </div>
   </div>`,
-  hint: `<div class="hint-title">💡 Hạt $d < 0.50\,\text{mm}$ = $m_6 + m_7$. Hạt $d < 1.0\,\text{mm}$ = $m_5 + m_6 + m_7$.</div>`,
+  hint: `<div class="hint-title">💡 Hạt $d < 0.50\,\\text{mm}$ = $m_6 + m_7$. Hạt $d < 1.0\,\\text{mm}$ = $m_5 + m_6 + m_7$.</div>`,
   genData(rng){
     const a = Math.floor(1 + rng()*199);
     const m7=15+2*a, m6=20+3*a, m5=5+5*a;
@@ -384,15 +384,15 @@ EXERCISES['ch1_b2_07'] = {
   theoryHTML: `<div class="theory-block">
     <div class="theory-label">📖 HÀM LƯỢNG TÍCH LŨY P(&lt;d) (%)</div>
     <div style="background:#e3f0fd;border-radius:7px;padding:9px 14px;margin:8px 0;font-size:.88rem;">
-      $$P(<d) = \frac{\displaystyle\sum m(<d)}{m_{\text{tổng}}} \times 100\%$$
+      $$P(<d) = \\frac{\displaystyle\\sum m(<d)}{m_{\\text{tổng}}} \\times 100\%$$
     </div>
     <div style="font-size:.84rem;line-height:1.7;">
       Trong đó:<br>
-      $\sum m(<d)$ = tổng khối lượng các hạt có kích thước nhỏ hơn $d$<br>
-      $m_{\text{tổng}}$ = tổng khối lượng toàn bộ mẫu (tổng tất cả các rây)
+      $\\sum m(<d)$ = tổng khối lượng các hạt có kích thước nhỏ hơn $d$<br>
+      $m_{\\text{tổng}}$ = tổng khối lượng toàn bộ mẫu (tổng tất cả các rây)
     </div>
   </div>`,
-  hint: `<div class="hint-title">💡 $P(<d) = $ (khối lượng hạt nhỏ hơn $d$ / tổng khối lượng toàn mẫu) $\times$ 100</div>`,
+  hint: `<div class="hint-title">💡 $P(<d) = $ (khối lượng hạt nhỏ hơn $d$ / tổng khối lượng toàn mẫu) $\\times$ 100</div>`,
   genData(rng){
     const a = Math.floor(1 + rng()*199);
     const m1=45+a, m2=25+a, m3=100+a, m4=60+a, m5=5+5*a, m6=20+3*a, m7=15+2*a;
@@ -428,8 +428,8 @@ EXERCISES['ch1_b2_08'] = {
       <b>Hàm lượng từng nhóm</b> = hiệu của 2 giá trị tích lũy liên tiếp:
     </div>
     <div style="background:#E3F2FD;border-radius:7px;padding:8px 14px;margin:8px 0;font-size:.86rem;">
-      $$P(d_1 \text{ đến } d_2) = P(<d_2) - P(<d_1)$$
-      <b>Ví dụ:</b> $P(0.05\,\text{mm} \text{ đến } 0.25\,\text{mm}) = P(<0.25) - P(<0.05) = 44.3 - 25.0 = 19.3\%$
+      $$P(d_1 \\text{ đến } d_2) = P(<d_2) - P(<d_1)$$
+      <b>Ví dụ:</b> $P(0.05\,\\text{mm} \\text{ đến } 0.25\,\\text{mm}) = P(<0.25) - P(<0.05) = 44.3 - 25.0 = 19.3\%$
     </div>
   </div>`,
   hint: `<div class="hint-title">💡 Hàm lượng nhóm 0.05–0.25mm $= P(<0.25) - P(<0.05) = 44.3 - 25.0 = 19.3\%$</div>`,
@@ -563,7 +563,7 @@ EXERCISES['ch1_b3_02'] = {
   title: '1.11 – Chỉ tiêu vật lý: hệ số rỗng e, độ bão hòa S',
   type: 'apply',
   theoryHTML: LY_THUYET_CHI_TIEU,
-  hint: `<div class="hint-title">💡 $e = V_r/V_h$. $S = V_w/V_r$ (với $V_w \approx Q_w$ vì $\gamma_w = 1\,\text{g/cm}^3$).</div>`,
+  hint: `<div class="hint-title">💡 $e = V_r/V_h$. $S = V_w/V_r$ (với $V_w \\approx Q_w$ vì $\\gamma_w = 1\,\\text{g/cm}^3$).</div>`,
   genData(rng){ return _genB3_type1(rng); },
   statement(d){
     return `Mẫu đất: $Q = ${d.Q}$ g, $Q_k = ${d.Qk}$ g, $V = ${d.V}$ cm³, $V_h = ${d.Vh}$ cm³.<br>Biết $V_r = ${d.Vr}$ cm³. Xác định <b>hệ số rỗng $e$</b> và <b>độ bão hòa $S$</b>:`;
@@ -581,10 +581,10 @@ EXERCISES['ch1_b3_03'] = {
   title: '1.12 – Chỉ tiêu vật lý: độ ẩm w, trọng lượng riêng tự nhiên γ_tn',
   type: 'apply',
   theoryHTML: LY_THUYET_CHI_TIEU,
-  hint: `<div class="hint-title">💡 $w = Q_w/Q_k \times 100\%$. $\gamma_{tn} = Q/V \times 10$ (kN/m³).</div>`,
+  hint: `<div class="hint-title">💡 $w = Q_w/Q_k \\times 100\%$. $\\gamma_{tn} = Q/V \\times 10$ (kN/m³).</div>`,
   genData(rng){ return _genB3_type1(rng); },
   statement(d){
-    return `Mẫu đất: $Q = ${d.Q}$ g, $Q_k = ${d.Qk}$ g, $V = ${d.V}$ cm³.<br>Xác định <b>độ ẩm $w$ (%)</b> và <b>trọng lượng riêng tự nhiên $\gamma_{tn}$ (kN/m³)</b>:`;
+    return `Mẫu đất: $Q = ${d.Q}$ g, $Q_k = ${d.Qk}$ g, $V = ${d.V}$ cm³.<br>Xác định <b>độ ẩm $w$ (%)</b> và <b>trọng lượng riêng tự nhiên $\\gamma_{tn}$ (kN/m³)</b>:`;
   },
   questions: [
     { id:'q1', type:'fill', label:'$w = Q_w/Q_k \\times 100$ (%)',             unit:'%',     answer: d=>d.w,    tol:0.2 },
@@ -597,10 +597,10 @@ EXERCISES['ch1_b3_04'] = {
   title: '1.13 – Chỉ tiêu vật lý: γ_k, γ_bh, γ_dn, γ_h',
   type: 'guided',
   theoryHTML: LY_THUYET_CHI_TIEU,
-  hint: `<div class="hint-title">💡 $\gamma_k = Q_k/V \times 10$. $\gamma_{bh} = (Q_k + V_r)/V \times 10$. $\gamma_{dn} = \gamma_{bh} - 10$. $\gamma_h = Q_k/V_h \times 10$.</div>`,
+  hint: `<div class="hint-title">💡 $\\gamma_k = Q_k/V \\times 10$. $\\gamma_{bh} = (Q_k + V_r)/V \\times 10$. $\\gamma_{dn} = \\gamma_{bh} - 10$. $\\gamma_h = Q_k/V_h \\times 10$.</div>`,
   genData(rng){ return _genB3_type1(rng); },
   statement(d){
-    return `Mẫu đất: $Q_k = ${d.Qk}$ g, $V = ${d.V}$ cm³, $V_h = ${d.Vh}$ cm³, $V_r = ${d.Vr}$ cm³.<br>Xác định $\gamma_k$, $\gamma_{bh}$, $\gamma_{dn}$ và $\gamma_h$ (kN/m³):`;
+    return `Mẫu đất: $Q_k = ${d.Qk}$ g, $V = ${d.V}$ cm³, $V_h = ${d.Vh}$ cm³, $V_r = ${d.Vr}$ cm³.<br>Xác định $\\gamma_k$, $\\gamma_{bh}$, $\\gamma_{dn}$ và $\\gamma_h$ (kN/m³):`;
   },
   questions: [
     { id:'q1', type:'fill', label:'$\\gamma_k = Q_k/V \\times 10$ (kN/m³)',              unit:'kN/m³', answer: d=>d.g_k,  tol:0.05 },
@@ -619,15 +619,15 @@ EXERCISES['ch1_b3_05'] = {
   theoryHTML: `<div class="theory-block">
     <div class="theory-label">📖 TÍNH CHỈ TIÊU TỪ w, γ_tn, Δ</div>
     <div style="background:#e3f0fd;border-radius:7px;padding:10px 14px;margin:8px 0;font-size:.87rem;line-height:2.2;">
-      $$\gamma_k = \frac{\gamma_{tn}}{1 + 0.01\,w}$$
-      $$n = 1 - \frac{\gamma_k}{\Delta \cdot \gamma_w} \qquad (\gamma_w = 10\,\text{kN/m}^3)$$
-      $$e = \frac{n}{1 - n}$$
+      $$\\gamma_k = \\frac{\\gamma_{tn}}{1 + 0.01\,w}$$
+      $$n = 1 - \\frac{\\gamma_k}{\\Delta \\cdot \\gamma_w} \\qquad (\\gamma_w = 10\,\\text{kN/m}^3)$$
+      $$e = \\frac{n}{1 - n}$$
     </div>
   </div>`,
-  hint: `<div class="hint-title">💡 Tính $\gamma_k$ trước → $n = 1 - \gamma_k/(\Delta \times 10)$ → $e = n/(1-n)$.</div>`,
+  hint: `<div class="hint-title">💡 Tính $\\gamma_k$ trước → $n = 1 - \\gamma_k/(\\Delta \\times 10)$ → $e = n/(1-n)$.</div>`,
   genData(rng){ return _genB3_type2(rng); },
   statement(d){
-    return `Mẫu đất có: $w = ${d.w}\%$, $\gamma_{tn} = ${d.g_tn}$ kN/m³, $\Delta$ (tỷ trọng hạt) $= ${d.D}$.<br>Xác định $\gamma_k$, $n$ và $e$:`;
+    return `Mẫu đất có: $w = ${d.w}\%$, $\\gamma_{tn} = ${d.g_tn}$ kN/m³, $\\Delta$ (tỷ trọng hạt) $= ${d.D}$.<br>Xác định $\\gamma_k$, $n$ và $e$:`;
   },
   questions: [
     { id:'q1', type:'fill', label:'$\\gamma_k = \\gamma_{tn}/(1 + 0.01w)$ (kN/m³)',  unit:'kN/m³', answer: d=>d.g_k, tol:0.05 },
@@ -643,15 +643,15 @@ EXERCISES['ch1_b3_06'] = {
   theoryHTML: `<div class="theory-block">
     <div class="theory-label">📖 TÍNH γ_bh, γ_dn, S</div>
     <div style="background:#e3f0fd;border-radius:7px;padding:10px 14px;margin:8px 0;font-size:.87rem;line-height:2.2;">
-      $$S = \frac{0.01\,w\,\Delta}{e}$$
-      $$\gamma_{bh} = \frac{(\Delta - 1)\,\gamma_w}{1 + e} + \gamma_w$$
-      $$\gamma_{dn} = \gamma_{bh} - \gamma_w \qquad (\gamma_w = 10\,\text{kN/m}^3)$$
+      $$S = \\frac{0.01\,w\,\\Delta}{e}$$
+      $$\\gamma_{bh} = \\frac{(\\Delta - 1)\,\\gamma_w}{1 + e} + \\gamma_w$$
+      $$\\gamma_{dn} = \\gamma_{bh} - \\gamma_w \\qquad (\\gamma_w = 10\,\\text{kN/m}^3)$$
     </div>
   </div>`,
-  hint: `<div class="hint-title">💡 Dùng $e$ đã tính. $S = 0.01\,w\,\Delta/e$. $\gamma_{bh} = (\Delta-1) \times 10/(1+e) + 10$.</div>`,
+  hint: `<div class="hint-title">💡 Dùng $e$ đã tính. $S = 0.01\,w\,\\Delta/e$. $\\gamma_{bh} = (\\Delta-1) \\times 10/(1+e) + 10$.</div>`,
   genData(rng){ return _genB3_type2(rng); },
   statement(d){
-    return `Mẫu đất: $w = ${d.w}\%$, $\Delta = ${d.D}$, $e = ${d.e}$ (đã tính).<br>Xác định $S$, $\gamma_{bh}$ và $\gamma_{dn}$:`;
+    return `Mẫu đất: $w = ${d.w}\%$, $\\Delta = ${d.D}$, $e = ${d.e}$ (đã tính).<br>Xác định $S$, $\\gamma_{bh}$ và $\\gamma_{dn}$:`;
   },
   questions: [
     { id:'q1', type:'fill', label:'$S = 0.01\\,w\\,\\Delta/e$',                              unit:'',      answer: d=>d.S,    tol:0.005 },
@@ -709,12 +709,12 @@ EXERCISES['ch1_b3_08'] = {
   theoryHTML: `<div class="theory-block">
     <div class="theory-label">📖 TRỌNG LƯỢNG RIÊNG ƯỚT (TỰ NHIÊN)</div>
     <div style="background:#e3f0fd;border-radius:7px;padding:9px 14px;margin:8px 0;font-size:.87rem;line-height:2.1;">
-      $$\gamma_{tn} = \frac{Q}{V} \times 10 \quad (\text{kN/m}^3)$$
-      Đổi đơn vị: $[\text{g/cm}^3] \times 10 = [\text{kN/m}^3]$
+      $$\\gamma_{tn} = \\frac{Q}{V} \\times 10 \\quad (\\text{kN/m}^3)$$
+      Đổi đơn vị: $[\\text{g/cm}^3] \\times 10 = [\\text{kN/m}^3]$
     </div>
     <div style="font-size:.83rem;color:#555;">$Q$: khối lượng mẫu ướt (g) | $V$: thể tích mẫu (cm³)</div>
   </div>`,
-  hint: `<div class="hint-title">💡 $\gamma_{tn}\,[\text{kN/m}^3] = Q\,[\text{g}] \,/\, V\,[\text{cm}^3] \times 10$.</div>`,
+  hint: `<div class="hint-title">💡 $\\gamma_{tn}\,[\\text{kN/m}^3] = Q\,[\\text{g}] \,/\, V\,[\\text{cm}^3] \\times 10$.</div>`,
   genData(rng){
     const V    = Math.round(80 + rng()*60);
     const g_tn = r2(16.5 + rng()*2.5);
@@ -726,7 +726,7 @@ EXERCISES['ch1_b3_08'] = {
     return {V, Q_uot, Q_kho, D, w, g_uot};
   },
   statement(d){
-    return `Mẫu đất có thể tích $V = ${d.V}$ cm³, khối lượng ướt $Q = ${d.Q_uot}$ g, khối lượng khô $Q_k = ${d.Q_kho}$ g, tỷ trọng hạt $\Delta = ${d.D}$.<br>Tính <b>trọng lượng riêng tự nhiên $\gamma_{tn}$</b> (kN/m³):`;
+    return `Mẫu đất có thể tích $V = ${d.V}$ cm³, khối lượng ướt $Q = ${d.Q_uot}$ g, khối lượng khô $Q_k = ${d.Q_kho}$ g, tỷ trọng hạt $\\Delta = ${d.D}$.<br>Tính <b>trọng lượng riêng tự nhiên $\\gamma_{tn}$</b> (kN/m³):`;
   },
   questions: [
     { id:'q1', type:'fill', label:'$\\gamma_{tn} = Q/V \\times 10$ (kN/m³)', unit:'kN/m³', answer: d=>d.g_uot, tol:0.05 },
@@ -753,33 +753,33 @@ EXERCISES['ch1_tomtat'] = {
   <h4>A. Các thành phần thể tích</h4>
   <div class="s1-body">
     <div class="s1-row"><div class="s1-f">$V = V_h + V_r = V_h + V_w + V_k$</div><div class="s1-n">$V_r = V_k + V_w$ (lỗ rỗng)</div></div>
-    <div class="s1-row"><div class="s1-f">$n = V_r/V \times 100\%$</div><div class="s1-n">Độ rỗng</div></div>
+    <div class="s1-row"><div class="s1-f">$n = V_r/V \\times 100\%$</div><div class="s1-n">Độ rỗng</div></div>
     <div class="s1-row"><div class="s1-f">$m = V_h/V$ &nbsp; ($n + m = 1$)</div><div class="s1-n">Độ đặc</div></div>
     <div class="s1-row"><div class="s1-f">$e = V_r/V_h$ &nbsp; ($e = n/(1-n)$)</div><div class="s1-n">Hệ số rỗng</div></div>
-    <div class="s1-row"><div class="s1-f">$S = V_w/V_r$</div><div class="s1-n">Độ bão hòa ($0 \leq S \leq 1$)</div></div>
-    <div class="s1-row"><div class="s1-f">$w = Q_w/Q_h \times 100\%$</div><div class="s1-n">Độ ẩm</div></div>
+    <div class="s1-row"><div class="s1-f">$S = V_w/V_r$</div><div class="s1-n">Độ bão hòa ($0 \\leq S \\leq 1$)</div></div>
+    <div class="s1-row"><div class="s1-f">$w = Q_w/Q_h \\times 100\%$</div><div class="s1-n">Độ ẩm</div></div>
   </div>
 </div>
 
 <div class="s1-sec">
   <h4>B. Các chỉ tiêu khối lượng (kN/m³)</h4>
   <div class="s1-body">
-    <div class="s1-row"><div class="s1-f">$\gamma_{tn} = Q/V \times 10$</div><div class="s1-n">TL riêng tự nhiên</div></div>
-    <div class="s1-row"><div class="s1-f">$\gamma_k = Q_h/V \times 10$</div><div class="s1-n">TL riêng khô</div></div>
-    <div class="s1-row"><div class="s1-f">$\gamma_k = \gamma_{tn}/(1 + 0.01w)$</div><div class="s1-n">Tính $\gamma_k$ từ $\gamma_{tn}$ và $w$</div></div>
-    <div class="s1-row"><div class="s1-f">$\gamma_{bh} = (\Delta-1)\gamma_w/(1+e)+\gamma_w$</div><div class="s1-n">TL riêng bão hòa</div></div>
-    <div class="s1-row"><div class="s1-f">$\gamma_{dn} = \gamma_{bh} - \gamma_w$</div><div class="s1-n">TL riêng đẩy nổi ($\gamma_w = 10$)</div></div>
-    <div class="s1-row"><div class="s1-f">$\gamma_h = Q_h/V_h \times 10 = \Delta \cdot \gamma_w$</div><div class="s1-n">TL riêng hạt đất</div></div>
+    <div class="s1-row"><div class="s1-f">$\\gamma_{tn} = Q/V \\times 10$</div><div class="s1-n">TL riêng tự nhiên</div></div>
+    <div class="s1-row"><div class="s1-f">$\\gamma_k = Q_h/V \\times 10$</div><div class="s1-n">TL riêng khô</div></div>
+    <div class="s1-row"><div class="s1-f">$\\gamma_k = \\gamma_{tn}/(1 + 0.01w)$</div><div class="s1-n">Tính $\\gamma_k$ từ $\\gamma_{tn}$ và $w$</div></div>
+    <div class="s1-row"><div class="s1-f">$\\gamma_{bh} = (\\Delta-1)\\gamma_w/(1+e)+\\gamma_w$</div><div class="s1-n">TL riêng bão hòa</div></div>
+    <div class="s1-row"><div class="s1-f">$\\gamma_{dn} = \\gamma_{bh} - \\gamma_w$</div><div class="s1-n">TL riêng đẩy nổi ($\\gamma_w = 10$)</div></div>
+    <div class="s1-row"><div class="s1-f">$\\gamma_h = Q_h/V_h \\times 10 = \\Delta \\cdot \\gamma_w$</div><div class="s1-n">TL riêng hạt đất</div></div>
   </div>
 </div>
 
 <div class="s1-sec">
   <h4>C. Tính từ w, γ_tn, Δ</h4>
   <div class="s1-body">
-    <div class="s1-row"><div class="s1-f">$\gamma_k = \gamma_{tn}/(1 + 0.01w)$</div></div>
-    <div class="s1-row"><div class="s1-f">$n = 1 - \gamma_k/(\Delta \cdot \gamma_w)$</div></div>
+    <div class="s1-row"><div class="s1-f">$\\gamma_k = \\gamma_{tn}/(1 + 0.01w)$</div></div>
+    <div class="s1-row"><div class="s1-f">$n = 1 - \\gamma_k/(\\Delta \\cdot \\gamma_w)$</div></div>
     <div class="s1-row"><div class="s1-f">$e = n/(1-n)$</div></div>
-    <div class="s1-row"><div class="s1-f">$S = 0.01\,w\,\Delta/e$</div></div>
+    <div class="s1-row"><div class="s1-f">$S = 0.01\,w\,\\Delta/e$</div></div>
   </div>
 </div>
 
@@ -787,8 +787,8 @@ EXERCISES['ch1_tomtat'] = {
   <h4>D. Rây sàng & Cấp phối hạt</h4>
   <div class="s1-body">
     <div class="s1-row"><div class="s1-f">Đất trên rây $d$ → hạt có kích thước $> d$</div><div class="s1-n">Lọt qua rây → hạt $< d$</div></div>
-    <div class="s1-row"><div class="s1-f">$P(<d) = \sum m(<d)\,/\,m_{\text{tổng}} \times 100\%$</div><div class="s1-n">Hàm lượng tích lũy</div></div>
-    <div class="s1-row"><div class="s1-f">$P(d_1\text{–}d_2) = P(<d_2) - P(<d_1)$</div><div class="s1-n">Hiệu 2 giá trị tích lũy</div></div>
+    <div class="s1-row"><div class="s1-f">$P(<d) = \\sum m(<d)\,/\,m_{\\text{tổng}} \\times 100\%$</div><div class="s1-n">Hàm lượng tích lũy</div></div>
+    <div class="s1-row"><div class="s1-f">$P(d_1\\text{–}d_2) = P(<d_2) - P(<d_1)$</div><div class="s1-n">Hiệu 2 giá trị tích lũy</div></div>
   </div>
 </div>`,
   hint: `<div class="hint-title">📌 Tóm tắt toàn bộ công thức chương 1 – không có câu hỏi tính toán.</div>`,
@@ -847,12 +847,12 @@ EXERCISES['ch1_b2_11'] = {
   theoryHTML: `<div class="theory-block">
     <div class="theory-label">📖 BẢNG CẤP PHỐI HẠT ĐẦY ĐỦ</div>
     <div style="font-size:.84rem;line-height:1.8;">
-      <b>Hàm lượng từng nhóm (%)</b> $= m_{\text{rây}} / m_{\text{tổng}} \times 100$<br>
+      <b>Hàm lượng từng nhóm (%)</b> $= m_{\\text{rây}} / m_{\\text{tổng}} \\times 100$<br>
       <b>Hàm lượng tích lũy $P(<d)$ (%)</b> = cộng dồn từ nhóm hạt nhỏ nhất lên<br>
       Tổng tất cả hàm lượng từng nhóm = 100%
     </div>
   </div>`,
-  hint: `<div class="hint-title">💡 Tổng tất cả hàm lượng từng nhóm = 100%. $P(d < 5\,\text{mm}) = 100 - \%\text{nhóm} > 5\,\text{mm}$.</div>`,
+  hint: `<div class="hint-title">💡 Tổng tất cả hàm lượng từng nhóm = 100%. $P(d < 5\,\\text{mm}) = 100 - \%\\text{nhóm} > 5\,\\text{mm}$.</div>`,
   genData(rng){
     const a   = Math.floor(1 + rng()*199);
     const ms  = [45+a, 25+a, 100+a, 60+a, 5+5*a, 20+3*a, 15+2*a];
@@ -886,7 +886,7 @@ EXERCISES['ch1_b3_09'] = {
   title: '1.20 – Tổng hợp: 10 chỉ tiêu vật lý từ bộ Q, V, Vh',
   type: 'guided',
   theoryHTML: LY_THUYET_CHI_TIEU,
-  hint: `<div class="hint-title">💡 Trình tự: $V_r \to Q_w \to n,\,m,\,e,\,S,\,w,\,\gamma_{tn},\,\gamma_k,\,\gamma_{bh},\,\gamma_{dn}$.</div>`,
+  hint: `<div class="hint-title">💡 Trình tự: $V_r \\to Q_w \\to n,\,m,\,e,\,S,\,w,\,\\gamma_{tn},\,\\gamma_k,\,\\gamma_{bh},\,\\gamma_{dn}$.</div>`,
   genData(rng){ return _genB3_type1(rng); },
   statement(d){
     return `Mẫu đất nguyên thổ cho kết quả TN:
@@ -917,16 +917,16 @@ EXERCISES['ch1_b3_10'] = {
   title: '1.21 – Tổng hợp: các chỉ tiêu từ w, γ_tn, Δ',
   type: 'apply',
   theoryHTML: LY_THUYET_CHI_TIEU,
-  hint: `<div class="hint-title">💡 Trình tự: $\gamma_k \to n \to e \to S \to \gamma_{bh} \to \gamma_{dn}$.</div>`,
+  hint: `<div class="hint-title">💡 Trình tự: $\\gamma_k \\to n \\to e \\to S \\to \\gamma_{bh} \\to \\gamma_{dn}$.</div>`,
   genData(rng){ return _genB3_type2(rng); },
   statement(d){
     return `Thí nghiệm mẫu đất cho 3 chỉ tiêu cơ bản:
     <table style="border-collapse:collapse;font-size:.88rem;margin:8px 0;">
     <tr style="background:#e3f0fd;"><td style="padding:4px 12px;">Độ ẩm tự nhiên $w$ (%)</td><td style="padding:4px 12px;font-weight:700;">${d.w}%</td></tr>
-    <tr><td style="padding:4px 12px;">Trọng lượng riêng tự nhiên $\gamma_{tn}$ (kN/m³)</td><td style="padding:4px 12px;font-weight:700;">${d.g_tn}</td></tr>
-    <tr style="background:#e3f0fd;"><td style="padding:4px 12px;">Tỷ trọng của hạt $\Delta$</td><td style="padding:4px 12px;font-weight:700;">${d.D}</td></tr>
+    <tr><td style="padding:4px 12px;">Trọng lượng riêng tự nhiên $\\gamma_{tn}$ (kN/m³)</td><td style="padding:4px 12px;font-weight:700;">${d.g_tn}</td></tr>
+    <tr style="background:#e3f0fd;"><td style="padding:4px 12px;">Tỷ trọng của hạt $\\Delta$</td><td style="padding:4px 12px;font-weight:700;">${d.D}</td></tr>
     </table>
-    Xác định các chỉ tiêu vật lý còn lại ($\gamma_w = 10$ kN/m³):`;
+    Xác định các chỉ tiêu vật lý còn lại ($\\gamma_w = 10$ kN/m³):`;
   },
   questions: [
     { id:'q1', type:'fill', label:'$\\gamma_k = \\gamma_{tn}/(1+0.01w)$ (kN/m³)',           unit:'kN/m³', answer: d=>d.g_k,  tol:0.05  },
@@ -945,13 +945,13 @@ EXERCISES['ch1_b3_11'] = {
   theoryHTML: `<div class="theory-block">
     <div class="theory-label">📖 TỔNG HỢP TÍNH TỪ V, Q_ướt, Q_k, Δ</div>
     <div style="background:#e3f0fd;border-radius:7px;padding:9px 14px;margin:8px 0;font-size:.87rem;line-height:2.2;">
-      $$\gamma_{tn} = \frac{Q}{V} \times 10 \quad (\text{kN/m}^3)$$
-      $$w = \frac{Q - Q_k}{Q_k} \times 100 \quad (\%)$$
-      $$\gamma_k = \frac{\gamma_{tn}}{1 + 0.01\,w} \quad (\text{kN/m}^3)$$
-      $$V_h = \frac{Q_k}{\Delta} \quad (\text{cm}^3) \quad \Rightarrow \quad e = \frac{V - V_h}{V_h}$$
+      $$\\gamma_{tn} = \\frac{Q}{V} \\times 10 \\quad (\\text{kN/m}^3)$$
+      $$w = \\frac{Q - Q_k}{Q_k} \\times 100 \\quad (\%)$$
+      $$\\gamma_k = \\frac{\\gamma_{tn}}{1 + 0.01\,w} \\quad (\\text{kN/m}^3)$$
+      $$V_h = \\frac{Q_k}{\\Delta} \\quad (\\text{cm}^3) \\quad \\Rightarrow \\quad e = \\frac{V - V_h}{V_h}$$
     </div>
   </div>`,
-  hint: `<div class="hint-title">💡 $V_h = Q_k/\Delta$ cm³ (khi $\gamma_w = 1\,\text{g/cm}^3$). Sau đó $e = (V - V_h)/V_h$.</div>`,
+  hint: `<div class="hint-title">💡 $V_h = Q_k/\\Delta$ cm³ (khi $\\gamma_w = 1\,\\text{g/cm}^3$). Sau đó $e = (V - V_h)/V_h$.</div>`,
   genData(rng){
     const V    = Math.round(85 + rng()*50);
     const g_tn = r2(16.5 + rng()*2.5);
@@ -967,7 +967,7 @@ EXERCISES['ch1_b3_11'] = {
     return {V, Q_uot, Q_k, D, g_tn_ans, w_ans, g_k_ans, Vh_ans, e_ans};
   },
   statement(d){
-    return `Mẫu đất có thể tích $V = ${d.V}$ cm³, khối lượng ướt $Q = ${d.Q_uot}$ g, khối lượng khô $Q_k = ${d.Q_k}$ g, tỷ trọng hạt $\Delta = ${d.D}$.<br>Tính các chỉ tiêu:`;
+    return `Mẫu đất có thể tích $V = ${d.V}$ cm³, khối lượng ướt $Q = ${d.Q_uot}$ g, khối lượng khô $Q_k = ${d.Q_k}$ g, tỷ trọng hạt $\\Delta = ${d.D}$.<br>Tính các chỉ tiêu:`;
   },
   questions: [
     { id:'q1', type:'fill', label:'$\\gamma_{tn} = Q/V \\times 10$ (kN/m³)',           unit:'kN/m³', answer: d=>d.g_tn_ans, tol:0.05 },
@@ -1046,10 +1046,10 @@ const LY_THUYET_TRANG_THAI = `
     </tr></thead>
     <tbody>
       <tr style="background:#ffccbc;"><td style="padding:4px 8px;font-weight:700;">Cứng (rắn)</td><td style="padding:4px 8px;text-align:center;">$I_L < 0$</td><td style="padding:4px 8px;">Cứng, giòn, khó biến dạng</td></tr>
-      <tr><td style="padding:4px 8px;font-weight:700;">Nửa cứng</td><td style="padding:4px 8px;text-align:center;">$0 \leq I_L < 0.25$</td><td style="padding:4px 8px;">Tương đối cứng</td></tr>
-      <tr style="background:#f5f5f5;"><td style="padding:4px 8px;font-weight:700;">Dẻo cứng</td><td style="padding:4px 8px;text-align:center;">$0.25 \leq I_L < 0.50$</td><td style="padding:4px 8px;">Dẻo, khó biến dạng</td></tr>
-      <tr><td style="padding:4px 8px;font-weight:700;">Dẻo mềm</td><td style="padding:4px 8px;text-align:center;">$0.50 \leq I_L < 0.75$</td><td style="padding:4px 8px;">Dẻo, dễ biến dạng hơn</td></tr>
-      <tr style="background:#c8e6c9;"><td style="padding:4px 8px;font-weight:700;">Dẻo chảy</td><td style="padding:4px 8px;text-align:center;">$0.75 \leq I_L \leq 1.0$</td><td style="padding:4px 8px;">Gần chảy</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:700;">Nửa cứng</td><td style="padding:4px 8px;text-align:center;">$0 \\leq I_L < 0.25$</td><td style="padding:4px 8px;">Tương đối cứng</td></tr>
+      <tr style="background:#f5f5f5;"><td style="padding:4px 8px;font-weight:700;">Dẻo cứng</td><td style="padding:4px 8px;text-align:center;">$0.25 \\leq I_L < 0.50$</td><td style="padding:4px 8px;">Dẻo, khó biến dạng</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:700;">Dẻo mềm</td><td style="padding:4px 8px;text-align:center;">$0.50 \\leq I_L < 0.75$</td><td style="padding:4px 8px;">Dẻo, dễ biến dạng hơn</td></tr>
+      <tr style="background:#c8e6c9;"><td style="padding:4px 8px;font-weight:700;">Dẻo chảy</td><td style="padding:4px 8px;text-align:center;">$0.75 \\leq I_L \\leq 1.0$</td><td style="padding:4px 8px;">Gần chảy</td></tr>
       <tr><td style="padding:4px 8px;font-weight:700;">Chảy</td><td style="padding:4px 8px;text-align:center;">$I_L > 1.0$</td><td style="padding:4px 8px;">Chảy lỏng</td></tr>
     </tbody>
   </table>
@@ -1061,8 +1061,8 @@ const LY_THUYET_TRANG_THAI_ROI = `
 <div class="theory-block">
   <div class="theory-label">📖 TRẠNG THÁI ĐẤT RỜI – ĐỘ CHẶT TƯƠNG ĐỐI D_r</div>
   <div style="background:#e3f0fd;border-radius:7px;padding:10px 14px;margin:8px 0;font-size:.87rem;line-height:2.1;">
-    $$D_r = \frac{e_{\max} - e}{e_{\max} - e_{\min}} \times 100\%$$
-    $e$: hệ số rỗng tự nhiên; $e_{\max}$: trạng thái rời nhất; $e_{\min}$: trạng thái chặt nhất
+    $$D_r = \\frac{e_{\\max} - e}{e_{\\max} - e_{\\min}} \\times 100\%$$
+    $e$: hệ số rỗng tự nhiên; $e_{\\max}$: trạng thái rời nhất; $e_{\\min}$: trạng thái chặt nhất
   </div>
   <table style="border-collapse:collapse;font-size:.82rem;width:100%;margin-top:6px;">
     <thead><tr style="background:#1565c0;color:#fff;text-align:center;">
@@ -1072,8 +1072,8 @@ const LY_THUYET_TRANG_THAI_ROI = `
     </tr></thead>
     <tbody>
       <tr style="background:#ffccbc;"><td style="padding:4px 8px;font-weight:700;">Rời</td><td style="padding:4px 8px;text-align:center;">$D_r < 33$</td><td style="padding:4px 8px;text-align:center;">$e > 0.8$</td></tr>
-      <tr><td style="padding:4px 8px;font-weight:700;">Chặt vừa</td><td style="padding:4px 8px;text-align:center;">$33 \leq D_r < 67$</td><td style="padding:4px 8px;text-align:center;">$0.6 < e \leq 0.8$</td></tr>
-      <tr style="background:#c8e6c9;"><td style="padding:4px 8px;font-weight:700;">Chặt</td><td style="padding:4px 8px;text-align:center;">$D_r \geq 67$</td><td style="padding:4px 8px;text-align:center;">$e \leq 0.6$</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:700;">Chặt vừa</td><td style="padding:4px 8px;text-align:center;">$33 \\leq D_r < 67$</td><td style="padding:4px 8px;text-align:center;">$0.6 < e \\leq 0.8$</td></tr>
+      <tr style="background:#c8e6c9;"><td style="padding:4px 8px;font-weight:700;">Chặt</td><td style="padding:4px 8px;text-align:center;">$D_r \\geq 67$</td><td style="padding:4px 8px;text-align:center;">$e \\leq 0.6$</td></tr>
     </tbody>
   </table>
 </div>`;
@@ -1132,7 +1132,7 @@ EXERCISES['ch1_tt02'] = {
   title: '1.24 – Trạng thái đất rời: độ chặt tương đối $D_r$',
   type: 'guided',
   theoryHTML: LY_THUYET_TRANG_THAI_ROI,
-  hint: `<div class="hint-title">💡 $D_r = (e_{\max} - e)/(e_{\max} - e_{\min}) \times 100\%$. Tra bảng phân loại theo $D_r$.</div>`,
+  hint: `<div class="hint-title">💡 $D_r = (e_{\\max} - e)/(e_{\\max} - e_{\\min}) \\times 100\%$. Tra bảng phân loại theo $D_r$.</div>`,
   genData(rng) {
     const e_min = r3(0.40 + rng()*0.15);
     const e_max = r3(e_min + 0.35 + rng()*0.25);
@@ -1147,7 +1147,7 @@ EXERCISES['ch1_tt02'] = {
   },
   statement(d) {
     return `Đất cát có hệ số rỗng tự nhiên $e = ${d.e}$.<br>
-    Từ TN xác định được: $e_{\max} = ${d.e_max}$ (rời nhất), $e_{\min} = ${d.e_min}$ (chặt nhất).<br>
+    Từ TN xác định được: $e_{\\max} = ${d.e_max}$ (rời nhất), $e_{\\min} = ${d.e_min}$ (chặt nhất).<br>
     Tính độ chặt tương đối $D_r$ và xác định <b>trạng thái</b> đất.`;
   },
   questions: [
@@ -1175,9 +1175,9 @@ const LY_THUYET_TEN_DAT = `
       <th style="padding:5px 8px;">Điều kiện cấp phối hạt</th>
     </tr></thead>
     <tbody>
-      <tr><td style="padding:4px 8px;font-weight:700;">Cuội sỏi</td><td style="padding:4px 8px;">% hạt $d > 2\,\text{mm} \geq 50\%$</td></tr>
-      <tr style="background:#f5f5f5;"><td style="padding:4px 8px;font-weight:700;">Cát</td><td style="padding:4px 8px;">% hạt $0.05\,\text{mm} \leq d \leq 2\,\text{mm} \geq 50\%$</td></tr>
-      <tr><td style="padding:4px 8px;font-weight:700;">Đất dính</td><td style="padding:4px 8px;">% hạt $d < 0.005\,\text{mm}$ chiếm đáng kể; dựa vào $I_P$</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:700;">Cuội sỏi</td><td style="padding:4px 8px;">% hạt $d > 2\,\\text{mm} \\geq 50\%$</td></tr>
+      <tr style="background:#f5f5f5;"><td style="padding:4px 8px;font-weight:700;">Cát</td><td style="padding:4px 8px;">% hạt $0.05\,\\text{mm} \\leq d \\leq 2\,\\text{mm} \\geq 50\%$</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:700;">Đất dính</td><td style="padding:4px 8px;">% hạt $d < 0.005\,\\text{mm}$ chiếm đáng kể; dựa vào $I_P$</td></tr>
     </tbody>
   </table>
   <p style="font-size:.84rem;margin-bottom:6px;"><b>Bước 2 (đất dính):</b> Xác định tên theo chỉ số dẻo $I_P$:</p>
@@ -1187,9 +1187,9 @@ const LY_THUYET_TEN_DAT = `
       <th style="padding:5px 8px;">Chỉ số dẻo $I_P$ (%)</th>
     </tr></thead>
     <tbody>
-      <tr><td style="padding:4px 8px;font-weight:700;">Cát pha (Á cát)</td><td style="padding:4px 8px;">$1 \leq I_P < 7$</td></tr>
-      <tr style="background:#f5f5f5;"><td style="padding:4px 8px;font-weight:700;">Sét pha (Á sét)</td><td style="padding:4px 8px;">$7 \leq I_P < 17$</td></tr>
-      <tr><td style="padding:4px 8px;font-weight:700;">Sét</td><td style="padding:4px 8px;">$I_P \geq 17$</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:700;">Cát pha (Á cát)</td><td style="padding:4px 8px;">$1 \\leq I_P < 7$</td></tr>
+      <tr style="background:#f5f5f5;"><td style="padding:4px 8px;font-weight:700;">Sét pha (Á sét)</td><td style="padding:4px 8px;">$7 \\leq I_P < 17$</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:700;">Sét</td><td style="padding:4px 8px;">$I_P \\geq 17$</td></tr>
     </tbody>
   </table>
 </div>`;
@@ -1199,7 +1199,7 @@ EXERCISES['ch1_ten01'] = {
   title: '1.25 – Xác định tên đất dính theo $I_P$ (TCVN)',
   type: 'guided',
   theoryHTML: LY_THUYET_TEN_DAT,
-  hint: `<div class="hint-title">💡 $I_P = W_L - W_P$. Á cát: $1 \leq I_P < 7$. Á sét: $7 \leq I_P < 17$. Sét: $I_P \geq 17$.</div>`,
+  hint: `<div class="hint-title">💡 $I_P = W_L - W_P$. Á cát: $1 \\leq I_P < 7$. Á sét: $7 \\leq I_P < 17$. Sét: $I_P \\geq 17$.</div>`,
   genData(rng) {
     const Wp = r2(16 + rng()*14);
     const loaiIdx = Math.floor(rng()*3);
@@ -1236,7 +1236,7 @@ EXERCISES['ch1_ten02'] = {
   title: '1.26 – Xác định tên đất rời theo cấp phối hạt (TCVN)',
   type: 'apply',
   theoryHTML: LY_THUYET_TEN_DAT,
-  hint: `<div class="hint-title">💡 Đất rời: nếu % hạt $d > 2\,\text{mm} \geq 50\%$ → cuội sỏi. Nếu % hạt $0.05\,\text{mm} \leq d \leq 2\,\text{mm} \geq 50\%$ → cát.<br>Trong cát: cát thô (% $d > 0.5\,\text{mm} \geq 50\%$), cát vừa (% $d > 0.25\,\text{mm} \geq 50\%$), cát mịn (% $d > 0.1\,\text{mm} \geq 75\%$).</div>`,
+  hint: `<div class="hint-title">💡 Đất rời: nếu % hạt $d > 2\,\\text{mm} \\geq 50\%$ → cuội sỏi. Nếu % hạt $0.05\,\\text{mm} \\leq d \\leq 2\,\\text{mm} \\geq 50\%$ → cát.<br>Trong cát: cát thô (% $d > 0.5\,\\text{mm} \\geq 50\%$), cát vừa (% $d > 0.25\,\\text{mm} \\geq 50\%$), cát mịn (% $d > 0.1\,\\text{mm} \\geq 75\%$).</div>`,
   genData(rng) {
     const loaiIdx = Math.floor(rng()*4);
     let pcts, tenDat, ttIdx;
@@ -1331,32 +1331,32 @@ EXERCISES['ch1_tomtat'] = {
   <h4>A. Thành phần thể tích – Khối lượng</h4>
   <div class="s1b-body">
     <div class="s1b-row"><div class="s1b-f">$V = V_h + V_r = V_h + V_w + V_k$</div><div class="s1b-n">Tổng thể tích</div></div>
-    <div class="s1b-row"><div class="s1b-f">$n = V_r/V \times 100\%$</div><div class="s1b-n">Độ rỗng</div></div>
+    <div class="s1b-row"><div class="s1b-f">$n = V_r/V \\times 100\%$</div><div class="s1b-n">Độ rỗng</div></div>
     <div class="s1b-row"><div class="s1b-f">$m = V_h/V$ &nbsp; ($n + m = 1$)</div><div class="s1b-n">Độ đặc</div></div>
     <div class="s1b-row"><div class="s1b-f">$e = V_r/V_h$ &nbsp; ($e = n/(1-n)$)</div><div class="s1b-n">Hệ số rỗng</div></div>
     <div class="s1b-row"><div class="s1b-f">$S = V_w/V_r$</div><div class="s1b-n">Độ bão hòa (0–1)</div></div>
-    <div class="s1b-row"><div class="s1b-f">$w = Q_w/Q_h \times 100\%$</div><div class="s1b-n">Độ ẩm</div></div>
+    <div class="s1b-row"><div class="s1b-f">$w = Q_w/Q_h \\times 100\%$</div><div class="s1b-n">Độ ẩm</div></div>
   </div>
 </div>
 
 <div class="s1b-sec">
   <h4>B. Trọng lượng riêng (kN/m³)</h4>
   <div class="s1b-body">
-    <div class="s1b-row"><div class="s1b-f">$\gamma_{tn} = Q/V \times 10$</div><div class="s1b-n">Tự nhiên</div></div>
-    <div class="s1b-row"><div class="s1b-f">$\gamma_k = Q_h/V \times 10 = \gamma_{tn}/(1+0.01w)$</div><div class="s1b-n">Khô</div></div>
-    <div class="s1b-row"><div class="s1b-f">$\gamma_{bh} = (\Delta-1)\gamma_w/(1+e) + \gamma_w$</div><div class="s1b-n">Bão hòa</div></div>
-    <div class="s1b-row"><div class="s1b-f">$\gamma_{dn} = \gamma_{bh} - \gamma_w$</div><div class="s1b-n">Đẩy nổi ($\gamma_w = 10$)</div></div>
-    <div class="s1b-row"><div class="s1b-f">$\gamma_h = Q_h/V_h \times 10 = \Delta \cdot \gamma_w$</div><div class="s1b-n">Hạt đất</div></div>
+    <div class="s1b-row"><div class="s1b-f">$\\gamma_{tn} = Q/V \\times 10$</div><div class="s1b-n">Tự nhiên</div></div>
+    <div class="s1b-row"><div class="s1b-f">$\\gamma_k = Q_h/V \\times 10 = \\gamma_{tn}/(1+0.01w)$</div><div class="s1b-n">Khô</div></div>
+    <div class="s1b-row"><div class="s1b-f">$\\gamma_{bh} = (\\Delta-1)\\gamma_w/(1+e) + \\gamma_w$</div><div class="s1b-n">Bão hòa</div></div>
+    <div class="s1b-row"><div class="s1b-f">$\\gamma_{dn} = \\gamma_{bh} - \\gamma_w$</div><div class="s1b-n">Đẩy nổi ($\\gamma_w = 10$)</div></div>
+    <div class="s1b-row"><div class="s1b-f">$\\gamma_h = Q_h/V_h \\times 10 = \\Delta \\cdot \\gamma_w$</div><div class="s1b-n">Hạt đất</div></div>
   </div>
 </div>
 
 <div class="s1b-sec">
   <h4>C. Tính từ w, γ_tn, Δ</h4>
   <div class="s1b-body">
-    <div class="s1b-row"><div class="s1b-f">$\gamma_k = \gamma_{tn}/(1 + 0.01w)$</div></div>
-    <div class="s1b-row"><div class="s1b-f">$n = 1 - \gamma_k/(\Delta \cdot \gamma_w)$</div></div>
+    <div class="s1b-row"><div class="s1b-f">$\\gamma_k = \\gamma_{tn}/(1 + 0.01w)$</div></div>
+    <div class="s1b-row"><div class="s1b-f">$n = 1 - \\gamma_k/(\\Delta \\cdot \\gamma_w)$</div></div>
     <div class="s1b-row"><div class="s1b-f">$e = n/(1-n)$</div></div>
-    <div class="s1b-row"><div class="s1b-f">$S = 0.01\,w\,\Delta/e$</div></div>
+    <div class="s1b-row"><div class="s1b-f">$S = 0.01\,w\,\\Delta/e$</div></div>
   </div>
 </div>
 
@@ -1374,7 +1374,7 @@ EXERCISES['ch1_tomtat'] = {
 <div class="s1b-sec">
   <h4>E. Trạng thái đất RỜI – Độ chặt tương đối</h4>
   <div class="s1b-body">
-    <div class="s1b-row"><div class="s1b-f">$D_r = (e_{\max} - e)/(e_{\max} - e_{\min}) \times 100\%$</div></div>
+    <div class="s1b-row"><div class="s1b-f">$D_r = (e_{\\max} - e)/(e_{\\max} - e_{\\min}) \\times 100\%$</div></div>
     <div class="s1b-row"><div class="s1b-f">$D_r < 33\%$: Rời &nbsp;|&nbsp; $33$–$67\%$: Chặt vừa &nbsp;|&nbsp; $> 67\%$: Chặt</div></div>
   </div>
 </div>
@@ -1382,19 +1382,19 @@ EXERCISES['ch1_tomtat'] = {
 <div class="s1b-sec">
   <h4>F. Tên đất theo TCVN (theo $I_P$)</h4>
   <div class="s1b-body">
-    <div class="s1b-row"><div class="s1b-f">$1 \leq I_P < 7$: Cát pha (Á cát)</div></div>
-    <div class="s1b-row"><div class="s1b-f">$7 \leq I_P < 17$: Sét pha (Á sét)</div></div>
-    <div class="s1b-row"><div class="s1b-f">$I_P \geq 17$: Sét</div></div>
-    <div class="s1b-row"><div class="s1b-f">% hạt $d > 2\,\text{mm} \geq 50\%$: Cuội sỏi</div></div>
-    <div class="s1b-row"><div class="s1b-f">% hạt $0.05 \leq d \leq 2\,\text{mm} \geq 50\%$: Cát (thô/vừa/mịn)</div></div>
+    <div class="s1b-row"><div class="s1b-f">$1 \\leq I_P < 7$: Cát pha (Á cát)</div></div>
+    <div class="s1b-row"><div class="s1b-f">$7 \\leq I_P < 17$: Sét pha (Á sét)</div></div>
+    <div class="s1b-row"><div class="s1b-f">$I_P \\geq 17$: Sét</div></div>
+    <div class="s1b-row"><div class="s1b-f">% hạt $d > 2\,\\text{mm} \\geq 50\%$: Cuội sỏi</div></div>
+    <div class="s1b-row"><div class="s1b-f">% hạt $0.05 \\leq d \\leq 2\,\\text{mm} \\geq 50\%$: Cát (thô/vừa/mịn)</div></div>
   </div>
 </div>
 
 <div class="s1b-sec">
   <h4>G. Rây sàng & Cấp phối hạt</h4>
   <div class="s1b-body">
-    <div class="s1b-row"><div class="s1b-f">$P(<d) = \sum m(<d)\,/\,m_{\text{tổng}} \times 100\%$</div><div class="s1b-n">Hàm lượng tích lũy</div></div>
-    <div class="s1b-row"><div class="s1b-f">$P(d_1 \text{–} d_2) = P(<d_2) - P(<d_1)$</div><div class="s1b-n">Hiệu 2 tích lũy liên tiếp</div></div>
+    <div class="s1b-row"><div class="s1b-f">$P(<d) = \\sum m(<d)\,/\,m_{\\text{tổng}} \\times 100\%$</div><div class="s1b-n">Hàm lượng tích lũy</div></div>
+    <div class="s1b-row"><div class="s1b-f">$P(d_1 \\text{–} d_2) = P(<d_2) - P(<d_1)$</div><div class="s1b-n">Hiệu 2 tích lũy liên tiếp</div></div>
   </div>
 </div>`,
   hint: `<div class="hint-title">📌 Tóm tắt toàn bộ công thức chương 1 – không có câu hỏi tính toán.</div>`,
